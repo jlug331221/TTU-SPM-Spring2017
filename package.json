@@ -1,0 +1,25 @@
+{
+  "name": "ttu-spm-spring2017",
+  "version": "1.0.0",
+  "description": "This is a food finding application where users in a particular area can search and find their favorite cuisine.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dish Wish Development Team",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.16.1",
+    "browser-sync": "^2.18.8",
+    "chai": "^3.5.0",
+    "ejs": "^2.5.6",
+    "express": "^4.14.1",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-nodemon": "^2.2.1",
+    "mocha": "^3.2.0",
+    "mongojs": "^2.4.0",
+    "requests": "^0.1.7",
+    "should": "^11.2.0"
+  }
+}
