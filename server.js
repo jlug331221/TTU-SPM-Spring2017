@@ -1,28 +1,41 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
+// Get dependencies
+const express = require('express');
+const path = require('path');
+const http = require('http');
+const bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var dishes = require('./routes/dishes');
+// Get our API routes
+const dishes = require('./server/routes/dishes');
 
-var app = express();
-app.set('port', process.env.PORT || 3000);
+const app = express();
 
-// View Engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
-
-// Set Static folder for the client
-app.use(express.static(path.join(__dirname, 'client')));
-
-// Body Parser
+// Parsers for POST data
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/', index);
+// Point static path to dist
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Set our api routes
 app.use('/api', dishes);
 
-app.listen(app.get('port'), function() {
-    console.log('Server started on port ' + app.get('port'));
+// Catch all other routes and return the index file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
+/**
+ * Get port from environment and store in Express.
+ */
+const port = process.env.PORT || '3000';
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port, () => console.log(`Application running on localhost:${port}`));
