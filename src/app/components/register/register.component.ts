@@ -13,6 +13,9 @@ export class RegisterComponent implements OnInit {
 	constructor(private router:Router) { }
 		
 	ngOnInit() {
+		firebase.auth().createUserWithEmailAndPassword("user.email@email.com","user.password ").catch(function(error) {
+			console.log("Error",error);
+		});
 	}
 	onRegister(){
 		const user = {
@@ -21,9 +24,7 @@ export class RegisterComponent implements OnInit {
 		}
 		
 		//this.validateService.validateRegister(user);*/
-		firebase.auth().createUserWithEmailAndPassword(user.email,user.password ).catch(function(error) {
-			console.log("Error",error);
-		});
+		
 		this.router.navigate(['/']);
 	}
 }
