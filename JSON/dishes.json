@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "cuisineName": "italian",
+    "img": "dummyLink.com",
+    "rating": 3.5
+  },
+  
+  {
+    "id": 2,
+    "cuisineName": "italian",
+    "img": "dummyLink2.com",
+    "rating": 4
+  },
+  
+  {
+    "id": 3,
+    "cuisineName": "italian",
+    "img": "dummyLink3.com",
+    "rating": 2.5
+  }
+
+]
