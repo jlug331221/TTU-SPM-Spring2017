@@ -1,15 +1,15 @@
 <nav>
     <div class="nav-wrapper container">
-        <a href="#" class="brand-logo">Foogle</a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a [routerLink]="['/']" class="brand-logo">Foogle</a>
+        <a href="#" data-activates="mobile-slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li><a routerLink="/" routerLinkActive="active">Home</a></li>
+			<li><a [routerLink]="['/']" routerLinkActive="active">Home</a></li>
             <li><a routerLinkActive="active" *ngIf="!(af.auth| async)" (click)="login()">Login</a></li>
             <li><a routerLinkActive="active" *ngIf="(af.auth| async)" (click)="logOut()">Logout</a></li>
         </ul>
 
-        <ul class="side-nav" id="mobile-demo">
+        <ul class="side-nav" id="mobile-slide-out">
             <li><a *ngIf="!(af.auth| async)" (click)="login()">Login</a></li>
             <li><a *ngIf="(af.auth| async)" (click)="logOut()">Logout</a></li>
         </ul>

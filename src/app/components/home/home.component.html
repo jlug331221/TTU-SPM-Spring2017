@@ -10,7 +10,7 @@
           	  <img src="{{cuisine.image_url}}" alt="" class="responsive-img">
         	</div>
         	<div class="card-action">
-            	<a class="btn" href="#">See Dishes</a>
+            	<a class="btn" [routerLink]="['/dishes', cuisine.$key]">See Dishes</a>
         	</div>
       	</div>
     </div>

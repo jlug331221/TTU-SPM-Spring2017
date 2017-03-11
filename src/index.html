@@ -14,11 +14,42 @@
         <!-- MaterialzeCSS Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Add custom CSS below -->
+        <style>
+            h3.loading-dishes {
+                text-align: center;
+                margin: 4rem 0;
+            }
 
+            .flex-center {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+            }
+        </style>
     </head>
 
     <body>
-        <app-root>Loading up the Dishes...</app-root>
+        <app-root>
+            <div class="container">
+                <h3 class="loading-dishes">Loading up some Dishes...</h3>
+
+                <div class="flex-center">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </app-root>
 
         <!-- JQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
