@@ -1,23 +1,33 @@
 [
-  {
+
+    {
     "id": 1,
+    "name": "Name 1"
     "cuisineName": "italian",
-    "img": "dummyLink.com",
-    "rating": 3.5
-  },
-  
-  {
-    "id": 2,
-    "cuisineName": "italian",
-    "img": "dummyLink2.com",
-    "rating": 4
-  },
-  
-  {
-    "id": 3,
-    "cuisineName": "italian",
-    "img": "dummyLink3.com",
-    "rating": 2.5
-  }
+    "img_url": "dummyLink.com",
+    "restaurant_name": "RName1"
+    "rating": 3.5,
+    "comments": []
+    },
+
+    {
+      "id": 2,
+      "name": "Name 2"
+      "cuisineName": "italian",
+      "img_url": "dummyLink2.com",
+      "restaurant_name": "RName2"
+      "rating": 2.5,
+      "comments": []
+    },
+
+    {
+      "id": 3,
+      "name": "Name 3"
+      "cuisineName": "mexican",
+      "img_url": "dummyLink3.com",
+      "restaurant_name": "RName3"
+      "rating": 4.5,
+      "comments": []
+    }
 
 ]

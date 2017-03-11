@@ -9,7 +9,7 @@ import { FireBaseService } from '../../services/firebase.service'
 })
 export class HomeComponent implements OnInit {
 	cuisines:any;
-	
+
   constructor(private af: AngularFire,private fireBaseService:FireBaseService ) { }
 
   ngOnInit() {
