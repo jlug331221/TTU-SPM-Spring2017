@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import {ValidateService} from './services/validate.service';
-import { DishesComponent } from './dishes/dishes.component'
+import { DishesComponent } from './components/dishes/dishes.component'
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 ];
