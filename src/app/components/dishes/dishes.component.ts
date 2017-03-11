@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FireBaseService } from '../../services/firebase.service';
 
@@ -8,10 +9,15 @@ import { FireBaseService } from '../../services/firebase.service';
   styleUrls: ['./dishes.component.css']
 })
 export class DishesComponent implements OnInit {
+    cuisineName: string;
+    private sub: any;
 
-  constructor() { }
+    constructor(private route: ActivatedRoute) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            this.cuisineName = params['cuisineName'];
+        });
+    }
 
 }

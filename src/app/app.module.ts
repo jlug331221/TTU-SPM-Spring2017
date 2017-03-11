@@ -13,7 +13,7 @@ import {ValidateService} from './services/validate.service';
 import { DishesComponent } from './components/dishes/dishes.component'
 const appRoutes:  Routes = [
 	{path: '', component: HomeComponent},
-	{path: 'dishes', component: DishesComponent}
+	{path: 'dishes/:cuisineName', component: DishesComponent}
 ];
 export const firebaseConfig = {
   	apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
