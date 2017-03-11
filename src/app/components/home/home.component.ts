@@ -10,12 +10,12 @@ import { FireBaseService } from '../../services/firebase.service'
 export class HomeComponent implements OnInit {
 	cuisines:any;
 
-  constructor(private af: AngularFire,private fireBaseService:FireBaseService ) { }
+    constructor(private af: AngularFire, private fireBaseService:FireBaseService ) { }
 
-  ngOnInit() {
-	  this.fireBaseService.getCuisine().subscribe(cuisine =>{
-		  this.cuisines = cuisine;
-	  });
-  }
+    ngOnInit() {
+      this.fireBaseService.getCuisines().subscribe(cuisine => {
+    	  this.cuisines = cuisine;
+      });
+    }
 
 }
