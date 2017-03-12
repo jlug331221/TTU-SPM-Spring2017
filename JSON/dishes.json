@@ -1,10 +1,11 @@
 [
 
     {
-    "id": 1,
+    "dish_id": 1,
     "name": "Name 1",
     "cuisineName": "italian",
-    "img_url": "dummyLink.com",
+    "img_url": "http://lorempixel.com/800/650/food",
+    "price": "9.85",
     "restaurant_name": "RName1",
     "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
     "rating": 3.5,
@@ -18,10 +19,11 @@
     },
 
     {
-      "id": 2,
+      "dish_id": 2,
       "name": "Name 2",
       "cuisineName": "italian",
-      "img_url": "dummyLink2.com",
+      "img_url": "http://lorempixel.com/800/650/food",
+      "price": "20.00",
       "restaurant_name": "RName2",
       "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
       "rating": 2.5,
@@ -29,10 +31,11 @@
     },
 
     {
-      "id": 3,
+      "dish_id": 3,
       "name": "Name 3",
       "cuisineName": "mexican",
-      "img_url": "dummyLink3.com",
+      "img_url": "http://lorempixel.com/800/650/food",
+      "price": "15.99",
       "restaurant_name": "RName3",
       "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
       "rating": 4.5,
