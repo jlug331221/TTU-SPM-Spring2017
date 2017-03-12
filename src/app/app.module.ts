@@ -10,9 +10,11 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import {ValidateService} from './services/validate.service';
-import { DishesComponent } from './components/dishes/dishes.component'
+import { DishesComponent } from './components/dishes/dishes.component';
+import { SettingsComponent } from './components/settings/settings.component'
 const appRoutes:  Routes = [
-	{path: '', component: HomeComponent},
+	{path:'', component: HomeComponent},
+	{path:'settings', component: SettingsComponent},
 	{path: 'dishes/:cuisineName', component: DishesComponent}
 ];
 export const firebaseConfig = {
@@ -32,8 +34,8 @@ const myFirebaseAuthConfig = {
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    DishesComponent
-
+    DishesComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

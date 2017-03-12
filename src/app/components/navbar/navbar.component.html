@@ -7,9 +7,22 @@
 			<li><a [routerLink]="['/']" routerLinkActive="active">Home</a></li>
             <li><a routerLinkActive="active" *ngIf="!(af.auth| async)" (click)="login()">Login</a></li>
             <li><a routerLinkActive="active" *ngIf="(af.auth| async)" (click)="logOut()">Logout</a></li>
+			<li><a routerLinkActive="active" *ngIf="(af.auth| async)" [routerLink]="['/settings']">Settings</a></li>
+			
         </ul>
 
         <ul class="side-nav" id="mobile-slide-out">
+			<li *ngIf="(af.auth| async)">
+				<div class="userView">
+			      <div class="background">
+			        <img src="{{userData.auth.photoURL}}">
+			      </div>
+			      <a href="#!user"><img class="circle" src="{{userData.auth.photoURL}}"></a>
+			      <a href="#!name"><span class="white-text name">{{userData.auth.displayName}}</span></a>
+			      <a href="#!email"><span class="white-text email">{{userData.auth.email}}</span></a>
+			    </div>
+			</li>
+			<li><a [routerLink]="['/']" routerLinkActive="active">Home</a></li>
             <li><a *ngIf="!(af.auth| async)" (click)="login()">Login</a></li>
             <li><a *ngIf="(af.auth| async)" (click)="logOut()">Logout</a></li>
         </ul>

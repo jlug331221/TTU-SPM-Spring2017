@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-	 
+	userData:any;		 
 	
   constructor(private af: AngularFire, private router:Router) { 
   }
@@ -18,6 +18,14 @@ export class NavbarComponent implements OnInit {
   }
   login(){
 	  this.af.auth.login();
+	  this.af.auth.subscribe(authData =>{
+		  
+		  if(authData!=null){
+		  	console.log(authData);
+		  	this.userData=authData;
+	  	  }
+	  
+	  });
 	  this.router.navigate(['/']);
   }
   logOut(){
