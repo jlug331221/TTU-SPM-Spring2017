@@ -42,7 +42,7 @@ interface cuisines {
 // be included in the dish interface
 interface dishes {
 	$key?: string
-	id: number;
+	dish_id: number;
 	name: string;
 	cuisineName: string;
 	description: string;

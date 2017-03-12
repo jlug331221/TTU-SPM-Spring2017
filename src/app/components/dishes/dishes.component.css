@@ -1,0 +1,11 @@
+.card.large {
+    max-width: 400px;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.no-dishes {
+    text-align: center;
+}
