@@ -12,35 +12,34 @@ declare var jQuery:any;
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit, AfterViewInit {
-  elementRef: ElementRef;	
+  elementRef: ElementRef;
   list:Array<restaurants> = [] ;
-  	
-  constructor(elementRef: ElementRef, private fireBaseService:FireBaseService) { 
+
+  constructor(elementRef: ElementRef, private fireBaseService:FireBaseService) {
   	this.elementRef = elementRef;
   }
-	
+
 
   ngOnInit() {
   }
-  
+
   ngAfterViewInit(){
-	   let newData = jQuery.extend({}, jQuery('input.autocomplete').autocomplete());
-	  this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-		  
+	  let newData = jQuery.extend({}, jQuery('input.autocomplete').autocomplete());
+
+      this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+
 		  for(let name of response){
 			  newData.data(name.restaurant_name,null);
 		  }
 	  	  console.log(newData.data());
-		  
+
 	  });
-	  
+
 	  jQuery('input.autocomplete').autocomplete({
 		  data: newData.data(),
 		  limit: 5
 	  });
   }
- 
-
 }
 
 interface restaurants{
