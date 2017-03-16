@@ -9,28 +9,30 @@ export class FireBaseService {
 	fbComments: FirebaseListObservable<any[]>;
 	fbDish: FirebaseObjectObservable<any>;
 
-	
-	
 	constructor(private af: AngularFire) { }
-	//gets all cuisine types 
+
+	//gets all cuisine types
 	getCuisines() {
 		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines>;
 
 		return this.firebaseCuisines;
 	}
 
-	//Get dishes from firebase DB for a particular cuisine name
-	//param: string cuisineName
+	/**
+	 * Get dishes from firebase DB for a particular cuisine name
+	 *
+	 * param: string cuisineName
+	 */
 	getDishesForCuisineName(cuisineName) {
 		this.dishesForCuisineName = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes', {
 			query: {
 				orderByChild: 'cuisineName',
-				equalTo: cuisineName.toLowerCase()
+				equalTo: cuisineName
 			}
 		}) as FirebaseListObservable<dishes[]>;
+
 		return this.dishesForCuisineName;
 	}
-<<<<<<< HEAD
 
 	//returns dish information
 	getDish($key) {
@@ -39,26 +41,22 @@ export class FireBaseService {
 	}
 
 	//returns comments
-	getComments(dish_id){
-		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments')as FirebaseListObservable<comments[]>
+	getComments(dish_id) {
+		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
 			return this.fbComments;
-		} 
-	
-	
-=======
-	
-	getRestaurantBasedOnLocation(){
+	}
+
+	getRestaurantBasedOnLocation() {
 		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes',{
-			
+
 			query:{
 				orderByChild: 'restaurant_city',
 				equalTo: 'Lubbock'
 			}
 		}) as FirebaseListObservable<restaurants[]>;
-		
+
 		return this.firebaseCuisines;
 	}
->>>>>>> e2e38e47c9f31d8595b27ac25293903e413d1b4e
 }
 
 interface cuisines {
@@ -76,7 +74,8 @@ interface dish {
 	restaurant_name: string;
 	avg_rating: number;
 }
-interface comments{
+
+interface comments {
 	user: string;
 	comment: string;
 	rating: number;
@@ -93,7 +92,7 @@ interface dishes {
 	avg_rating: number;
 }
 
-interface restaurants{
+interface restaurants {
 	restaurant_city: string;
 	restaurant_name: string;
 }

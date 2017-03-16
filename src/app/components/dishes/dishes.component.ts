@@ -22,6 +22,7 @@ export class DishesComponent implements OnInit {
         // Get cuisine name parameter from URL
         this.sub = this.route.params.subscribe(params => {
             this.cuisineName = params['cuisineName'];
+            this.cuisineName = this.cuisineName.toLowerCase();
         });
 
         // Make call to firebase DB for dishes that match the cuisine name

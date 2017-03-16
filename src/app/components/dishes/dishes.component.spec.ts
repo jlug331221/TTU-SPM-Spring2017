@@ -4,7 +4,6 @@ import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 
 import { FireBaseService } from '../../services/firebase.service';
 
