@@ -9,6 +9,8 @@ export class FireBaseService {
 	fbComments: FirebaseListObservable<any[]>;
 	fbDish: FirebaseObjectObservable<any>;
 
+	
+	
 	constructor(private af: AngularFire) { }
 	//gets all cuisine types 
 	getCuisines() {
@@ -28,6 +30,7 @@ export class FireBaseService {
 		}) as FirebaseListObservable<dishes[]>;
 		return this.dishesForCuisineName;
 	}
+<<<<<<< HEAD
 
 	//returns dish information
 	getDish($key) {
@@ -42,6 +45,20 @@ export class FireBaseService {
 		} 
 	
 	
+=======
+	
+	getRestaurantBasedOnLocation(){
+		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes',{
+			
+			query:{
+				orderByChild: 'restaurant_city',
+				equalTo: 'Lubbock'
+			}
+		}) as FirebaseListObservable<restaurants[]>;
+		
+		return this.firebaseCuisines;
+	}
+>>>>>>> e2e38e47c9f31d8595b27ac25293903e413d1b4e
 }
 
 interface cuisines {
@@ -74,4 +91,9 @@ interface dishes {
 	img_url: string;
 	restaurant_name: string;
 	avg_rating: number;
+}
+
+interface restaurants{
+	restaurant_city: string;
+	restaurant_name: string;
 }
