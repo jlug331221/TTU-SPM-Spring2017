@@ -9,13 +9,16 @@ import { FireBaseService } from './services/firebase.service';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
-import {ValidateService} from './services/validate.service';
+import { ValidateService } from './services/validate.service';
 import { DishesComponent } from './components/dishes/dishes.component';
-import { SettingsComponent } from './components/settings/settings.component'
+import { SettingsComponent } from './components/settings/settings.component';
+import { DishComponent } from './components/dish/dish.component'
+
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 	{path:'settings', component: SettingsComponent},
-	{path: 'dishes/:cuisineName', component: DishesComponent}
+	{path: 'dishes/:cuisineName', component: DishesComponent},
+  {path: 'dish/:$key', component: DishComponent}
 ];
 export const firebaseConfig = {
   	apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
@@ -35,14 +38,15 @@ const myFirebaseAuthConfig = {
     NavbarComponent,
     HomeComponent,
     DishesComponent,
-    SettingsComponent
+    SettingsComponent,
+    DishComponent
   ],
   imports: [
     BrowserModule,
-	AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
     HttpModule,
-	RouterModule.forRoot(appRoutes)
+	  RouterModule.forRoot(appRoutes)
   ],
   providers: [ValidateService, FireBaseService ],
   bootstrap: [AppComponent]

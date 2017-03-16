@@ -5,22 +5,20 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 @Injectable()
 export class FireBaseService {
 	firebaseCuisines: FirebaseListObservable<any[]>;
-
 	dishesForCuisineName: FirebaseListObservable<any[]>;
+	fbComments: FirebaseListObservable<any[]>;
+	fbDish: FirebaseObjectObservable<any>;
 
 	constructor(private af: AngularFire) { }
-
+	//gets all cuisine types 
 	getCuisines() {
 		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines>;
 
 		return this.firebaseCuisines;
 	}
 
-	/**
-	 * Get dishes from firebase DB for a particular cuisine name
-	 *
-	 * param: string cuisineName
-	 */
+	//Get dishes from firebase DB for a particular cuisine name
+	//param: string cuisineName
 	getDishesForCuisineName(cuisineName) {
 		this.dishesForCuisineName = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes', {
 			query: {
@@ -28,9 +26,22 @@ export class FireBaseService {
 				equalTo: cuisineName.toLowerCase()
 			}
 		}) as FirebaseListObservable<dishes[]>;
-
 		return this.dishesForCuisineName;
 	}
+
+	//returns dish information
+	getDish($key) {
+		this.fbDish = this.af.database.object('/dishes/'+ $key) as FirebaseObjectObservable<dish>
+		return this.fbDish;
+	}
+
+	//returns comments
+	getComments(dish_id){
+		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments')as FirebaseListObservable<comments[]>
+			return this.fbComments;
+		} 
+	
+	
 }
 
 interface cuisines {
@@ -38,8 +49,22 @@ interface cuisines {
 	image_url?: string;
 }
 
-// Don't know if comments are needed for the dishes interface. I believe that will
-// be included in the dish interface
+interface dish {
+	$key?: string;
+	dish_id: number;
+	name: string;
+	cuisineName: string;
+	description: string;
+	img_url: string;
+	restaurant_name: string;
+	avg_rating: number;
+}
+interface comments{
+	user: string;
+	comment: string;
+	rating: number;
+}
+
 interface dishes {
 	$key?: string
 	dish_id: number;
@@ -48,5 +73,5 @@ interface dishes {
 	description: string;
 	img_url: string;
 	restaurant_name: string;
-	rating: number;
+	avg_rating: number;
 }
