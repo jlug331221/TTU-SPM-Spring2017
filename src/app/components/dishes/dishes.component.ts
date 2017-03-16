@@ -40,5 +40,4 @@ export class DishesComponent implements OnInit {
             console.log(response);
         });
     }
-
 }
