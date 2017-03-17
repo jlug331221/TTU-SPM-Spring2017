@@ -1,0 +1,65 @@
+<div class = "row">
+    <div class = "col s9 m9 l9" *ngIf="dish">
+        <div class = "card-medium">
+            <span class="card-title"><strong>{{ dish.name }}</strong></span>
+            <div class="card-image">
+          	    <img src="{{ dish.img_url }}" alt="" class="responsive-img">
+        	</div>
+            <div class = "card-content">
+                    <h6><strong>Restaurant:</strong> {{ dish.restaurant_name }}</h6>
+                    <h6><strong>Address:</strong> {{dish.restaurant_address}}</h6>
+                    <h6><strong>Description:</strong> {{ dish.description }}</h6>
+                    <h6><strong>Price:</strong> ${{ dish.price }}</h6>
+                    <h6><strong>Foogle Rating:</strong> {{ dish.avg_rating }} stars</h6>
+                <br>
+            </div> 
+        </div>   
+     </div> 
+</div>
+    <a link="btn light blue" onclick ="comments()">Comments</a>
+        <br>
+        <br>
+<div id="comments" style="display: none">
+    <div class="row">
+        <div class="card-large">
+            <div class="input-field col l12 m12 s12">
+          <input id="comment" type="text" class="validate">
+          <label for="comment">Comment</label>
+           <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
+            <br>
+            <br>
+            </div>
+        </div>
+    </div>
+ <div class = "row">
+    <div class= "col s12 m12 l12">
+        <div class = "card-large" *ngFor="let comment of comments">
+            <div class= "card-content">
+                <div class= "col s6 l6 m6">
+                    <h6><strong>{{ comment.user }}</strong></h6>
+                    </div>
+                    <div class= "col s6 m6 l6">
+                    <h6><strong>{{ comment.date }}</strong></h6>
+                    </div>
+                    <div class= "col s12 m12 l12">
+                    <h6><strong>Rating: </strong>{{ comment.rating }}</h6>
+                    <h6><strong>Comment: </strong>{{ comment.comment }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+   
+
+
+
+
+ 
+
+
+        
+    
+
+
+

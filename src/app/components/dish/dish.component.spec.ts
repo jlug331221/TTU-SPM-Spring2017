@@ -8,11 +8,11 @@ import { DebugElement } from '@angular/core';
 import { FireBaseService } from '../../services/firebase.service';
 
 import { NavbarComponent } from '../navbar/navbar.component';
-import { DishesComponent } from './dishes.component';
+import { DishComponent } from './dish.component';
 
-describe('DishesComponent', () => {
-    let component: DishesComponent;
-    let fixture: ComponentFixture<DishesComponent>;
+describe('DishComponent', () => {
+    let component: DishComponent;
+    let fixture: ComponentFixture<DishComponent>;
 
     const firebaseConfig = {
         apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
@@ -34,14 +34,14 @@ describe('DishesComponent', () => {
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
             ],
             providers: [ FireBaseService ],
-            declarations: [ DishesComponent, NavbarComponent ]
+            declarations: [ DishComponent, NavbarComponent ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DishesComponent);
+        fixture = TestBed.createComponent(DishComponent);
         component = fixture.componentInstance;
-        //fixture.detectChanges();
+        fixture.detectChanges();
     });
 
     it('should create', () => {
