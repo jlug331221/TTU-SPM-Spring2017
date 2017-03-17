@@ -35,13 +35,9 @@ export class FireBaseService {
 	}
 	
 	getRestaurantBasedOnLocation(){
-		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes',{
+		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/Location/Lubbock',{
 			
-			query:{
-				orderByChild: 'restaurant_city',
-				equalTo: 'Lubbock'
-			}
-		}) as FirebaseListObservable<restaurants[]>;
+		}) as FirebaseListObservable<restaurant []>;
 		
 		return this.firebaseCuisines;
 	}
@@ -62,10 +58,11 @@ interface dishes {
 	description: string;
 	img_url: string;
 	restaurant_name: string;
+	restaurant_city: string;
 	rating: number;
 }
-
-interface restaurants{
-	restaurant_city: string;
-	restaurant_name: string;
+interface restaurant {
+	$key?:string;
 }
+
+

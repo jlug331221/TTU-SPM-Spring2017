@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnChanges } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { CompleterService, CompleterData } from 'ng2-completer';
@@ -11,39 +11,27 @@ declare var jQuery:any;
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit, AfterViewInit {
+export class SettingsComponent implements OnInit,OnChanges {
   elementRef: ElementRef;	
-  list:Array<restaurants> = [] ;
-  	
+  //list:Array<restaurants> = [] ;
+  //restaurants:Array<string> = [];
+  restaurants:any;	
   constructor(elementRef: ElementRef, private fireBaseService:FireBaseService) { 
   	this.elementRef = elementRef;
   }
 	
+  ngOnChanges(){
+	 
+  }	
 
   ngOnInit() {
-  }
-  
-  ngAfterViewInit(){
-	   let newData = jQuery.extend({}, jQuery('input.autocomplete').autocomplete());
 	  this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-		  
-		  for(let name of response){
-			  newData.data(name.restaurant_name,null);
-		  }
-	  	  console.log(newData.data());
-		  
+		    this.restaurants=response;
+ 		 	console.log(response[0].$key);	
 	  });
-	  
-	  jQuery('input.autocomplete').autocomplete({
-		  data: newData.data(),
-		  limit: 5
-	  });
+	  jQuery('select').material_select(); 
   }
  
-
+	  
 }
 
-interface restaurants{
-	restaurant_name: string;
-	value: string;
-}
