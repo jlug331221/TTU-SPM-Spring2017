@@ -40,8 +40,8 @@ export class FireBaseService {
 			
 		}) as FirebaseListObservable<restaurant []>;
 		
-
-
+		return this.firebaseCuisines;
+	}
 	//returns dish information
 	getDish($key) {
 		this.fbDish = this.af.database.object('/dishes/'+ $key) as FirebaseObjectObservable<dish>
@@ -54,18 +54,7 @@ export class FireBaseService {
 			return this.fbComments;
 	}
 
-	getRestaurantBasedOnLocation() {
-		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes',{
-
-			query:{
-				orderByChild: 'restaurant_city',
-				equalTo: 'Lubbock'
-			}
-		}) as FirebaseListObservable<restaurants[]>;
-
-
-		return this.firebaseCuisines;
-	}
+	
 }
 
 interface cuisines {
