@@ -1,0 +1,10 @@
+{
+  "Cuisine" : {
+    "Italian" : {
+      "img_url" : "http://lorempixel.com/800/650/food"
+    },
+    "Mexican" : {
+      "imag_url" : "http://lorempixel.com/800/650/food"
+    }
+  }
+}

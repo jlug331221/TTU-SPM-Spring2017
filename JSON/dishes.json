@@ -1,71 +1,81 @@
 [
 
     {
-        "dish_id": 1,
         "name": "Name 1",
         "cuisineName": "italian",
         "img_url": "http://lorempixel.com/800/650/food",
         "price": "9.85",
-    	"restaurant_city": "Lubbock",
-        "restaurant_name": "RName1",
+        "restaurant_name": "RName 1",
+        "city": "Lubbock",
+        "address": "123 Fake Street",
+        "zip_code": "79401",
+        "state": "Texas",
         "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
-        "rating": 3.5,
+        "avg_rating": 3.5,
         "comments": [
             {
-                "comment_id": 1,
-                "comment_data": "This is a comment for dish number 1",
+                "comment_data": "This is a comment for dish with Name 1.",
+                "rating": 1.2,
                 "likes": 3
             }
         ]
     },
 
     {
-        "dish_id": 2,
         "name": "Name 2",
         "cuisineName": "italian",
         "img_url": "http://lorempixel.com/800/650/food",
         "price": "20.00",
-        "restaurant_city": "Lubbock",
         "restaurant_name": "RName2",
+        "city": "Dallas",
+        "address": "123 Not So Fake Street",
+        "zip_code": "75243",
+        "state": "Texas",
         "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
-        "rating": 2.5,
+        "avg_rating": 2.5,
         "comments": []
     },
 
     {
-        "dish_id": 3,
         "name": "Name 3",
         "cuisineName": "mexican",
         "restaurant_city": "Lubbock",
         "img_url": "http://lorempixel.com/800/650/food",
         "price": "15.99",
         "restaurant_name": "RName3",
+        "city": "Lubbock",
+        "address": "123 Not So Fake 2 Street",
+        "zip_code": "79401",
+        "state": "Texas",
         "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
-        "rating": 4.0,
+        "avg_rating": 4.0,
         "comments": [
-          {
-              "comment_id": 1,
-              "comment_data": "This is a comment for dish number 3.",
+            {
+              "comment_data": "This is a comment for dish with Name 3.",
+              "rating": 5,
               "likes": 1
-          }
+            }
         ]
     },
+
     {
-        "dish_id": 4,
         "name": "Name 4",
         "cuisineName": "american",
-        "restaurant_city": "San Jose",
         "img_url": "http://lorempixel.com/800/650/food",
         "price": "11.99",
         "restaurant_name": "RName4",
+        "city": "Lubbock",
+        "address": "123 Raider Dr. Street",
+        "zip_code": "79401",
+        "state": "Texas",
         "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
-        "rating": 4.5,
+        "avg_rating": 4.5,
         "comments": [
-          {
-              "comment_id": 1,
-              "comment_data": "This is a comment for dish number 3.",
+            {
+              "comment_data": "This is a comment for dish with Name 4.",
+              "rating": 3.7,
               "likes": 1
-          }
+            }
         ]
     }
 
