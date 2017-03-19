@@ -1,14 +1,16 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, Injectable } from '@angular/core';
 
 import { FireBaseService } from '../../services/firebase.service';
 
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishesComponent } from './dishes.component';
+
+let dishesService;
 
 describe('DishesComponent', () => {
     let component: DishesComponent;
@@ -27,6 +29,12 @@ describe('DishesComponent', () => {
         method: AuthMethods.Popup
     };
 
+    /**
+     * Call async function because the TestBed.createComponent method is synchronous.
+     * The Angular template compiler must read from the external HTML and CSS files
+     * before it can create a component instance (dishes.component.ts is reading from
+     * an external templates).
+     */
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -35,16 +43,32 @@ describe('DishesComponent', () => {
             ],
             providers: [ FireBaseService ],
             declarations: [ DishesComponent, NavbarComponent ]
-        }).compileComponents();
+        }).compileComponents(); // compile HTML template and CSS files
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(DishesComponent);
         component = fixture.componentInstance;
         //fixture.detectChanges();
+
+        dishesService = fixture.debugElement.injector.get(FireBaseService);
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should get all dishes pertaining to the `italian` cuisine name', () => {
+        let dishes;
+
+        let cuisineName = 'italian';
+        dishes = dishesService.getDishesForCuisineName(cuisineName).subscribe(response => {
+            console.log(response);
+            dishes = response;
+        });
+
+        console.log(dishes);
+
+        expect(dishes[0].name).toBe("Name 1");
     });
 });
