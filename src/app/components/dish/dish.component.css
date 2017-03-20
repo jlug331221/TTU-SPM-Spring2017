@@ -1,6 +1,6 @@
 .card-large{
     font-size: 16;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 .card-title{
     font-size: 24px;
@@ -13,7 +13,21 @@ button{
     font-size: 14;
     width: 25px;
 }
-card-content{
- border: solid #007dff;
+.userid{
+    font-size: 20px;
 }
+.c2{
+ padding-left: 10px;
+ padding-bottom: 10px;
+ padding-top: 10px;
+ padding-right: 10px;
+ 
+}
+.date{
+    float: right;
+}
+.comhover{
+    cursor: pointer;
+}
+
 

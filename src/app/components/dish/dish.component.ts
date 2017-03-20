@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
+import { RatingModule } from 'ngx-rating';
 
 @Component({
   selector: 'app-dish',
@@ -11,6 +12,7 @@ export class DishComponent implements OnInit {
   private dish_id: any;
   private dish: any;
   private comments: any[];
+  private starCount_avg: number;
 
   constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) {}
 
@@ -21,6 +23,7 @@ export class DishComponent implements OnInit {
     //gets dish object which corresponds to route parameter '$key'
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             this.dish = dish;
+            this.starCount_avg = dish.avg_rating;
             console.log(this.dish);
       });
    

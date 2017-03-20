@@ -61,7 +61,6 @@ interface cuisines {
 	$key?: string;
 	image_url?: string;
 }
-
 interface dish {
 	$key?: string;
 	dish_id: number;
@@ -72,13 +71,11 @@ interface dish {
 	restaurant_name: string;
 	avg_rating: number;
 }
-
 interface comments {
 	user: string;
 	comment: string;
 	rating: number;
 }
-
 interface dishes {
 	$key?: string
 	dish_id: number;
@@ -98,7 +95,4 @@ interface restaurant {
 interface restaurants {
 	restaurant_city: string;
 	restaurant_name: string;
-
 }
-
-

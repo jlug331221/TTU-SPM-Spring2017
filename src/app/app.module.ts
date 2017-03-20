@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FireBaseService } from './services/firebase.service';
+import { RatingModule } from 'ngx-rating';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -12,7 +13,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ValidateService } from './services/validate.service';
 import { DishesComponent } from './components/dishes/dishes.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { DishComponent } from './components/dish/dish.component'
+import { DishComponent } from './components/dish/dish.component';
 
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
@@ -46,6 +47,7 @@ const myFirebaseAuthConfig = {
 	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
     HttpModule,
+    RatingModule,
 	  RouterModule.forRoot(appRoutes)
   ],
   providers: [ValidateService, FireBaseService ],
