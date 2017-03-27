@@ -15,6 +15,7 @@ let dishesService;
 describe('DishesComponent', () => {
     let component: DishesComponent;
     let fixture: ComponentFixture<DishesComponent>;
+    let de;
 
     const firebaseConfig = {
         apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
@@ -49,7 +50,7 @@ describe('DishesComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(DishesComponent);
         component = fixture.componentInstance;
-        //fixture.detectChanges();
+        fixture.detectChanges();
 
         dishesService = fixture.debugElement.injector.get(FireBaseService);
     });
@@ -58,17 +59,33 @@ describe('DishesComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should get all dishes pertaining to the `italian` cuisine name', () => {
-        let dishes;
-
+    it('should get all dishes pertaining to the `italian` cuisine name', done => {
+        component.cuisineName = 'italian';
         let cuisineName = 'italian';
-        dishes = dishesService.getDishesForCuisineName(cuisineName).subscribe(response => {
-            console.log(response);
-            dishes = response;
+
+        dishesService.getDishesForCuisineName(cuisineName).subscribe(response => {
+            fixture.whenStable().then(() => {
+                component.dishes = response;
+
+                fixture.detectChanges();
+
+                let i = 0;
+                response.forEach(function(dish) {
+                    //console.log(dish);
+                    expect(dish.cuisineName).toBe("italian");
+
+                    //  get the dish card element by CSS selector (e.g., by class name)
+                    de = fixture.debugElement.query(By.css('.row'));
+
+                    //console.log(de.children[i].nativeElement.childNodes[1].childNodes[3].childNodes[1].childNodes[0].data);
+
+                    expect (de.children[i].nativeElement.childNodes[1].childNodes[3].childNodes[1].childNodes[0].data).toBe(dish.name);
+
+                    i++;
+                });
+
+                done();
+            });
         });
-
-        console.log(dishes);
-
-        expect(dishes[0].name).toBe("Name 1");
     });
 });

@@ -22,7 +22,7 @@ export class DishesComponent implements OnInit {
         // Get cuisine name parameter from URL
         this.sub = this.route.params.subscribe(params => {
             this.cuisineName = params['cuisineName'];
-            this.cuisineName = this.cuisineName.toLowerCase();
+            this.cuisineName = this.cuisineName;
         });
 
         // Make call to firebase DB for dishes that match the cuisine name
@@ -38,7 +38,7 @@ export class DishesComponent implements OnInit {
             }
 
             this.dishes = response;
-            console.log(response);
+            //console.log(this.dishes);
         });
     }
 }
