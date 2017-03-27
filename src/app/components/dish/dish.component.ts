@@ -17,19 +17,19 @@ export class DishComponent implements OnInit {
   constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) {}
 
   ngOnInit() {
-    //gets route parameter 
+    //gets route parameter
      this.dish_id = this.route.snapshot.params['$key'];
 
     //gets dish object which corresponds to route parameter '$key'
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             this.dish = dish;
             this.starCount_avg = dish.avg_rating;
-            console.log(this.dish);
+            //console.log(this.dish);
       });
-   
+
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
-            console.log(this.comments);
+            //console.log(this.comments);
       });
     }
   }

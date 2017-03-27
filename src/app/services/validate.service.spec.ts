@@ -10,7 +10,7 @@ describe('ValidateService', () => {
         });
     });
 
-    it('should ...', inject([ValidateService], (service: ValidateService) => {
+    it('should create', inject([ValidateService], (service: ValidateService) => {
         expect(service).toBeTruthy();
     }));
 });

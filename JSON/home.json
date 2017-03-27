@@ -1,10 +1,12 @@
 {
   "Cuisine" : {
     "Italian" : {
-      "img_url" : "http://lorempixel.com/800/650/food"
+        "description" : "Italian cuisine has a great variety of different ingredients which are commonly used, ranging from fruits, vegetables, sauces, meats, etc. In the North of Italy, fish (such as cod, or baccalà), potatoes, rice, corn (maize), sausages, pork, and different types of cheeses are the most common ingredients.",
+        "img_url" : "http://lorempixel.com/800/650/food"
     },
     "Mexican" : {
-      "imag_url" : "http://lorempixel.com/800/650/food"
+        "description" : "Mexican cuisine is primarily a fusion of indigenous Mesoamerican cooking with European, especially Spanish, elements added after the Spanish conquest of the Aztec Empire in the 16th century. The staples are native foods, such as corn, beans, avocados, tomatoes, and chili peppers, along with rice, which was brought by the Spanish.",
+        "imag_url" : "http://lorempixel.com/800/650/food"
     }
   }
 }
