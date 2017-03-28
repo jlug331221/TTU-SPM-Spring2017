@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jlug331221/TTU-SPM-Spring2017.svg?branch=development)](https://travis-ci.org/jlug331221/TTU-SPM-Spring2017)
+
 # Foogle Food Finding Application
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3. The backend for our application is managed with Google Firebase.
