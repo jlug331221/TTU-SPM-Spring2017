@@ -24,6 +24,7 @@ before_install:
 before_script:
 - npm install -g angular-cli
 - npm install -g karma
+- npm install angularfire2 firebase
 - npm install
 
 script: karma start karma.conf.js --single-run
