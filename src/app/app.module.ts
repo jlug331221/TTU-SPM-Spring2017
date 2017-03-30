@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
@@ -14,6 +15,7 @@ import { ValidateService } from './services/validate.service';
 import { DishesComponent } from './components/dishes/dishes.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DishComponent } from './components/dish/dish.component';
+
 
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
@@ -42,7 +44,9 @@ const myFirebaseAuthConfig = {
     SettingsComponent,
     DishComponent
   ],
+  schemas: [ NO_ERRORS_SCHEMA ],
   imports: [
+    CommonModule,
     BrowserModule,
 	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
