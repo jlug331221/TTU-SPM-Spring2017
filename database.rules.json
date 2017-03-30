@@ -1,11 +1,6 @@
 {
   "rules": {
-    ".read": "true",
-    ".write": "true",
-    "dishes": {
-      ".read": "true",
-      ".write": "false",
-      ".indexOn": "cuisineName"
-    }
+    ".read": "auth != null",
+    ".write": "auth != null"
   }
 }
