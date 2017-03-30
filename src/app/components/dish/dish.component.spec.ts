@@ -4,11 +4,11 @@ import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement, NgModule } from '@angular/core';
-
+import { RatingModule } from "ngx-rating";
 import { FireBaseService } from '../../services/firebase.service';
-
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
+import { FormsModule } from '@angular/forms';
 
 describe('DishComponent', () => {
     let component: DishComponent;
@@ -30,7 +30,7 @@ describe('DishComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-              RouterTestingModule,
+              RouterTestingModule, RatingModule, FormsModule,
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
             ],
             providers: [ FireBaseService ],
@@ -39,12 +39,12 @@ describe('DishComponent', () => {
     }));
 
     beforeEach(() => {
-        //fixture = TestBed.createComponent(DishComponent);
-        //component = fixture.componentInstance;
-        //fixture.detectChanges();
+        fixture = TestBed.createComponent(DishComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
-    /*it('should create', () => {
+    it('should create', () => {
         expect(component).toBeTruthy();
-    });*/
+    });
 });

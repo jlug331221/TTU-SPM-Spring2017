@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive, Input, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
 import { RatingModule } from 'ngx-rating';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-dish',
   templateUrl: './dish.component.html',
-  styleUrls: ['./dish.component.css']
+  styleUrls: ['./dish.component.css'], 
 })
 export class DishComponent implements OnInit {
   private dish_id: any;
