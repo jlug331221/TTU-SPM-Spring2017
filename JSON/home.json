@@ -2,11 +2,23 @@
   "Cuisine" : {
     "Italian" : {
         "description" : "Italian cuisine has a great variety of different ingredients which are commonly used, ranging from fruits, vegetables, sauces, meats, etc. In the North of Italy, fish (such as cod, or baccalà), potatoes, rice, corn (maize), sausages, pork, and different types of cheeses are the most common ingredients.",
-        "img_url" : "http://lorempixel.com/800/650/food"
+        "img_url" : "http://i.imgur.com/0PzvezB.jpg"
     },
     "Mexican" : {
         "description" : "Mexican cuisine is primarily a fusion of indigenous Mesoamerican cooking with European, especially Spanish, elements added after the Spanish conquest of the Aztec Empire in the 16th century. The staples are native foods, such as corn, beans, avocados, tomatoes, and chili peppers, along with rice, which was brought by the Spanish.",
-        "imag_url" : "http://lorempixel.com/800/650/food"
+        "img_url" : "http://wooderice.com/wp-content/uploads/2014/09/mexicanfood.jpg"
+    },
+    "Mongolian" : {
+        "description" : "Mongolian cuisine refers to the local culinary traditions of Mongolia and Mongolian styled dishes. The extreme continental climate has affected the traditional diet, so the Mongolian cuisine primarily consists of dairy products, meat, and animal fats. Use of vegetables and spices are limited.",
+        "img_url" : "http://flavorboulevard.com/wp-content/uploads/2011/07/mongolian-grill.jpg"
+    },
+    "Indian" : {
+        "description" : "Indian cuisine encompasses a wide variety of regional and traditional cuisines native to India. Given the range of diversity in soil type, climate, culture, ethnic groups, and occupations, these cuisines vary significantly from each other and use locally available spices, herbs, vegetables, and fruits. Indian food is also heavily influenced by religious and cultural choices and traditions.",
+        "img_url" : "http://az616578.vo.msecnd.net/files/2016/07/06/636034360643459128-507613226_indian.jpg"
+    },
+    "American" : {
+        "description" : "The cuisine of the United States of America is characterized by diversity and regional delicacies. Each region of the country has been affected by several cultures as well as evolved on its own.",
+        "img_url" : "https://www.waiter.com/blog/wp-content/uploads/2015/06/hamburger.jpg"
     }
   }
 }
