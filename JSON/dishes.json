@@ -1,48 +1,85 @@
 [
 
     {
-        "name": "Name 1",
+        "name": "Spaghetti",
         "cuisineName": "italian",
-        "img_url": "http://lorempixel.com/800/650/food",
+        "img_url": "http://viztangocafe.com/wp-content/uploads/2015/06/food2.jpg",
         "price": "9.85",
-        "restaurant_name": "RName 1",
+        "restaurant_name": "Olive Garden",
         "city": "Lubbock",
         "address": "123 Fake Street",
         "zip_code": "79401",
         "state": "Texas",
-        "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
+        "description": "Pasta and meatballs with marinara",
         "avg_rating": 3.5,
         "comments": [
             {
+            	"user": "Mike",
+            	"date": "3-17-17",
                 "comment_data": "This is a comment for dish with Name 1.",
                 "rating": 1.2,
                 "likes": 3
-            }
+            },
+            {
+            	"user": "Sally",
+            	"date": "3-18-17",
+                "comment_data": "This is a comment for dish with Name 1.",
+                "rating": 2,
+                "likes": 3
+            },
+            {
+            	"user": "Jennifer",
+            	"date": "3-18-17",
+                "comment_data": "This is a comment for dish with Name 1.",
+                "rating": 1.5,
+                "likes": 3
+             }
         ]
     },
 
     {
-        "name": "Name 2",
+        "name": "Lobster Bisque",
         "cuisineName": "italian",
-        "img_url": "http://lorempixel.com/800/650/food",
-        "price": "20.00",
-        "restaurant_name": "RName2",
+        "img_url": "http://cookdiary.net/wp-content/uploads/images/Lobster-Bisque_10508.jpg",
+        "price": "22.00",
+        "restaurant_name": "Red Lobster",
         "city": "Dallas",
         "address": "123 Not So Fake Street",
         "zip_code": "75243",
         "state": "Texas",
         "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
         "avg_rating": 2.5,
-        "comments": []
+        "comments": [
+        	{
+            	"user": "Lauren",
+            	"date": "3-18-17",
+                "comment_data": "Terrific meal.",
+                "rating": 5,
+                "likes": 3
+             },
+             {
+            	"user": "Jennifer",
+            	"date": "3-18-17",
+                "comment_data": "Can't wait to come back",
+                "rating": 4,
+                "likes": 3
+             },
+             {
+            	"user": "Mike",
+            	"date": "3-19-17",
+                "comment_data": "The dish was ok.  Nice atmosphere though.",
+                "rating": 3,
+                "likes": 3
+             }
+        ]
     },
-
     {
-        "name": "Name 3",
+        "name": "Tacos",
         "cuisineName": "mexican",
         "restaurant_city": "Lubbock",
-        "img_url": "http://lorempixel.com/800/650/food",
-        "price": "15.99",
-        "restaurant_name": "RName3",
+        "img_url": "https://static1.squarespace.com/static/53f3f136e4b0124220e8333e/t/54110606e4b0e5bb93d5efa6/1410401799249/tacos+on+a+tray.jpg",
+        "price": "8.99",
+        "restaurant_name": "On The Border",
         "city": "Lubbock",
         "address": "123 Not So Fake 2 Street",
         "zip_code": "79401",
@@ -51,31 +88,123 @@
         "avg_rating": 4.0,
         "comments": [
             {
-              "comment_data": "This is a comment for dish with Name 3.",
-              "rating": 5,
-              "likes": 1
-            }
+            	"user": "Dan",
+            	"date": "3-19-17",
+                "comment_data": "The dish was just alright.",
+                "rating": 3,
+                "likes": 3
+             },
+             {
+            	"user": "Tanya",
+            	"date": "3-19-17",
+                "comment_data": "The dish was ok.  Nice atmosphere though.",
+                "rating": 3,
+                "likes": 3
+             },
+             {
+            	"user": "Jordan",
+            	"date": "3-20-17",
+                "comment_data": "Magnifico!",
+                "rating": 5,
+                "likes": 3
+             }
         ]
     },
 
     {
-        "name": "Name 4",
+        "name": "Cheeseburger",
         "cuisineName": "american",
-        "img_url": "http://lorempixel.com/800/650/food",
-        "price": "11.99",
-        "restaurant_name": "RName4",
+        "img_url": "https://www.redrobin.com/content/dam/web/menu/2015-june/gourmet-cheeseburger-1100.jpg",
+        "price": "9.99",
+        "restaurant_name": "Red Robin",
         "city": "Lubbock",
         "address": "123 Raider Dr. Street",
         "zip_code": "79401",
         "state": "Texas",
-        "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",
+        "description": "1/2 pound burger patty in between an artisan bun.  Thick cheese and choice of toppings",
+        "avg_rating": 4.5,
+        "comments": [
+            
+              {
+            	"user": "Brian",
+            	"date": "3-19-17",
+                "comment_data": "Really enjoyed it.  Can't wait to come back",
+                "rating": 5,
+                "likes": 3
+             },
+             {
+            	"user": "Bill",
+            	"date": "3-20-17",
+                "comment_data": "The dish was ok.  Nice atmosphere though.",
+                "rating": 3,
+                "likes": 3
+             },
+             {
+            	"user": "Gina",
+            	"date": "3-21-17",
+                "comment_data": "Yum!",
+                "rating": 4.5,
+                "likes": 3
+             }
+            
+        ]
+    },
+    {
+        "name": "chicken",
+        "cuisineName": "indian",
+        "img_url": "http://i.ndtvimg.com/i/2015-01/teekha-murgh_625x350_41421325402.jpg",
+        "price": "10.99",
+        "restaurant_name": "India Palace",
+        "city": "Lubbock",
+        "address": "1234 Yourhere Dr.",
+        "zip_code": "79401",
+        "state": "Texas",
+        "description": "Zesty chicken dish with spices.",
+        "avg_rating": 3,
+        "comments": [
+           	{
+            	"user": "Laura",
+            	"date": "3-19-17",
+                "comment_data": "The dish was meh.",
+                "rating": 3,
+                "likes": 3
+             },
+             {
+            	"user": "Mike",
+            	"date": "3-19-17",
+                "comment_data": "The dish was just ok.",
+                "rating": 3,
+                "likes": 3
+             },
+             {
+            	"user": "Jenna",
+            	"date": "3-19-17",
+                "comment_data": "That dish was awesome.  Fun atmosphere too.",
+                "rating": 5,
+                "likes": 3
+             }
+        ]
+    },
+    {
+        "name": "Stir Fry with chicken",
+        "cuisineName": "mongolian",
+        "img_url": "https://eat24-files-live.s3.amazonaws.com/cuisines/v4/mongolian.jpg?Signature=78UDHyYEcPxcliQ4eE2bLMgT7iI%3D&Expires=1490934492&AWSAccessKeyId=AKIAIEJ2GCCJRT63TBYA",
+        "price": "12.99",
+        "restaurant_name": "Mongolian Grill",
+        "city": "Lubbock",
+        "address": "123 Another Street",
+        "zip_code": "79401",
+        "state": "Texas",
+        "description": "pasta chicken and vegetables",
         "avg_rating": 4.5,
         "comments": [
             {
-              "comment_data": "This is a comment for dish with Name 4.",
-              "rating": 3.7,
-              "likes": 1
-            }
+            	"user": "John",
+            	"date": "3-19-17",
+                "comment_data": "Good stuff",
+                "rating": 4.5,
+                "likes": 3
+             }
         ]
     }
 
