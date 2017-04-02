@@ -19,6 +19,11 @@
     "American" : {
         "description" : "The cuisine of the United States of America is characterized by diversity and regional delicacies. Each region of the country has been affected by several cultures as well as evolved on its own.",
         "img_url" : "https://www.waiter.com/blog/wp-content/uploads/2015/06/hamburger.jpg"
+    },
+    "German" : {
+        "description" : "Germans tend to favor hearty meals which include meats such as pork, beef, or poultry. Germans usually  eat their meat in pot-roasts or consumed as sausages.",
+        "img_url" : "http://www.oldworld.ws/img/content/oldworld-german-restaurant-food-05.jpg"
     }
   }
+  
 }
