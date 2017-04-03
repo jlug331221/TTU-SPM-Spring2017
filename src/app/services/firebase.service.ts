@@ -8,6 +8,8 @@ export class FireBaseService {
 	dishesForCuisineName: FirebaseListObservable<any[]>;
 	fbComments: FirebaseListObservable<any[]>;
 	fbDish: FirebaseObjectObservable<any>;
+	fbCuisine: FirebaseObjectObservable<any>;
+	
 
 	constructor(private af: AngularFire) { }
 
@@ -53,6 +55,14 @@ export class FireBaseService {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
 			return this.fbComments;
 	}
+	 //Updates a cuisine's likes by one,*** Needs authentication***
+  	updateCuisinelikes(cuisineObj: cuisine, likes){
+	  	let name = cuisineObj.$key;
+	 	this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
+	  	let likeInc = likes + 1;
+		this.fbCuisine.update({likes: likeInc});
+		//console.log(cuisineObj);
+}
 }
 
 interface cuisines {
@@ -93,4 +103,11 @@ interface restaurant {
 interface restaurants {
 	restaurant_city: string;
 	restaurant_name: string;
+}
+
+interface cuisine{
+	$key?: string;
+	image_url?: string;
+	likes: number;
+	description: string;
 }
