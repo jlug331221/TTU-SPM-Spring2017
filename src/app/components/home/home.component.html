@@ -6,7 +6,13 @@
         	</div>
 			<div class ="card-content">
 				<span class="card-title activator"><strong>{{ cuisine.$key }}</strong><i class="material-icons right">more_vert</i></span>
-                <p><a [routerLink]="['/dishes', cuisine.$key.toLowerCase()]">See Dishes...</a></p>
+               <span>
+									<a [routerLink]="['/dishes', cuisine.$key.toLowerCase()]">See Dishes...</a>
+									<p align="right">
+							 		<a class= "btn-small" (click)="likeCuisine(cuisine)"><i class="material-icons right">thumb_up</i>({{cuisine.likes}})</a>
+							 		</p>
+							 </span>
+							 <p align="right"></p>
 			</div>
 			<div class="card-reveal">
                 <span class="card-title activator"><strong>{{ cuisine.$key }}</strong><i class="material-icons right">close</i></span>
