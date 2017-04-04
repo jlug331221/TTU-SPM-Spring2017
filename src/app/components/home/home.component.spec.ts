@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
+import { AuthProviders, AuthMethods, AngularFireModule, FirebaseObjectObservable } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
@@ -10,6 +10,7 @@ import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HomeComponent } from './home.component';
 
+let updatelikeService;
 describe('HomeComponent', () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
@@ -31,7 +32,7 @@ describe('HomeComponent', () => {
         TestBed.configureTestingModule({
             imports: [
               RouterTestingModule,
-              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
             ],
             providers: [ FireBaseService ],
             declarations: [ HomeComponent, NavbarComponent ]
@@ -42,9 +43,42 @@ describe('HomeComponent', () => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+       updatelikeService = fixture.debugElement.injector.get(FireBaseService);
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    //checks the like cuisine feature
+    it('should return with a new likes count of +1',() =>{
+        let initLikes: number;
+        let postLikes: number;
+        let diff: number;
+        let name: string;
+        let cuis: cuisine;
+        
+        this.name='Italian';
+
+        updatelikeService.getCuisine(this.name).subscribe(res=>{
+            this.cuis = res;
+        });
+    
+        initLikes = this.cuis.likes; 
+    //console.log(initLikes);      
+        updatelikeService.updateCuisinelikes(this.cuis, this.cuis.likes);
+        postLikes = this.cuis.likes;
+     //console.log(postLikes);
+        diff = postLikes - initLikes;
+     //console.log(diff);
+        expect(diff).toEqual(1);
+       });
+
 });
+
+interface cuisine{
+	$key?: string;
+	image_url?: string;
+	likes: number;
+	description: string;
+}
