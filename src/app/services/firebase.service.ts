@@ -9,14 +9,20 @@ export class FireBaseService {
 	fbComments: FirebaseListObservable<any[]>;
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
+	fbCuis: FirebaseObjectObservable<any>;
 	
 
 	constructor(private af: AngularFire) { }
-
+	
+	//get cuisine by name
+	getCuisine(name: string) {
+		this.fbCuis = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>;
+		console.log(this.fbCuis);
+		return this.fbCuis;
+	}
 	//gets all cuisine types
 	getCuisines() {
 		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines>;
-
 		return this.firebaseCuisines;
 	}
 
