@@ -6,6 +6,24 @@
         "img_url": "http://viztangocafe.com/wp-content/uploads/2015/06/food2.jpg",
         "price": "9.85",
         "restaurant_name": "Olive Garden",
+        "restaurant_hours": [
+        		{
+        			"MonOpen": "3pm",
+        			"MonClose": "10pm",
+        			"TuesOpen": "3pm",
+        			"TuesClose": "10pm",
+        			"WedOpen": "3pm",
+        			"WedClose": "10pm",
+        			"ThursOpen": "3pm",
+        			"ThursClose": "10pm",
+        			"FriOpen": "3pm",
+        			"FriClose": "10pm",
+        			"SatOpen": "3pm",
+        			"SatClose": "10pm",
+        			"SunOpen": "3pm",
+        			"SunClose": "10pm"
+        		}
+        ],
         "city": "Lubbock",
         "address": "123 Fake Street",
         "zip_code": "79401",

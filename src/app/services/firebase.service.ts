@@ -9,8 +9,8 @@ export class FireBaseService {
 	fbComments: FirebaseListObservable<any[]>;
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
-	fbCuis: FirebaseObjectObservable<any>;
-	
+	fbCuis: FirebaseObjectObservable<any>;	
+	fbHours: FirebaseObjectObservable<any>;
 
 	constructor(private af: AngularFire) { }
 	
@@ -49,13 +49,15 @@ export class FireBaseService {
 
 		return this.firebaseCuisines;
 	}
-
 	//returns dish information
 	getDish($key) {
 		this.fbDish = this.af.database.object('/dishes/'+ $key) as FirebaseObjectObservable<dish>
 		return this.fbDish;
 	}
-
+	getRestaurantHours($key){
+		this.fbHours = this.af.database.object('/dishes/' + $key + '/restaurant_hours/0') as FirebaseObjectObservable<restaurant_hours>
+		return this.fbHours;
+	}
 	//returns comments
 	getComments(dish_id) {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
@@ -104,6 +106,23 @@ interface dishes {
 interface restaurant {
 	$key?:string;
 	avg_rating: number;
+}
+interface restaurant_hours {
+	$key?: string;
+	FriClose: string;
+ 	FriOpen: string;
+ 	MonClose: string;
+ 	MonOpen: string;
+ 	SatClose: string;
+ 	SatOpen: string;
+ 	SunClose: string;
+ 	SunOpen: string;
+ 	ThursClose: string;
+ 	ThursOpen: string;
+ 	TuesClose: string;
+ 	TuesOpen: string;
+ 	WedClose: string;
+ 	WedOpen: string;
 }
 
 interface restaurants {

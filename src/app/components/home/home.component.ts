@@ -21,12 +21,12 @@ export class HomeComponent implements OnInit {
       });  
   
     }
-      likeCuisine(cuisine){
+    likeCuisine(cuisine){
       this.likes = cuisine.likes;
       this.cuisine = cuisine;
       this.fireBaseService.updateCuisinelikes(this.cuisine, this.likes);
       //console.log(cuisine.likes);
-      };
+    };
   }
       
   

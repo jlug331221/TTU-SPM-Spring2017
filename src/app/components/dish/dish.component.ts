@@ -15,6 +15,7 @@ export class DishComponent implements OnInit {
   private dish: any;
   private comments: any[];
   private starCount_avg: number;
+  private hours: any;
 
   constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) {}
 
@@ -31,7 +32,11 @@ export class DishComponent implements OnInit {
 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
-            //console.log(this.comments);
+           // console.log(this.comments);
+      });
+      this.fireBaseService.getRestaurantHours(this.dish_id).subscribe(hours => {
+            this.hours = hours;
+           // console.log(this.hours);
       });
     }
   }
