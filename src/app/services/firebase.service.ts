@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
+let firebase = require('firebase');
+let firebaseDb;
+let userInfo: user;
 
 @Injectable()
 export class FireBaseService {
@@ -10,16 +13,16 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-	
 
 	constructor(private af: AngularFire) { }
-	
+
 	//get cuisine by name
 	getCuisine(name: string) {
 		this.fbCuis = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>;
 		console.log(this.fbCuis);
 		return this.fbCuis;
 	}
+
 	//gets all cuisine types
 	getCuisines() {
 		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines>;
@@ -40,6 +43,21 @@ export class FireBaseService {
 		}) as FirebaseListObservable<dishes[]>;
 
 		return this.dishesForCuisineName;
+	}
+
+	getUserProfileInfo(uid) {
+		firebaseDb = firebase.database().ref("users");
+		firebaseDb.orderByChild("uid").equalTo(uid).once("value").then(function(snapshot) {
+			if(snapshot != null) {
+				snapshot.forEach(function(childsnapshot) {
+					//console.log(childsnapshot.val());
+
+					userInfo = childsnapshot.val();
+				});
+			}
+			console.log(userInfo);
+		});
+		return userInfo;
 	}
 
 	getRestaurantBasedOnLocation(){
@@ -68,13 +86,25 @@ export class FireBaseService {
 	  	let likeInc = likes + 1;
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
+	}
 }
+
+interface user {
+	$key?: string;
+	uid: string;
+	first_name: string;
+	last_name: string;
+	location_city: string;
+	location_state: string;
+	profile_photo: string;
+	diet: string;
 }
 
 interface cuisines {
 	$key?: string;
 	image_url?: string;
 }
+
 interface dish {
 	$key?: string;
 	dish_id: number;
@@ -85,11 +115,13 @@ interface dish {
 	restaurant_name: string;
 	avg_rating: number;
 }
+
 interface comments {
 	user: string;
 	comment: string;
 	rating: number;
 }
+
 interface dishes {
 	$key?: string
 	dish_id: number;
@@ -101,8 +133,9 @@ interface dishes {
 	restaurant_city: string;
 	rating: number;
 }
+
 interface restaurant {
-	$key?:string;
+	$key?: string;
 	avg_rating: number;
 }
 
@@ -111,7 +144,7 @@ interface restaurants {
 	restaurant_name: string;
 }
 
-interface cuisine{
+interface cuisine {
 	$key?: string;
 	image_url?: string;
 	likes: number;

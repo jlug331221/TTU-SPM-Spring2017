@@ -15,13 +15,15 @@ import { ValidateService } from './services/validate.service';
 import { DishesComponent } from './components/dishes/dishes.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DishComponent } from './components/dish/dish.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 	{path:'settings', component: SettingsComponent},
 	{path: 'dishes/:cuisineName', component: DishesComponent},
-  {path: 'dish/:$key', component: DishComponent}
+  	{path: 'dish/:$key', component: DishComponent},
+	{path: 'user-profile', component: UserProfileComponent}
 ];
 export const firebaseConfig = {
   	apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
@@ -42,7 +44,8 @@ const myFirebaseAuthConfig = {
     HomeComponent,
     DishesComponent,
     SettingsComponent,
-    DishComponent
+    DishComponent,
+    UserProfileComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   imports: [
