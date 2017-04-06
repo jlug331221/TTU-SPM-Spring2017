@@ -1,0 +1,16 @@
+.user-profile-preferences-set-preferences-header {
+    text-align: center;
+    background-color: #0367B4;
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+    margin-top: -4rem;
+    min-height: 70vh;
+}
+
+.user-profile-preferences-button {
+    background-color: #00BD6C;
+}
+
+.user-profile-preferences-h3 {
+    color: #FFF;
+}

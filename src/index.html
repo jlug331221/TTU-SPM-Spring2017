@@ -43,12 +43,12 @@
                             <div class="circle-clipper right">
                                 <div class="circle"></div>
                             </div>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </app-root>
-             
+
         <!--JQuery-->
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <!--comments toggle (hide and display)-->
@@ -71,7 +71,18 @@
                     closeOnClick: true
                 });
             });
+        </script>
 
+        <!-- Set user profile preferences modal -->
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $(".modal").modal({
+                dismissible: false,
+                opacity: .8,
+                inDuration: 300,
+                outDuration: 200
+            });
+        });
         </script>
     </body>
 </html>

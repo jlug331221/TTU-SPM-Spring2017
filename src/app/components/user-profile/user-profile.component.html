@@ -1,3 +1,20 @@
-<p>
-  user-profile works!
-</p>
+<div *ngIf="! userExists" class="row">
+    <div class="col s12 user-profile-preferences-set-preferences-header">
+        <h3 class="user-profile-preferences-h3">Go ahead and setup your profile</h3>
+
+        <!-- Modal Trigger -->
+        <a class="waves-effect waves-light btn-large user-profile-preferences-button" href="#set-user-profile-preferences-modal">Set Profile Preferences</a>
+    </div>
+
+    <div class="col s12">
+        <div id="set-user-profile-preferences-modal" class="modal">
+            <div class="modal-content">
+                <h4>Modal Header</h4>
+                <p>A bunch of text</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Update Profile</a>
+            </div>
+        </div>
+    </div>
+</div>

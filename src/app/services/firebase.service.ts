@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
-let firebase = require('firebase');
-let firebaseDb;
-let userInfo: user;
-
 @Injectable()
 export class FireBaseService {
 	firebaseCuisines: FirebaseListObservable<any[]>;
@@ -13,6 +9,7 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
+	userInfo: FirebaseObjectObservable<any>;
 
 	constructor(private af: AngularFire) { }
 
@@ -32,7 +29,8 @@ export class FireBaseService {
 	/**
 	 * Get dishes from firebase DB for a particular cuisine name
 	 *
-	 * param: string cuisineName
+	 * @param  {string} cuisineName [Cuisine name]
+	 * @return FirebaseListObservable<dishes[]>
 	 */
 	getDishesForCuisineName(cuisineName) {
 		this.dishesForCuisineName = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes', {
@@ -43,21 +41,6 @@ export class FireBaseService {
 		}) as FirebaseListObservable<dishes[]>;
 
 		return this.dishesForCuisineName;
-	}
-
-	getUserProfileInfo(uid) {
-		firebaseDb = firebase.database().ref("users");
-		firebaseDb.orderByChild("uid").equalTo(uid).once("value").then(function(snapshot) {
-			if(snapshot != null) {
-				snapshot.forEach(function(childsnapshot) {
-					//console.log(childsnapshot.val());
-
-					userInfo = childsnapshot.val();
-				});
-			}
-			console.log(userInfo);
-		});
-		return userInfo;
 	}
 
 	getRestaurantBasedOnLocation(){
@@ -83,6 +66,7 @@ export class FireBaseService {
   	updateCuisinelikes(cuisineObj: cuisine, likes){
 	  	let name = cuisineObj.$key;
 	 	this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
+		console.log(this.fbCuisine);
 	  	let likeInc = likes + 1;
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
