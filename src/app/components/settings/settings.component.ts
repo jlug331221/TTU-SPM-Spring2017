@@ -17,7 +17,9 @@ declare var jQuery:any;
 	image:any;
 	restaurantName:any;
 	dish_name:any;
-    restaurants:any;	
+    restaurants:any;
+	cuisine_names:any;
+	selectedCuisine:any;	
    
    constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService) { 
    	this.elementRef = elementRef;
@@ -31,10 +33,14 @@ declare var jQuery:any;
    		    this.restaurants = response;
     		 	console.log(this.restaurants);
    		});
+		this.fireBaseService.getCuisines().subscribe(response => {
+			this.cuisine_names= response;
+			
+		})
    	}
-   	onclick(){
+   	onSubmit(){
 		
-   		 this.fireBaseService.putImage(this.image,this.dish_name,this.restaurantName).subscribe(status=>{
+   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName).subscribe(status=>{
    			 console.log("Status is" + status);
    	 		if(status!="Error"){
    	 			console.log('added');

@@ -70,8 +70,8 @@ export class FireBaseService {
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
 	}
-	putImage(image,dish_name,restaurant_name){
-			let path = "'"+restaurant_name+"/"+dish_name+"'";
+	putImage(image,dish_name,cuisine_name,restaurant_name){
+			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
 		
 			const storageRef= firebase.storage().ref().child(path);
 		
@@ -84,6 +84,7 @@ export class FireBaseService {
 			return Observable.of(this.result);
 	}
 }
+
 
 interface cuisines {
 	$key?: string;
