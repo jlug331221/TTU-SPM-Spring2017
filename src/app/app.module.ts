@@ -7,7 +7,7 @@ import {RouterModule, Routes} from '@angular/router';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FireBaseService } from './services/firebase.service';
 import { RatingModule } from 'ngx-rating';
-
+import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -50,6 +50,7 @@ const myFirebaseAuthConfig = {
     BrowserModule,
 	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
+	FlashMessagesModule,
     HttpModule,
     RatingModule,
 	  RouterModule.forRoot(appRoutes)

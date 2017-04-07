@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-
+import {Observable} from 'rxjs/Rx';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class FireBaseService {
@@ -68,7 +69,21 @@ export class FireBaseService {
 	  	let likeInc = likes + 1;
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
-}
+	}
+	putImage(image,dish_name,restaurant_name){
+			let path = "'"+restaurant_name+"/"+dish_name+"'";
+		
+			const storageRef= firebase.storage().ref().child(path);
+		
+			for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
+				storageRef.put(selectedFile).then((snapshot)=>{
+					//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
+					this.result=snapshot
+				});
+			}
+			return Observable.of(this.result);
+		}
+	}
 }
 
 interface cuisines {
