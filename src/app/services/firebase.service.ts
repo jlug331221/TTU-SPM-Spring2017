@@ -11,7 +11,7 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-	
+	result:any;
 
 	constructor(private af: AngularFire) { }
 	
@@ -82,7 +82,6 @@ export class FireBaseService {
 				});
 			}
 			return Observable.of(this.result);
-		}
 	}
 }
 
