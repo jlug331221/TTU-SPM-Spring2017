@@ -25,6 +25,7 @@ const appRoutes:  Routes = [
   	{path: 'dish/:$key', component: DishComponent},
 	{path: 'user-profile', component: UserProfileComponent}
 ];
+
 export const firebaseConfig = {
   	apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
     authDomain: "spm-spring2017-7fbab.firebaseapp.com",
@@ -32,6 +33,7 @@ export const firebaseConfig = {
     storageBucket: "spm-spring2017-7fbab.appspot.com",
     messagingSenderId: "544260738212"
 };
+
 const myFirebaseAuthConfig = {
   provider: AuthProviders.Google,
   method: AuthMethods.Popup
@@ -51,11 +53,11 @@ const myFirebaseAuthConfig = {
   imports: [
     CommonModule,
     BrowserModule,
-	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+	AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
     HttpModule,
     RatingModule,
-	  RouterModule.forRoot(appRoutes)
+	RouterModule.forRoot(appRoutes)
   ],
   providers: [ValidateService, FireBaseService ],
   bootstrap: [AppComponent]

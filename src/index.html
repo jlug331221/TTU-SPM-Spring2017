@@ -73,16 +73,23 @@
             });
         </script>
 
-        <!-- Set user profile preferences modal -->
+        <!-- User profile preferences modal -->
         <script type="text/javascript">
-        $(document).ready(function() {
-            $(".modal").modal({
-                dismissible: false,
-                opacity: .8,
-                inDuration: 300,
-                outDuration: 200
+            $(document).ready(function() {
+                $("#set-user-profile-preferences-modal").modal({
+                    dismissible: true,
+                    opacity: .8,
+                    inDuration: 300,
+                    outDuration: 200
+                });
             });
-        });
+        </script>
+
+        <!-- State select dropdown -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('select').material_select();
+            });
         </script>
     </body>
 </html>
