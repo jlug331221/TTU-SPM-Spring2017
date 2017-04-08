@@ -5,11 +5,12 @@
             <div class="card-image">
           	    <img src="{{ dish.img_url }}" alt="" class="responsive-img">
         	</div>
-            <div class = "card-content">
-                    <h6><strong>Restaurant:</strong> {{ dish.restaurant_name }}</h6>
-                    <h6><strong>Address:</strong> {{ dish.restaurant_address }}</h6>
-                    <h6><strong>Description:</strong> {{ dish.description }}</h6>
-                    <h6><strong>Price: </strong> ${{ dish.price }}</h6>
+            <div class = "card-content" *ngIf="details">
+                    <h6><strong>Restaurant:</strong> {{ details.result.name }}</h6>
+                    <h6><strong>Address:</strong> {{ details.result.formatted_address }}</h6>
+                    <h6><strong>Phone:</strong> {{ details.result.formatted_phone_number }}</h6>
+                    <h6><strong>Hours: Sunday</strong>
+                    </h6>
                     <rating [(ngModel)]="starCount_avg" [readonly]="true"></rating>
                 <br>
             </div>

@@ -57,7 +57,7 @@ export class FireBaseService {
 		this.fbDish = this.af.database.object('/dishes/'+ $key) as FirebaseObjectObservable<dish>
 		return this.fbDish;
 	}
-	/* Utilizes Google's Place API to return a restaurant object.
+	/* Utilizes Google's Place API to return a restaurant identifier.
 	 * Takes as parameter the city, state and name of the restaurant
 	 */
 	getRestaurantId(restName: string, city: string, state: string){
@@ -66,21 +66,23 @@ export class FireBaseService {
 		let st = state;
 		
 		let googleResturl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+rest+'+'+cit+'+'+st+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
-		
 		return this.getRestHttp.get(googleResturl).map( data => {
 				if (data != null){
 					this.res = data.json().results[0].place_id;
-					console.log(this.res);
+					//console.log(this.res);
 					return this.res;
 				}
 			})
 	}
+	/* utilizes Google's Place Api to retrieve restaurant details
+	 * based on a google id parameter
+	 */
 	getRestaurantDetails(restId){
 		let googleRestDetailsurl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+restId+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
 			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
 				if (response != null){
 					let body = response.json();
-					console.log(body);
+					//console.log(body);
 					return body;
 				}
 		});		

@@ -28,13 +28,21 @@ export class DishComponent implements OnInit {
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             this.dish = dish;
             this.starCount_avg = dish.avg_rating;
-            //console.log(this.dish);
+            console.log(this.dish);
       });
 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
            // console.log(this.comments);
-      });    
+      });
+    
+    this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
+            if(details != null){
+               this.details = details
+              console.log(this.details);
+            }         
+        }); 
+            
       
     }
 

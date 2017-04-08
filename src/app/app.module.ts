@@ -54,11 +54,10 @@ const myFirebaseAuthConfig = {
 	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
     HttpModule,
-    Observable,
     RatingModule,
 	  RouterModule.forRoot(appRoutes)
   ],
-  providers: [ValidateService, FireBaseService, Http],
+  providers: [ValidateService, FireBaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
