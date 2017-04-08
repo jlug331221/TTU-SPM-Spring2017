@@ -86,20 +86,6 @@ describe('HomeComponent', () => {
         if(this.res != null) 
         expect(this.res).toBe("ChIJ_UypeeMuTIYRGtrKERCRj2U");
        });
-      
-       //tests api request to google to get restaurant details.  
-       //Returns a specific property (a phone number) from the details object
-    it('should return a specific detail from googles place detail api',() =>{
-        fbService.getRestaurantDetails('ChIJ_UypeeMuTIYRGtrKERCRj2U').subscribe(details =>{
-           this.details = details.result.formatted_phone_number;         
-        }); 
-        
-        if(this.details != null){
-        console.log(this.details.result.formatted_phone_number);
-        expect(this.details).toBe("(972) 315-6202");
-        }
-        
-       }); 
 
 });
 

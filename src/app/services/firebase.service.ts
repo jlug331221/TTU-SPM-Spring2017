@@ -24,7 +24,7 @@ export class FireBaseService {
 	//get cuisine by name
 	getCuisine(name: string) {
 		this.fbCuis = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>;
-		console.log(this.fbCuis);
+		//console.log(this.fbCuis);
 		return this.fbCuis;
 	}
 	//gets all cuisine types
@@ -48,7 +48,7 @@ export class FireBaseService {
 
 		return this.dishesForCuisineName;
 	}
-//return a list of restaurant objects from google's place api
+	//returns a list of restaurant objects from google's place api
 	getRestaurantsBasedOnLocation(input: string, city: string, state: string){	
 		let st = state;
 		let cit = city;	
@@ -57,7 +57,7 @@ export class FireBaseService {
 		return this.getRestHttp.get(googleResturl).map( data => {
 				if (data != null){
 					this.res = data.json();
-					console.log(this.res);
+					//console.log(this.res);
 					return this.res;
 				}
 			})
@@ -119,9 +119,6 @@ export class FireBaseService {
 		//console.log(cuisineObj);
 	}
 	
-}
-interface id{
-	place_id: string;
 }
 interface cuisines {
 	$key?: string;

@@ -1,7 +1,8 @@
 <div class = "row">
     <div class = "col s12 m8 offset-m2 l12" *ngIf="dish">
         <div class = "card-medium">
-            <span class="card-title"><strong>{{ dish.name }}</strong></span>
+            <span class="card-title"><strong>{{ dish.name }} &nbsp;</strong></span>
+            <span><rating [(ngModel)]="starCount_avg" [readonly]="true"></rating></span>
             <div class="card-image">
           	    <img src="{{ dish.img_url }}" alt="" class="responsive-img">
         	</div>
@@ -9,9 +10,10 @@
                     <h6><strong>Restaurant:</strong> {{ details.result.name }}</h6>
                     <h6><strong>Address:</strong> {{ details.result.formatted_address }}</h6>
                     <h6><strong>Phone:</strong> {{ details.result.formatted_phone_number }}</h6>
-                    <h6><strong>Hours: Sunday</strong>
-                    </h6>
-                    <rating [(ngModel)]="starCount_avg" [readonly]="true"></rating>
+                    <h6><strong>Hours: </strong></h6>
+                    <div class="hours" *ngFor="let dayhours of this.details.result.opening_hours.weekday_text">
+                    {{ dayhours }}<br>
+                    </div>
                 <br>
             </div>
         </div>

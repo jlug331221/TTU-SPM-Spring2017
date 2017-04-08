@@ -17,43 +17,43 @@ export class DishComponent implements OnInit {
   private starCount_avg: number;
   private res: any;
   private details: any;
+  private open: any[];
+  private close: any[];
 
   constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) {}
 
   ngOnInit() {
     //gets route parameter
-     this.dish_id = this.route.snapshot.params['$key'];
-
+     this.route.params.subscribe(params => {
+            this.dish_id = params['$key'];
+            this.dish_id = this.dish_id;
+        });
+  
     //gets dish object which corresponds to route parameter '$key'
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
+            if(dish!= null){
             this.dish = dish;
             this.starCount_avg = dish.avg_rating;
             //console.log(this.dish);
+          }
+           if(this.dish.place_id != null){
+            this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
+               this.details = details
+              console.log(this.details);        
+            });
+           }
       });
 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
            // console.log(this.comments);
       });
-    
-    this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
-            if(details != null){
-               this.details = details
-              //console.log(this.details);
-            }         
-        }); 
+   
+    }                        
+}
+  
 
-     this.fireBaseService.getRestaurantsBasedOnLocation("Olive","Dallas", "Texas").subscribe(list =>{
-          if(list != null){
-            let l = list;
-            console.log(list);
-          }
-     });
-            
-      
-    }
-
-  }
+  
 
 
 
