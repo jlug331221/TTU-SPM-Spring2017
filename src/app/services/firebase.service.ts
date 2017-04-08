@@ -12,7 +12,11 @@ export class FireBaseService {
 	fbComments: FirebaseListObservable<any[]>;
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
-	fbCuis: FirebaseObjectObservable<any>;	
+	fbCuis: FirebaseObjectObservable<any>;
+
+	private rest;
+	private cit;
+	private st;	
 	private res;
 	
 	constructor(private af: AngularFire, private getRestHttp: Http) { }
@@ -44,27 +48,34 @@ export class FireBaseService {
 
 		return this.dishesForCuisineName;
 	}
-
-	getRestaurantBasedOnLocation(){
-		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/Location/Lubbock',{
-
-		}) as FirebaseListObservable<restaurant []>;
-
-		return this.firebaseCuisines;
+//return a list of restaurant objects from google's place api
+	getRestaurantsBasedOnLocation(input: string, city: string, state: string){	
+		let st = state;
+		let cit = city;	
+		let inp = input;
+		let googleResturl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants'+cit+'+'+st+'+contains '+inp+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
+		return this.getRestHttp.get(googleResturl).map( data => {
+				if (data != null){
+					this.res = data.json();
+					console.log(this.res);
+					return this.res;
+				}
+			})
 	}
+
 	//returns dish information
 	getDish($key) {
 		this.fbDish = this.af.database.object('/dishes/'+ $key) as FirebaseObjectObservable<dish>
 		return this.fbDish;
 	}
-	/* Utilizes Google's Place API to return a restaurant identifier.
+
+	/* Returns a restaurant identifier from Google's Place Api
 	 * Takes as parameter the city, state and name of the restaurant
 	 */
 	getRestaurantId(restName: string, city: string, state: string){
 		let rest = restName;
 		let cit = city;
 		let st = state;
-		
 		let googleResturl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+rest+'+'+cit+'+'+st+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
 		return this.getRestHttp.get(googleResturl).map( data => {
 				if (data != null){
@@ -74,7 +85,8 @@ export class FireBaseService {
 				}
 			})
 	}
-	/* utilizes Google's Place Api to retrieve restaurant details
+
+	/* Returns restaurant details from Google's Place Api
 	 * based on a google id parameter
 	 */
 	getRestaurantDetails(restId){
@@ -87,14 +99,17 @@ export class FireBaseService {
 				}
 		});		
 	}
+
 	postRestaurantId(restid){
 		
 	}
+
 	//returns comments
 	getComments(dish_id) {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
 			return this.fbComments;
 	}
+
 	 //Updates a cuisine's likes by one,*** Needs authentication***
   	updateCuisinelikes(cuisineObj: cuisine, likes){
 	  	let name = cuisineObj.$key;

@@ -28,7 +28,7 @@ export class DishComponent implements OnInit {
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             this.dish = dish;
             this.starCount_avg = dish.avg_rating;
-            console.log(this.dish);
+            //console.log(this.dish);
       });
 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
@@ -39,9 +39,16 @@ export class DishComponent implements OnInit {
     this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
             if(details != null){
                this.details = details
-              console.log(this.details);
+              //console.log(this.details);
             }         
         }); 
+
+     this.fireBaseService.getRestaurantsBasedOnLocation("Olive","Dallas", "Texas").subscribe(list =>{
+          if(list != null){
+            let l = list;
+            console.log(list);
+          }
+     });
             
       
     }

@@ -25,17 +25,17 @@ declare var jQuery:any;
    }	
  
    ngOnInit() {
-  	  this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-  		    this.restaurants=response;
-   		 	console.log(response[0].$key);	
-      });
+  	  //this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+  		   // this.restaurants=response;
+   		 	//console.log(response[0].$key);	
+      //});
    }
  
    ngAfterViewInit(){
  	  let newData = jQuery.extend({}, jQuery('input.autocomplete').autocomplete());
   
-      this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
- 		});
+      //this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+ 		//});
    }
  }
  /*
