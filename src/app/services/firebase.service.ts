@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
+import { User } from '../interfaces/user.interface';
+
 @Injectable()
 export class FireBaseService {
 	firebaseCuisines: FirebaseListObservable<any[]>;
@@ -9,7 +11,8 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-	userInfo: FirebaseObjectObservable<any>;
+	users: FirebaseListObservable<any[]>;
+	user: FirebaseObjectObservable<any>;
 
 	constructor(private af: AngularFire) { }
 
@@ -43,6 +46,22 @@ export class FireBaseService {
 		return this.dishesForCuisineName;
 	}
 
+	/**
+	 * Add new Foogle user to the database.
+	 * @param {User} userObj [User info from the user-profile component form]
+	 */
+	addNewUser(userObj: User) {
+		this.af.database.object('users/' + userObj.uid).set({
+			uid: userObj.uid,
+			first_name: userObj.first_name,
+		    last_name: userObj.last_name,
+		    location_city: userObj.location_city,
+		    location_state: userObj.location_state,
+		    profile_photo_url: userObj.profile_photo_url,
+		    diet: userObj.diet
+		});
+	}
+
 	getRestaurantBasedOnLocation(){
 		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/Location/Lubbock',{
 
@@ -60,7 +79,7 @@ export class FireBaseService {
 	//returns comments
 	getComments(dish_id) {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
-			return this.fbComments;
+		return this.fbComments;
 	}
 	 //Updates a cuisine's likes by one,*** Needs authentication***
   	updateCuisinelikes(cuisineObj: cuisine, likes){
@@ -73,7 +92,7 @@ export class FireBaseService {
 	}
 }
 
-interface user {
+/*interface user {
 	$key?: string;
 	uid: string;
 	first_name: string;
@@ -82,7 +101,7 @@ interface user {
 	location_state: string;
 	profile_photo: string;
 	diet: string;
-}
+}*/
 
 interface cuisines {
 	$key?: string;
