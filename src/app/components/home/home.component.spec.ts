@@ -4,7 +4,7 @@ import { AuthProviders, AuthMethods, AngularFireModule, FirebaseObjectObservable
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
+import { HttpModule } from '@angular/http';
 import { FireBaseService } from '../../services/firebase.service';
 
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -33,6 +33,7 @@ describe('HomeComponent', () => {
             imports: [
               RouterTestingModule,
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+				HttpModule
             ],
             providers: [ FireBaseService ],
             declarations: [ HomeComponent, NavbarComponent ]

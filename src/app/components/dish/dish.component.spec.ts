@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement, NgModule } from '@angular/core';
 import { RatingModule } from "ngx-rating";
+import { HttpModule } from '@angular/http';
 import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
@@ -31,7 +32,8 @@ describe('DishComponent', () => {
         TestBed.configureTestingModule({
             imports: [
               RouterTestingModule, RatingModule, FormsModule,
-              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+			  HttpModule
             ],
             providers: [ FireBaseService ],
             declarations: [ DishComponent, NavbarComponent ]

@@ -3,7 +3,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes} from '@angular/router';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FireBaseService } from './services/firebase.service';
 import { RatingModule } from 'ngx-rating';
@@ -53,12 +53,12 @@ const myFirebaseAuthConfig = {
 	 }),  
     CommonModule,
     BrowserModule,
-	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+	AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
 	FlashMessagesModule,
     HttpModule,
     RatingModule,
-	  RouterModule.forRoot(appRoutes)
+	RouterModule.forRoot(appRoutes)
   ],
   providers: [ValidateService, FireBaseService ],
   bootstrap: [AppComponent]
