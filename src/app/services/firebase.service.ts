@@ -92,6 +92,9 @@ export class FireBaseService {
 	getLocation(){
 		this.latitude=33.5864378802915;
 		this.longitude=-101.8690557197085;
+		
+		this.apiUrl='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=33.5864378802915,-101.8690557197085&radius=5000&type=restaurant&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas';
+		
 		navigator.geolocation.getCurrentPosition(position=>{
 			this.latitude= position.coords.latitude;
 			this.longitude = position.coords.longitude;
@@ -101,8 +104,9 @@ export class FireBaseService {
 			this.apiUrl='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
    			this.latitude+','+this.longitude+
    			'&radius=5000&type=restaurant&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas';
+			
+			
 		});
-		
 		return this.http.get(this.apiUrl).map(data=>{
 			if (data != null){
 				this.res = data.json();
@@ -110,6 +114,7 @@ export class FireBaseService {
 				return this.res;
 			}
 		});
+		
 	}
 	
 }

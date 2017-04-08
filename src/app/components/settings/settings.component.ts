@@ -30,7 +30,7 @@ declare var jQuery:any;
  
    ngOnInit() {
    	  this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-   		    this.restaurants = response;
+   		    	this.restaurants = response;
     		 	console.log(this.restaurants);
    		});
 		this.fireBaseService.getCuisines().subscribe(response => {
