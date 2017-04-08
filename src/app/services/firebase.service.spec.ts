@@ -1,12 +1,13 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { FirebaseService } from './firebase.service';
+import { FireBaseService } from './firebase.service';
 
-describe('FirebaseService', () => {
+describe('FireBaseService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [FirebaseService]
+            providers: [FireBaseService]
         });
     });
+    
 });

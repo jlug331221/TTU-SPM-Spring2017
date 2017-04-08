@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
 import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
-
+import { HttpModule, Http} from '@angular/http';
 
 @Component({
   selector: 'app-dish',
@@ -13,9 +13,10 @@ import { FormsModule } from '@angular/forms';
 export class DishComponent implements OnInit {
   private dish_id: any;
   private dish: any;
-  private comments: any[];
+  private comments: any[]; 
   private starCount_avg: number;
-  private hours: any;
+  private res: any;
+  private details: any;
 
   constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) {}
 
@@ -33,10 +34,11 @@ export class DishComponent implements OnInit {
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
            // console.log(this.comments);
-      });
-      this.fireBaseService.getRestaurantHours(this.dish_id).subscribe(hours => {
-            this.hours = hours;
-           // console.log(this.hours);
-      });
+      });    
+      
     }
+
   }
+
+
+

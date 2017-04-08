@@ -8,14 +8,6 @@
             <div class = "card-content">
                     <h6><strong>Restaurant:</strong> {{ dish.restaurant_name }}</h6>
                     <h6><strong>Address:</strong> {{ dish.restaurant_address }}</h6>
-                    <h6><strong>Hours:</strong> 
-                    Monday: {{ hours.MonOpen }} to {{ hours.MonClose }} 
-                    <br> Tuesday: {{ hours.TuesOpen }} to {{ hours.TuesClose }}
-                    <br> Wednesday: {{ hours.WedOpen }} to {{ hours.WedClose }}
-                    <br> Thursday: {{ hours.ThursOpen }} to {{ hours.ThursClose }}
-                    <br> Friday: {{ hours.FriOpen }} to {{ hours.FriClose }}
-                    <br> Saturday: {{ hours.SatOpen }} to {{ hours.SatClose }}
-                    <br> Sunday: {{ hours.SunOpen }} to {{ hours.SunClose }}</h6>
                     <h6><strong>Description:</strong> {{ dish.description }}</h6>
                     <h6><strong>Price: </strong> ${{ dish.price }}</h6>
                     <rating [(ngModel)]="starCount_avg" [readonly]="true"></rating>

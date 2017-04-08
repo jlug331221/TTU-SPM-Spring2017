@@ -2,11 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Response, Http} from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FireBaseService } from './services/firebase.service';
 import { RatingModule } from 'ngx-rating';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -51,10 +54,11 @@ const myFirebaseAuthConfig = {
 	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
     HttpModule,
+    Observable,
     RatingModule,
 	  RouterModule.forRoot(appRoutes)
   ],
-  providers: [ValidateService, FireBaseService ],
+  providers: [ValidateService, FireBaseService, Http],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

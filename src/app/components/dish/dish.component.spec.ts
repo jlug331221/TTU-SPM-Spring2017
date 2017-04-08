@@ -9,6 +9,7 @@ import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
 import { FormsModule } from '@angular/forms';
+import { HttpModule, Http} from '@angular/http';
 
 describe('DishComponent', () => {
     let component: DishComponent;
@@ -30,7 +31,7 @@ describe('DishComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-              RouterTestingModule, RatingModule, FormsModule,
+              RouterTestingModule, RatingModule, FormsModule, HttpModule,
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
             ],
             providers: [ FireBaseService ],

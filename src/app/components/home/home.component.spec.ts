@@ -4,6 +4,7 @@ import { AuthProviders, AuthMethods, AngularFireModule, FirebaseObjectObservable
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { HttpModule, Http} from '@angular/http';
 
 import { FireBaseService } from '../../services/firebase.service';
 
@@ -11,6 +12,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { HomeComponent } from './home.component';
 
 let updatelikeService;
+let fbService;
 describe('HomeComponent', () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
@@ -31,7 +33,7 @@ describe('HomeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-              RouterTestingModule,
+              RouterTestingModule, HttpModule,
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
             ],
             providers: [ FireBaseService ],
@@ -44,6 +46,7 @@ describe('HomeComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
        updatelikeService = fixture.debugElement.injector.get(FireBaseService);
+       fbService = fixture.debugElement.injector.get(FireBaseService);
     });
 
     it('should create', () => {
@@ -73,6 +76,30 @@ describe('HomeComponent', () => {
      //console.log(diff);
         expect(diff).toEqual(1);
        });
+
+        //tests google api request to get a restaurant id
+    it('should return a restaurant id from googles place api',() => {
+        fbService.getRestaurantId("Olive Garden", "Lewisville", "Texas").subscribe(data =>{
+            this.res = data;
+            console.log(this.res);
+        });
+        if(this.res != null) 
+        expect(this.res).toBe("ChIJ_UypeeMuTIYRGtrKERCRj2U");
+       });
+      
+       //tests api request to google to get restaurant details.  
+       //Returns a specific property (a phone number) from the details object
+    it('should return a specific detail from googles place detail api',() =>{
+        fbService.getRestaurantDetails('ChIJ_UypeeMuTIYRGtrKERCRj2U').subscribe(details =>{
+           this.details = details.result.formatted_phone_number;         
+        }); 
+        
+        if(this.details != null){
+        console.log(this.details.result.formatted_phone_number);
+        expect(this.details).toBe("(972) 315-6202");
+        }
+        
+       }); 
 
 });
 

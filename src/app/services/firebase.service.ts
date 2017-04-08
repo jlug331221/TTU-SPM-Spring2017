@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-
+import { HttpModule, Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class FireBaseService {
@@ -10,9 +13,9 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;	
-	fbHours: FirebaseObjectObservable<any>;
-
-	constructor(private af: AngularFire) { }
+	private res;
+	
+	constructor(private af: AngularFire, private getRestHttp: Http) { }
 	
 	//get cuisine by name
 	getCuisine(name: string) {
@@ -54,9 +57,36 @@ export class FireBaseService {
 		this.fbDish = this.af.database.object('/dishes/'+ $key) as FirebaseObjectObservable<dish>
 		return this.fbDish;
 	}
-	getRestaurantHours($key){
-		this.fbHours = this.af.database.object('/dishes/' + $key + '/restaurant_hours/0') as FirebaseObjectObservable<restaurant_hours>
-		return this.fbHours;
+	/* Utilizes Google's Place API to return a restaurant object.
+	 * Takes as parameter the city, state and name of the restaurant
+	 */
+	getRestaurantId(restName: string, city: string, state: string){
+		let rest = restName;
+		let cit = city;
+		let st = state;
+		
+		let googleResturl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+rest+'+'+cit+'+'+st+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
+		
+		return this.getRestHttp.get(googleResturl).map( data => {
+				if (data != null){
+					this.res = data.json().results[0].place_id;
+					console.log(this.res);
+					return this.res;
+				}
+			})
+	}
+	getRestaurantDetails(restId){
+		let googleRestDetailsurl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+restId+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
+			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
+				if (response != null){
+					let body = response.json();
+					console.log(body);
+					return body;
+				}
+		});		
+	}
+	postRestaurantId(restid){
+		
 	}
 	//returns comments
 	getComments(dish_id) {
@@ -70,9 +100,12 @@ export class FireBaseService {
 	  	let likeInc = likes + 1;
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
+	}
+	
 }
+interface id{
+	place_id: string;
 }
-
 interface cuisines {
 	$key?: string;
 	image_url?: string;
@@ -107,24 +140,6 @@ interface restaurant {
 	$key?:string;
 	avg_rating: number;
 }
-interface restaurant_hours {
-	$key?: string;
-	FriClose: string;
- 	FriOpen: string;
- 	MonClose: string;
- 	MonOpen: string;
- 	SatClose: string;
- 	SatOpen: string;
- 	SunClose: string;
- 	SunOpen: string;
- 	ThursClose: string;
- 	ThursOpen: string;
- 	TuesClose: string;
- 	TuesOpen: string;
- 	WedClose: string;
- 	WedOpen: string;
-}
-
 interface restaurants {
 	restaurant_city: string;
 	restaurant_name: string;

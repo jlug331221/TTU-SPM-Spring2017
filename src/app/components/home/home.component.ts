@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FireBaseService } from '../../services/firebase.service'
+import { HttpModule, Response, Http} from '@angular/http';
 
 @Component({
   selector: 'app-home',
