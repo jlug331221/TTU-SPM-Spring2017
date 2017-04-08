@@ -5,6 +5,7 @@ import { CompleterService, CompleterData } from 'ng2-completer';
 import { FireBaseService } from '../../services/firebase.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import {Router} from '@angular/router';
+
 declare var jQuery:any;
 
 @Component({
@@ -19,11 +20,10 @@ declare var jQuery:any;
 	dish_name:any;
     restaurants:any;
 	cuisine_names:any;
-	selectedCuisine:any;	
+	selectedCuisine:any;
+	
+	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
    
-   constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService) { 
-   	this.elementRef = elementRef;
-   }
    ngOnChanges(){
  	 
    }	
@@ -37,6 +37,9 @@ declare var jQuery:any;
 			this.cuisine_names= response;
 			
 		})
+		this.fireBaseService.getLocation().subscribe(response=>{
+			console.log(response);
+		});
    	}
    	onSubmit(){
 		

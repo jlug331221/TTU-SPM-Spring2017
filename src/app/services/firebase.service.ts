@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { Http, Response, Headers, RequestOptions, HttpModule } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import * as firebase from 'firebase';
+import 'rxjs/add/operator/map';
+
 
 @Injectable()
 export class FireBaseService {
@@ -12,8 +15,11 @@ export class FireBaseService {
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
 	result:any;
-
-	constructor(private af: AngularFire) { }
+	latitude:any;
+	longitude:any;
+	apiUrl:string;
+	private res;
+	constructor(private af: AngularFire, private http:Http) { }
 	
 	//get cuisine by name
 	getCuisine(name: string) {
@@ -83,6 +89,29 @@ export class FireBaseService {
 			}
 			return Observable.of(this.result);
 	}
+	getLocation(){
+		this.latitude=33.5864378802915;
+		this.longitude=-101.8690557197085;
+		navigator.geolocation.getCurrentPosition(position=>{
+			this.latitude= position.coords.latitude;
+			this.longitude = position.coords.longitude;
+			console.log(position.coords.latitude);
+			console.log(position.coords.longitude);
+   		 	
+			this.apiUrl='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
+   			this.latitude+','+this.longitude+
+   			'&radius=5000&type=restaurant&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas';
+		});
+		
+		return this.http.get(this.apiUrl).map(data=>{
+			if (data != null){
+				this.res = data.json();
+				console.log(this.res);
+				return this.res;
+			}
+		});
+	}
+	
 }
 
 

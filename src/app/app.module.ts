@@ -15,6 +15,7 @@ import { ValidateService } from './services/validate.service';
 import { DishesComponent } from './components/dishes/dishes.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DishComponent } from './components/dish/dish.component';
+import { AgmCoreModule } from "angular2-google-maps/core";
 
 
 const appRoutes:  Routes = [
@@ -46,6 +47,10 @@ const myFirebaseAuthConfig = {
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   imports: [
+	AgmCoreModule.forRoot({
+	        apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
+	        libraries: ["places"]
+	 }),  
     CommonModule,
     BrowserModule,
 	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
