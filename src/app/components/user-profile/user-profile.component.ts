@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FireBaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
@@ -15,8 +15,17 @@ export class UserProfileComponent implements OnInit {
     private authDataUID: any;
     private userExists: any;
     private authDataPhotoUrl: any;
+
     private userInfoFromFirebase: any;
+    private newUser: User;
     private user: User;
+
+    //user info variables to display in profile
+    private user_first_name;
+    private user_last_name;
+    private user_location_city;
+    private user_location_state;
+    private user_diet;
 
     // Form fields
     private first_name: any;
@@ -24,6 +33,12 @@ export class UserProfileComponent implements OnInit {
     private location_city: any;
     private location_state: any;
     private diet: any;
+
+    // Form validation variables
+    private mustEnterState: any;
+    private mustEnterDiet: any;
+
+    private loading: any;
 
     states: Object[] = [
         {
@@ -286,7 +301,7 @@ export class UserProfileComponent implements OnInit {
     constructor(
         private af: AngularFire,
         private fireBaseService: FireBaseService,
-        private router: Router) { }
+        private router: Router, private DOMelRef: ElementRef) { }
 
     /**
      * Add new Foogle user to the database.
@@ -296,23 +311,39 @@ export class UserProfileComponent implements OnInit {
      * @return void
      */
     addUserToDatabase(stateSelectOption: string, dietSelectOption: string) {
-        this.user = {
-            uid: this.authDataUID,
-            first_name: this.first_name,
-            last_name: this.last_name,
-            location_city: this.location_city,
-            location_state: stateSelectOption,
-            profile_photo_url: this.authDataPhotoUrl,
-            diet: dietSelectOption
-        };
+        //console.log(this.DOMelRef.nativeElement.querySelector('#modal-button').style);
+        console.log(this.DOMelRef.nativeElement.querySelector('#set-user-profile-preferences-modal'));
+        this.mustEnterState = false;
+        this.mustEnterDiet = false;
 
-        console.log(this.user);
+        // Naive validation
+        if(stateSelectOption == "Choose your state") { this.mustEnterState = true; }
+        if(dietSelectOption == "Choose your diet") { this.mustEnterDiet = true; }
 
-        //add user to DB
-        this.fireBaseService.addNewUser(this.user);
+        // Form is only submitted if validation passes -> user is added to DB
+        if(stateSelectOption != "Choose your state" && dietSelectOption != "Choose your diet") {
+            this.newUser = {
+                uid: this.authDataUID,
+                first_name: this.first_name,
+                last_name: this.last_name,
+                location_city: this.location_city,
+                location_state: stateSelectOption,
+                profile_photo_url: this.authDataPhotoUrl,
+                diet: dietSelectOption
+            };
 
-        //navigate back to user profile page
-        this.router.navigate(['/user-profile']);
+            console.log(this.newUser);
+
+            //close modal
+            //this.DOMelRef.nativeElement.querySelector('#set-user-profile-preferences-modal');
+
+            //add user to DB
+            this.fireBaseService.addNewUser(this.newUser).then(function() {
+                //navigate back to user profile page
+                console.log("Added user to db");
+                this.loading = false;
+            });
+        }
     }
 
     /**
@@ -329,15 +360,29 @@ export class UserProfileComponent implements OnInit {
         this.userInfoFromFirebase.subscribe(snapshot => {
             //console.log(snapshot.val());
             if(! snapshot.val()) {
+                this.loading = false;
+                
                 // user does not exist, have user set up intial profile
                 this.userExists = false;
             } else {
                 this.userExists = true;
+
+                this.user = snapshot.val();
+
+                this.user_first_name = this.user.first_name;
+                this.user_last_name = this.user.last_name;
+                this.user_location_city = this.user.location_city;
+                this.user_location_state = this.user.location_state;
+                this.user_diet = this.user.diet;
+
+                this.loading = false;
             }
         });
     }
 
     ngOnInit() {
+        this.loading = true;
+
         this.af.auth.subscribe(authData => {
 
             if(authData != null) {
@@ -345,7 +390,7 @@ export class UserProfileComponent implements OnInit {
                 this.authDataUID = authData.uid;
                 this.authDataPhotoUrl = authData.google.photoURL;
 
-                this.checkIfFirstLogin(authData);
+                this.checkIfFirstLogin(authData)
 
             }
 

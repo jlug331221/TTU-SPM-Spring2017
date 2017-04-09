@@ -1,4 +1,12 @@
-<div *ngIf="! userExists" class="row">
+<div *ngIf="loading" class="row container">
+    <div class="col s12">
+        <div class="user-profile-progress-bar progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="! userExists && ! loading" class="row">
     <div class="col s12 user-profile-preferences-set-preferences-header">
         <h3 class="user-profile-preferences-h3">Go ahead and setup your profile</h3>
 
@@ -8,8 +16,7 @@
 
     <div class="col s12">
         <div id="set-user-profile-preferences-modal" class="modal modal-fixed-footer">
-            <!-- <form (ngSubmit)="addUserToDatabase()" novalidate> -->
-            <form>
+            <form #userPrefForm="ngForm">
                 <div class="modal-content">
                     <h4>Set your preferneces below</h4>
 
@@ -32,27 +39,40 @@
                         </div>
 
                         <div class="input-field col s12 m6 l6 form-group">
-                            <select #stateSelectOption ngControl="stateSelectOption" class="form-control">
+                            <select #stateSelectOption ngControl="stateSelectOption" class="form-control" required>
                                 <option [value]="" disabled selected>Choose your state</option>
                                 <option *ngFor="let state of states" [value]="state.value">{{state.name}}</option>
                             </select>
+                            <span class="user-profile-span-red-error-msg" *ngIf="mustEnterState"><small>Please choose your state</small></span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12 m6 l6 form-group">
-                            <select #dietSelectOption ngControl="dietSelectOption" class="form-control">
+                            <select #dietSelectOption ngControl="dietSelectOption" class="form-control" required>
                                 <option [value]="" disabled selected>Choose your diet</option>
                                 <option *ngFor="let diet of diets" [value]="diet.value">{{diet.name}}</option>
                             </select>
+                            <span class="user-profile-span-red-error-msg" *ngIf="mustEnterDiet"><small>Please choose your diet</small></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button (click)="addUserToDatabase(stateSelectOption.value, dietSelectOption.value)" type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">Update Profile</button>
+                    <button id="modal-button" [disabled]="! userPrefForm.form.valid || ! stateSelectOption.value" (click)="addUserToDatabase(stateSelectOption.value, dietSelectOption.value)" type="button" class="waves-effect waves-green btn-flat">Update Profile</button>
                 </div>
             </form>
         </div>
+    </div>
+</div>
+
+<div *ngIf="! loading && userExists" class="row container">
+    <div class="col s12 m6 offset-m3 l8 offset-l2">
+        <!-- Need to create layout for profile NOT FINISHED YET -->
+        <h3>{{ user_first_name }}</h3>
+        <h3>{{ user_last_name }}</h3>
+        <h3>{{ user_location_city }}</h3>
+        <h3>{{ user_location_state }}</h3>
+        <h3>{{ user_diet }}</h3>
     </div>
 </div>

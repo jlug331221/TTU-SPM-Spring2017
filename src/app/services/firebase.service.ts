@@ -51,7 +51,7 @@ export class FireBaseService {
 	 * @param {User} userObj [User info from the user-profile component form]
 	 */
 	addNewUser(userObj: User) {
-		this.af.database.object('users/' + userObj.uid).set({
+		return this.af.database.object('users/' + userObj.uid).set({
 			uid: userObj.uid,
 			first_name: userObj.first_name,
 		    last_name: userObj.last_name,

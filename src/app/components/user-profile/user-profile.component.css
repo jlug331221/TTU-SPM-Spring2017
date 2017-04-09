@@ -1,3 +1,8 @@
+.user-profile-progress-bar {
+    background-color: #00BD6C;
+    margin-top: 4rem;
+}
+
 .user-profile-preferences-set-preferences-header {
     text-align: center;
     background-color: #0367B4;
@@ -28,4 +33,11 @@
 
 select.dropdown-content li > a, selects.dropdown-content li > span {
     color: #0367B4;
+}
+
+span.user-profile-span-red-error-msg {
+    color: red;
+    display: inline-block;
+    position: relative;
+    top: -1rem;
 }
