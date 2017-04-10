@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-
+import { HttpModule, Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class FireBaseService {
@@ -10,14 +13,18 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-	
 
-	constructor(private af: AngularFire) { }
+	private rest;
+	private cit;
+	private st;	
+	private res;
+	
+	constructor(private af: AngularFire, private getRestHttp: Http) { }
 	
 	//get cuisine by name
 	getCuisine(name: string) {
 		this.fbCuis = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>;
-		console.log(this.fbCuis);
+		//console.log(this.fbCuis);
 		return this.fbCuis;
 	}
 	//gets all cuisine types
@@ -41,13 +48,19 @@ export class FireBaseService {
 
 		return this.dishesForCuisineName;
 	}
-
-	getRestaurantBasedOnLocation(){
-		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/Location/Lubbock',{
-
-		}) as FirebaseListObservable<restaurant []>;
-
-		return this.firebaseCuisines;
+	//returns a list of restaurant objects from google's place api
+	getRestaurantsBasedOnLocation(input: string, city: string, state: string){	
+		let st = state;
+		let cit = city;	
+		let inp = input;
+		let googleResturl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants'+cit+'+'+st+'+contains '+inp+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
+		return this.getRestHttp.get(googleResturl).map( data => {
+				if (data != null){
+					this.res = data.json();
+					//console.log(this.res);
+					return this.res;
+				}
+			})
 	}
 
 	//returns dish information
@@ -56,11 +69,47 @@ export class FireBaseService {
 		return this.fbDish;
 	}
 
+	/* Returns a restaurant identifier from Google's Place Api
+	 * Takes as parameter the city, state and name of the restaurant
+	 */
+	getRestaurantId(restName: string, city: string, state: string){
+		let rest = restName;
+		let cit = city;
+		let st = state;
+		let googleResturl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+rest+'+'+cit+'+'+st+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
+		return this.getRestHttp.get(googleResturl).map( data => {
+				if (data != null){
+					this.res = data.json().results[0].place_id;
+					//console.log(this.res);
+					return this.res;
+				}
+			})
+	}
+
+	/* Returns restaurant details from Google's Place Api
+	 * based on a google id parameter
+	 */
+	getRestaurantDetails(restId){
+		let googleRestDetailsurl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+restId+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
+			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
+				if (response != null){
+					let body = response.json();
+					//console.log(body);
+					return body;
+				}
+		});		
+	}
+
+	postRestaurantId(restid){
+		
+	}
+
 	//returns comments
 	getComments(dish_id) {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
 			return this.fbComments;
 	}
+
 	 //Updates a cuisine's likes by one,*** Needs authentication***
   	updateCuisinelikes(cuisineObj: cuisine, likes){
 	  	let name = cuisineObj.$key;
@@ -68,9 +117,9 @@ export class FireBaseService {
 	  	let likeInc = likes + 1;
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
+	}
+	
 }
-}
-
 interface cuisines {
 	$key?: string;
 	image_url?: string;
@@ -105,7 +154,6 @@ interface restaurant {
 	$key?:string;
 	avg_rating: number;
 }
-
 interface restaurants {
 	restaurant_city: string;
 	restaurant_name: string;

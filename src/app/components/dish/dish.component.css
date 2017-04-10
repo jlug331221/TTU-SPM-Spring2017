@@ -29,5 +29,9 @@ button{
 .comhover{
     cursor: pointer;
 }
+.hours{
+    font-size: 12px;
+}
+
 
 
