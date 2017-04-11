@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-import { Http, Response, Headers, RequestOptions, HttpModule } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, HttpModule, Jsonp, URLSearchParams } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import * as firebase from 'firebase';
 import 'rxjs/add/operator/map';
@@ -19,7 +19,7 @@ export class FireBaseService {
 	longitude:any;
 	apiUrl:string;
 	private res;
-	constructor(private af: AngularFire, private http:Http) { }
+	constructor(private af: AngularFire, private http:Http, private jsonp:Jsonp) { }
 	
 	//get cuisine by name
 	getCuisine(name: string) {
@@ -107,7 +107,8 @@ export class FireBaseService {
 			
 			
 		});
-		return this.http.get(this.apiUrl).map(data=>{
+		
+		return this.jsonp.get(this.apiUrl).map(data=>{
 			if (data != null){
 				this.res = data.json();
 				console.log(this.res);

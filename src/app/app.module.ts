@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { RouterModule, Routes} from '@angular/router';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FireBaseService } from './services/firebase.service';
@@ -57,6 +57,7 @@ const myFirebaseAuthConfig = {
     FormsModule,
 	FlashMessagesModule,
     HttpModule,
+	 JsonpModule,
     RatingModule,
 	RouterModule.forRoot(appRoutes)
   ],

@@ -21,7 +21,7 @@ declare var jQuery:any;
     restaurants:any;
 	cuisine_names:any;
 	selectedCuisine:any;
-	
+	gotresult:string;
 	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
    
    ngOnChanges(){
@@ -29,17 +29,22 @@ declare var jQuery:any;
    }	
  
    ngOnInit() {
-   	  this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-   		    	this.restaurants = response;
-    		 	console.log(this.restaurants);
-   		});
+	this.fireBaseService.getLocation().subscribe(response=>{
+		if(response.results!=null){
+			this.restaurants = response.results;
+			this.gotresult="true";
+			console.log("this.restaurants"+ response);
+		}
+	});
+   	 /* this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+   		    	//this.restaurants = response;
+    		 	//console.log(this.restaurants);
+   		});*/
 		this.fireBaseService.getCuisines().subscribe(response => {
 			this.cuisine_names= response;
 			
 		})
-		this.fireBaseService.getLocation().subscribe(response=>{
-			console.log(response);
-		});
+		
    	}
    	onSubmit(){
 		
