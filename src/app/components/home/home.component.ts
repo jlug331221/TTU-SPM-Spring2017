@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FireBaseService } from '../../services/firebase.service'
+import { HttpModule, Http} from '@angular/http';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +22,12 @@ export class HomeComponent implements OnInit {
       });  
   
     }
-      likeCuisine(cuisine){
+    likeCuisine(cuisine){
       this.likes = cuisine.likes;
       this.cuisine = cuisine;
       this.fireBaseService.updateCuisinelikes(this.cuisine, this.likes);
       //console.log(cuisine.likes);
-      };
+    };
   }
       
   

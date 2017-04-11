@@ -3,8 +3,6 @@ import {FormControl} from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { CompleterService, CompleterData } from 'ng2-completer';
 import { FireBaseService } from '../../services/firebase.service';
-import { FlashMessagesService } from 'angular2-flash-messages';
-import {Router} from '@angular/router';
 
 declare var jQuery:any;
 
@@ -15,47 +13,30 @@ declare var jQuery:any;
 })
  export class SettingsComponent implements OnInit,OnChanges {
     elementRef: ElementRef;	
-	image:any;
-	restaurantName:any;
-	dish_name:any;
-    restaurants:any;
-	cuisine_names:any;
-	selectedCuisine:any;
-	
-	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
+    //list:Array<restaurants> = [];
+   //restaurants:Array<string> = [];
+   restaurants:any;	
    
+   constructor(elementRef: ElementRef, private fireBaseService:FireBaseService) { 
+   	this.elementRef = elementRef;
+   }
    ngOnChanges(){
  	 
    }	
  
    ngOnInit() {
-   	  this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-   		    	this.restaurants = response;
-    		 	console.log(this.restaurants);
-   		});
-		this.fireBaseService.getCuisines().subscribe(response => {
-			this.cuisine_names= response;
-			
-		})
-		this.fireBaseService.getLocation().subscribe(response=>{
-			console.log(response);
-		});
-   	}
-   	onSubmit(){
-		
-   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName).subscribe(status=>{
-   			 console.log("Status is" + status);
-   	 		if(status!="Error"){
-   	 			console.log('added');
-   	 			this.router.navigate(['/']);
-   	 			this.flash.show('Thank You for your input',{cssClass: 'alert-success', timeout: 5000});
-   	 		}else{
-   	 			console.log('Not added');
-   	 			this.flash.show('Please add valid message',{cssClass: 'alert-success', timeout: 5000});
-   	 			this.router.navigate(['/']);
-   	 		}
-   		});
-	}
+  	  //this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+  		   // this.restaurants=response;
+   		 	//console.log(response[0].$key);	
+      //});
+   }
+ 
+   ngAfterViewInit(){
+ 	  let newData = jQuery.extend({}, jQuery('input.autocomplete').autocomplete());
+  
+      //this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+ 		//});
+   }
  }
  /*
  		  for(let name of response){
