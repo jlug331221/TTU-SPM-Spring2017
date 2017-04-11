@@ -17,6 +17,7 @@
     <div class="col s12">
         <div id="set-user-profile-preferences-modal" class="modal modal-fixed-footer">
             <form #userPrefForm="ngForm">
+
                 <div class="modal-content">
                     <h4>Set your preferneces below</h4>
 
@@ -34,13 +35,13 @@
 
                     <div class="row">
                         <div class="input-field col s12 m6 l6 form-group">
-                            <label>City</label>
+                            <label>Enter Your Home City</label>
                             <input type="text" class="form-control" name="location_city" [(ngModel)]="location_city" required>
                         </div>
 
                         <div class="input-field col s12 m6 l6 form-group">
                             <select #stateSelectOption ngControl="stateSelectOption" class="form-control" required>
-                                <option [value]="" disabled selected>Choose your state</option>
+                                <option [value]="" disabled selected>State</option>
                                 <option *ngFor="let state of states" [value]="state.value">{{state.name}}</option>
                             </select>
                             <span class="user-profile-span-red-error-msg" *ngIf="mustEnterState"><small>Please choose your state</small></span>
@@ -59,6 +60,7 @@
                 </div>
 
                 <div class="modal-footer">
+                    <!-- <a [routerLink]="['/user-profile']" type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">Update Profile</a> -->
                     <button id="modal-button" [disabled]="! userPrefForm.form.valid || ! stateSelectOption.value" (click)="addUserToDatabase(stateSelectOption.value, dietSelectOption.value)" type="button" class="waves-effect waves-green btn-flat">Update Profile</button>
                 </div>
             </form>

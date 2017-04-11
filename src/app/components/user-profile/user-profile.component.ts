@@ -1,9 +1,12 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FireBaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
 
 import { User } from '../../interfaces/user.interface';
+
+// JQuery declaration variable
+declare var $:any;
 
 @Component({
   selector: 'app-user-profile',
@@ -312,7 +315,7 @@ export class UserProfileComponent implements OnInit {
      */
     addUserToDatabase(stateSelectOption: string, dietSelectOption: string) {
         //console.log(this.DOMelRef.nativeElement.querySelector('#modal-button').style);
-        console.log(this.DOMelRef.nativeElement.querySelector('#set-user-profile-preferences-modal'));
+        //console.log(this.DOMelRef.nativeElement.querySelector('#set-user-profile-preferences-modal'));
         this.mustEnterState = false;
         this.mustEnterDiet = false;
 
@@ -341,7 +344,6 @@ export class UserProfileComponent implements OnInit {
             this.fireBaseService.addNewUser(this.newUser).then(function() {
                 //navigate back to user profile page
                 console.log("Added user to db");
-                this.loading = false;
             });
         }
     }
@@ -358,10 +360,11 @@ export class UserProfileComponent implements OnInit {
         this.userInfoFromFirebase = this.af.database.object('https://spm-spring2017-7fbab.firebaseio.com/users/' + authData.uid, { preserveSnapshot: true });
 
         this.userInfoFromFirebase.subscribe(snapshot => {
-            //console.log(snapshot.val());
+            this.loading = true;
+
             if(! snapshot.val()) {
                 this.loading = false;
-                
+
                 // user does not exist, have user set up intial profile
                 this.userExists = false;
             } else {
@@ -380,8 +383,17 @@ export class UserProfileComponent implements OnInit {
         });
     }
 
+    /*openModal() {
+        //alert('You want to open the modal');
+            $('.modal').modal({
+                dismissible: true,
+                opacity: .8,
+                inDuration: 300,
+                outDuration: 200,
+            });
+    }*/
+
     ngOnInit() {
-        this.loading = true;
 
         this.af.auth.subscribe(authData => {
 
@@ -396,7 +408,13 @@ export class UserProfileComponent implements OnInit {
 
         });
 
+    }
 
+    ngAfterViewInit() {
+        //console.log($('#setUserProfilePrefModal'));
+        /*$(document).ready(function() {
+            $('#setUserProfilePrefModal').modal('open')
+        });*/
     }
 
 }
