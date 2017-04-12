@@ -16,11 +16,28 @@ export class FireBaseService {
 	fbCuis: FirebaseObjectObservable<any>;
 	result:any;
 	latitude:any;
+	commentObject:comments;
+	authData:any;
 	longitude:any;
 	apiUrl:string;
 	private res;
 	constructor(private af: AngularFire, private http:Http, private jsonp:Jsonp) { }
 	
+	setAuthData(auth){
+		this.authData= auth;
+	}
+	
+	getAuthData(){
+		return this.authData;
+	}
+	
+	
+	setComments(dish_id,user_name,comment_data){
+		this.commentObject ={user:user_name, comment_data:comment_data, rating:5};
+		
+		
+		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
+	}
 	//get cuisine by name
 	getCuisine(name: string) {
 		this.fbCuis = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>;
@@ -137,7 +154,7 @@ interface dish {
 }
 interface comments {
 	user: string;
-	comment: string;
+	comment_data: string;
 	rating: number;
 }
 interface dishes {

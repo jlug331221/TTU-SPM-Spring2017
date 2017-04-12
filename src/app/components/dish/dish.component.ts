@@ -1,6 +1,7 @@
 import { Component, OnInit, Directive, Input, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 
@@ -15,8 +16,9 @@ export class DishComponent implements OnInit {
   private dish: any;
   private comments: any[];
   private starCount_avg: number;
-
-  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) {}
+  private authData:any;
+  private addedComment:string;	
+  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire) {}
 
   ngOnInit() {
     //gets route parameter
@@ -34,4 +36,10 @@ export class DishComponent implements OnInit {
             //console.log(this.comments);
       });
     }
+	onAddedComment(){
+		console.log("Adding Dish");
+		this.authData=this.fireBaseService.getAuthData();
+		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment);
+		this.addedComment="";
+	}
   }
