@@ -1,11 +1,12 @@
-<div *ngIf="loading" class="row container">
+<!-- <div *ngIf="loading" class="row container">
     <div class="col s12">
         <div class="user-profile-progress-bar progress">
             <div class="indeterminate"></div>
         </div>
     </div>
-</div>
+</div> -->
 
+<!-- Show user profile preferences form -->
 <div *ngIf="! userExists && ! loading" class="row">
     <div class="col s12 user-profile-preferences-set-preferences-header">
         <h3 class="user-profile-preferences-h3">Go ahead and setup your profile</h3>
@@ -17,7 +18,6 @@
     <div class="col s12">
         <div id="set-user-profile-preferences-modal" class="modal modal-fixed-footer">
             <form #userPrefForm="ngForm">
-
                 <div class="modal-content">
                     <h4>Set your preferneces below</h4>
 
@@ -61,20 +61,78 @@
 
                 <div class="modal-footer">
                     <!-- <a [routerLink]="['/user-profile']" type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">Update Profile</a> -->
-                    <button id="modal-button" [disabled]="! userPrefForm.form.valid || ! stateSelectOption.value" (click)="addUserToDatabase(stateSelectOption.value, dietSelectOption.value)" type="button" class="waves-effect waves-green btn-flat">Update Profile</button>
+                    <button id="modal-button" [disabled]="! userPrefForm.form.valid || ! stateSelectOption.value" (click)="addUserToDatabase(stateSelectOption.value, dietSelectOption.value)" type="button" class="waves-effect waves-green btn-flat">Add Profile</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- Show profile of user -->
 <div *ngIf="! loading && userExists" class="row container">
-    <div class="col s12 m6 offset-m3 l8 offset-l2">
-        <!-- Need to create layout for profile NOT FINISHED YET -->
-        <h3>{{ user_first_name }}</h3>
-        <h3>{{ user_last_name }}</h3>
-        <h3>{{ user_location_city }}</h3>
-        <h3>{{ user_location_state }}</h3>
-        <h3>{{ user_diet }}</h3>
+    <div class="col s12 m7 offset-m3 l9 offset-l2">
+        <div class="card-panel grey lighten-5 z-depth-1 hoverable user-profile-card">
+            <div class="row valign-wrapper">
+                <div class="col s2">
+                    <img src="{{ user_profile_photo_url }}" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                </div>
+                <div class="col s8">
+                    <span class="black-text user-profile-name">
+                        {{ user_first_name }}
+                    </span>
+                    <span class="black-text user-profile-name">
+                        {{ user_last_name }}
+                    </span>
+                </div>
+                <div class="col s2">
+                    <a (click)="editProfile()"><i id="user-profile-edit" class="material-icons">mode_edit</i></a>
+                </div>
+            </div>
+
+            <div class="row user-profile-info-no-edit">
+                <div class="col s12">
+                    <h5 class="user-profile-h5-small-margin-bottom"><small>{{ user_location_city }}, {{ user_location_state }}</small></h5>
+                    <h5><small>Diet: {{ user_diet }}</small></h5>
+                </div>
+            </div>
+        </div>
+
+
+        <form class="user-profile-info-edit" #userPrefEditForm="ngForm">
+            <h5>Edit your info below:</h5>
+
+            <div class="input-field col s12 form-group location_city-input">
+                <label>City</label>
+                <input type="text" class="form-control" name="location_city" [(ngModel)]="location_city" required>
+            </div>
+
+            <div class="input-field col s12 form-group">
+                <select #stateSelectEditOption ngControl="stateSelectEditOption" class="form-control" required>
+                    <option [value]="" disabled selected>Choose your state</option>
+                    <option *ngFor="let state of states" [value]="state.value">{{state.name}}</option>
+                </select>
+                <span class="user-profile-span-red-error-msg" *ngIf="mustEnterState"><small>Please choose your state</small></span>
+            </div>
+
+            <div class="input-field col s12 form-group">
+                <select #dietSelectEditOption ngControl="dietSelectEditOption" class="form-control" required>
+                    <option [value]="" disabled selected>Choose your diet</option>
+                    <option *ngFor="let diet of diets" [value]="diet.value">{{diet.name}}</option>
+                </select>
+                <span class="user-profile-span-red-error-msg" *ngIf="mustEnterDiet"><small>Please choose your diet</small></span>
+            </div>
+
+            <div class="col s12">
+                <button id="edit-profile-button" [disabled]="! userPrefEditForm.form.valid || ! stateSelectEditOption.value" (click)="addUserToDatabase(stateSelectOption.value, dietSelectEditOption.value)" type="button" class="waves-effect waves-green btn-flat">Update Profile</button>
+            </div>
+        </form>
+
+        <section class="user-profile-comments">
+            <h5><strong>Your most recent comments</strong></h5><br><br><br>
+        </section>
+
+        <section class="user-profile-favorite-dishes">
+            <h5><strong>Here are your favorite dishes</strong></h5>
+        </section>
     </div>
 </div>

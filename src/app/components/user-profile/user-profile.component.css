@@ -41,3 +41,28 @@ span.user-profile-span-red-error-msg {
     position: relative;
     top: -1rem;
 }
+
+span.user-profile-name {
+    font-size: 2rem;
+}
+
+div.user-profile-card {
+    margin-bottom: 3rem;
+}
+
+h5.user-profile-h5-small-margin-bottom {
+    margin-bottom: -1rem;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+form.user-profile-info-edit {
+    display: none;
+    margin-bottom: 3rem;
+}
+
+button#edit-profile-button {
+    margin-bottom: 4rem;
+}

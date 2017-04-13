@@ -29,6 +29,7 @@ export class UserProfileComponent implements OnInit {
     private user_location_city;
     private user_location_state;
     private user_diet;
+    private user_profile_photo_url;
 
     // Form fields
     private first_name: any;
@@ -298,6 +299,10 @@ export class UserProfileComponent implements OnInit {
         {
             "name": "Pescatarian",
             "value": "pescatarian"
+        },
+        {
+            "name": "Atkins",
+            "value": "atkins"
         }
     ]
 
@@ -372,11 +377,14 @@ export class UserProfileComponent implements OnInit {
 
                 this.user = snapshot.val();
 
+                console.log(this.user);
+
                 this.user_first_name = this.user.first_name;
                 this.user_last_name = this.user.last_name;
                 this.user_location_city = this.user.location_city;
                 this.user_location_state = this.user.location_state;
                 this.user_diet = this.user.diet;
+                this.user_profile_photo_url = this.user.profile_photo_url;
 
                 this.loading = false;
             }
@@ -393,11 +401,22 @@ export class UserProfileComponent implements OnInit {
             });
     }*/
 
+    editProfile() {
+        $('.user-profile-info-no-edit').hide();
+        $('.user-profile-comments').hide();
+        $('.user-profile-favorite-dishes').hide();
+
+        $('select').material_select();
+        $('.user-profile-info-edit').css("display", "block");
+    }
+
     ngOnInit() {
+        console.log($('#user-profile-edit').html());
 
         this.af.auth.subscribe(authData => {
 
             if(authData != null) {
+                this.loading = true;
 
                 this.authDataUID = authData.uid;
                 this.authDataPhotoUrl = authData.google.photoURL;
@@ -410,11 +429,11 @@ export class UserProfileComponent implements OnInit {
 
     }
 
-    ngAfterViewInit() {
+    /*ngAfterViewInit() {
         //console.log($('#setUserProfilePrefModal'));
-        /*$(document).ready(function() {
+        $(document).ready(function() {
             $('#setUserProfilePrefModal').modal('open')
-        });*/
-    }
+        });
+    }*/
 
 }
