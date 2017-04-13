@@ -78,7 +78,7 @@ export class FireBaseService {
 		let st = state;
 		let googleResturl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantId/'+rest+'/'+city+'/'+state
 		
-		this.getRestHttp.get(googleResturl).subscribe( data => {
+		return this.getRestHttp.get(googleResturl).map( data => {
 				if (data != null){
 					this.res = data.json().results[0].place_id;
 					//console.log(this.res);
@@ -92,7 +92,7 @@ export class FireBaseService {
 	 */
 	getRestaurantDetails(restId){
 		let googleRestDetailsurl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantDetails/'+restId
-			 this.getRestHttp.get(googleRestDetailsurl).subscribe( response => {
+			 return this.getRestHttp.get(googleRestDetailsurl).map( response => {
 				if (response != null){
 					let body = response.json();
 					//console.log(body);
