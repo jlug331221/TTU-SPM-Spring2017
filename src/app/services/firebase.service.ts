@@ -14,6 +14,7 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
+	aPi:any;
 	result:any;
 	latitude:any;
 	commentObject:comments;
@@ -21,7 +22,7 @@ export class FireBaseService {
 	longitude:any;
 	apiUrl:string;
 	private res;
-	constructor(private af: AngularFire, private http:Http, private jsonp:Jsonp) { }
+	constructor(private af: AngularFire, private http:Http) { }
 	
 	setAuthData(auth){
 		this.authData= auth;
@@ -31,9 +32,15 @@ export class FireBaseService {
 		return this.authData;
 	}
 	
-	
+	getMapApi(){
+		this.http.get('https://powerful-thicket-30479.herokuapp.com/listUsers').subscribe(res=>{
+			res.json();
+			console.log(res.json());
+		});
+		
+	}
 	setComments(dish_id,user_name,comment_data){
-		this.commentObject ={user:user_name, comment_data:comment_data, rating:5};
+		this.commentObject ={user:user_name, comment:comment_data, rating:5};
 		
 		
 		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
@@ -110,7 +117,8 @@ export class FireBaseService {
 		this.latitude=33.5864378802915;
 		this.longitude=-101.8690557197085;
 		
-		this.apiUrl='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=33.5864378802915,-101.8690557197085&radius=5000&type=restaurant&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas';
+		
+		this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
 		
 		navigator.geolocation.getCurrentPosition(position=>{
 			this.latitude= position.coords.latitude;
@@ -118,20 +126,19 @@ export class FireBaseService {
 			console.log(position.coords.latitude);
 			console.log(position.coords.longitude);
    		 	
-			this.apiUrl='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
-   			this.latitude+','+this.longitude+
-   			'&radius=5000&type=restaurant&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas';
+			this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
 			
 			
 		});
 		
-		return this.jsonp.get(this.apiUrl).map(data=>{
+		return this.http.get(this.apiUrl).map(data=>{
 			if (data != null){
 				this.res = data.json();
 				console.log(this.res);
 				return this.res;
 			}
 		});
+		
 		
 	}
 	
@@ -154,7 +161,7 @@ interface dish {
 }
 interface comments {
 	user: string;
-	comment_data: string;
+	comment: string;
 	rating: number;
 }
 interface dishes {
