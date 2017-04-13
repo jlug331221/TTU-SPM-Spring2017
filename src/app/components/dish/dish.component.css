@@ -27,11 +27,23 @@ button{
     float: right;
 }
 .comhover{
+    
     cursor: pointer;
+    font-size: 16px;
+}
+.rate{
+    cursor: pointer;
+    padding-left: 280px;
+    display: inline-block;
+    font-size: 16px;
 }
 .hours{
     font-size: 12px;
 }
-
+#ratingModal{
+    align-self: center;
+    height: 200px;
+    width: 300px;
+}
 
 

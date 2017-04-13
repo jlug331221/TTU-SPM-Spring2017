@@ -4,6 +4,8 @@ import { FireBaseService } from '../../services/firebase.service';
 import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
+import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+
 
 @Component({
   selector: 'app-dish',
@@ -15,14 +17,21 @@ export class DishComponent implements OnInit {
   private dish: any;
   private comments: any[]; 
   private starCount_avg: number;
-  private res: any;
+  private starSelect;
   private details: any;
-  private open: any[];
-  private close: any[];
+  private userID; 
+  private userExists = false;
 
-  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) {}
+  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService, private af: AngularFire) {}
 
   ngOnInit() {
+    this.af.auth.subscribe(authData => {
+            if(authData != null) {
+                this.userExists = true;
+                this.userID = authData.uid;
+            }
+
+        });
     //gets route parameter
      this.route.params.subscribe(params => {
             this.dish_id = params['$key'];
@@ -49,8 +58,15 @@ export class DishComponent implements OnInit {
            // console.log(this.comments);
       });
    
-    }                        
-}
+    } 
+    rateDish(){
+      if (this.userExists != false){
+          this.fireBaseService.checkUserRatingExists(this.userID, this.starSelect, this.dish_id)
+      }
+    }
+    
+    }
+
   
 
   
