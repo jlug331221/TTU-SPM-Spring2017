@@ -76,8 +76,9 @@ export class FireBaseService {
 		let rest = restName;
 		let cit = city;
 		let st = state;
-		let googleResturl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+rest+'+'+cit+'+'+st+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
-		return this.getRestHttp.get(googleResturl).map( data => {
+		let googleResturl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantId/'+rest+'/'+city+'/'+state
+		
+		this.getRestHttp.get(googleResturl).subscribe( data => {
 				if (data != null){
 					this.res = data.json().results[0].place_id;
 					//console.log(this.res);
@@ -90,8 +91,8 @@ export class FireBaseService {
 	 * based on a google id parameter
 	 */
 	getRestaurantDetails(restId){
-		let googleRestDetailsurl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+restId+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
-			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
+		let googleRestDetailsurl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantDetails/'+restId
+			 this.getRestHttp.get(googleRestDetailsurl).subscribe( response => {
 				if (response != null){
 					let body = response.json();
 					//console.log(body);
@@ -118,6 +119,7 @@ export class FireBaseService {
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
 	}
+
 	
 }
 interface cuisines {
