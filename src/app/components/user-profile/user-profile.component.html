@@ -85,7 +85,8 @@
                     </span>
                 </div>
                 <div class="col s2">
-                    <a (click)="editProfile()"><i id="user-profile-edit" class="material-icons">mode_edit</i></a>
+                    <a (click)="editProfile()"><i id="user-profile-edit-icon" class="material-icons">mode_edit</i></a>
+                    <a (click)="cancelEditProfile()"><i id="user-profile-cancel-icon" class="material-icons">stop</i></a>
                 </div>
             </div>
 
@@ -102,28 +103,28 @@
             <h5>Edit your info below:</h5>
 
             <div class="input-field col s12 form-group location_city-input">
-                <label>City</label>
-                <input type="text" class="form-control" name="location_city" [(ngModel)]="location_city" required>
+                <label>Your New City</label>
+                <input type="text" class="form-control" name="location_edit_city" [(ngModel)]="location_edit_city" required>
             </div>
 
             <div class="input-field col s12 form-group">
                 <select #stateSelectEditOption ngControl="stateSelectEditOption" class="form-control" required>
-                    <option [value]="" disabled selected>Choose your state</option>
+                    <option [value]="" disabled selected>Choose your new state</option>
                     <option *ngFor="let state of states" [value]="state.value">{{state.name}}</option>
                 </select>
-                <span class="user-profile-span-red-error-msg" *ngIf="mustEnterState"><small>Please choose your state</small></span>
+                <span class="user-profile-span-red-error-msg" *ngIf="mustEnterEditState"><small>Please choose your new state</small></span>
             </div>
 
             <div class="input-field col s12 form-group">
                 <select #dietSelectEditOption ngControl="dietSelectEditOption" class="form-control" required>
-                    <option [value]="" disabled selected>Choose your diet</option>
+                    <option [value]="" disabled selected>Choose your new diet</option>
                     <option *ngFor="let diet of diets" [value]="diet.value">{{diet.name}}</option>
                 </select>
-                <span class="user-profile-span-red-error-msg" *ngIf="mustEnterDiet"><small>Please choose your diet</small></span>
+                <span class="user-profile-span-red-error-msg" *ngIf="mustEnterEditDiet"><small>Please choose your new diet</small></span>
             </div>
 
             <div class="col s12">
-                <button id="edit-profile-button" [disabled]="! userPrefEditForm.form.valid || ! stateSelectEditOption.value" (click)="addUserToDatabase(stateSelectOption.value, dietSelectEditOption.value)" type="button" class="waves-effect waves-green btn-flat">Update Profile</button>
+                <button id="edit-profile-button" [disabled]="! userPrefEditForm.form.valid" (click)="editUserPref(stateSelectEditOption.value, dietSelectEditOption.value)" type="button" class="waves-effect waves-green btn-flat">Update Profile</button>
             </div>
         </form>
 

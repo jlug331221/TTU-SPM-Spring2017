@@ -48,7 +48,9 @@ export class FireBaseService {
 
 	/**
 	 * Add new Foogle user to the database.
+	 *
 	 * @param {User} userObj [User info from the user-profile component form]
+	 * @return User as FirebaseObjectObservable<any>
 	 */
 	addNewUser(userObj: User) {
 		return this.af.database.object('users/' + userObj.uid).set({
@@ -59,6 +61,20 @@ export class FireBaseService {
 		    location_state: userObj.location_state,
 		    profile_photo_url: userObj.profile_photo_url,
 		    diet: userObj.diet
+		});
+	}
+
+	/**
+	* Update user profile in database
+	*
+	* @param {User} userObj [User profile info from the user-profile edit form]
+	* @return User as FirebaseObjectObservable<any>
+	*/
+	editUserProfilePref(userObj: User) {
+		return this.af.database.object('users/' + userObj.uid).update({
+			location_city: userObj.location_city,
+			location_state: userObj.location_state,
+			diet: userObj.diet
 		});
 	}
 
@@ -81,7 +97,8 @@ export class FireBaseService {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
 		return this.fbComments;
 	}
-	 //Updates a cuisine's likes by one,*** Needs authentication***
+
+	//Updates a cuisine's likes by one,*** Needs authentication***
   	updateCuisinelikes(cuisineObj: cuisine, likes){
 	  	let name = cuisineObj.$key;
 	 	this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>

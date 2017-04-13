@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
 
     private userInfoFromFirebase: any;
     private newUser: User;
+    private editUser: User;
     private user: User;
 
     //user info variables to display in profile
@@ -35,12 +36,15 @@ export class UserProfileComponent implements OnInit {
     private first_name: any;
     private last_name: any;
     private location_city: any;
+    private location_edit_city: any;
     private location_state: any;
     private diet: any;
 
     // Form validation variables
     private mustEnterState: any;
     private mustEnterDiet: any;
+    private mustEnterEditState: any;
+    private mustEnterEditDiet: any;
 
     private loading: any;
 
@@ -312,6 +316,51 @@ export class UserProfileComponent implements OnInit {
         private router: Router, private DOMelRef: ElementRef) { }
 
     /**
+     * Edit Foogle user to the database.
+     *
+     * @param {string} stateSelectEditOption [State select option from edit form]
+     * @param {string} dietSelectEditOption [Diet select option from edit form]
+     * @return void
+     */
+    editUserPref(stateSelectEditOption: string, dietSelectEditOption: string) {
+        this.mustEnterEditState = false;
+        this.mustEnterEditDiet = false;
+
+        // Naive validation
+        if(stateSelectEditOption == "Choose your state") { this.mustEnterEditState = true; }
+        if(dietSelectEditOption == "Choose your diet") { this.mustEnterEditDiet = true; }
+
+        // Form is only submitted if validation passes -> user is added to DB
+        if(stateSelectEditOption != "Choose your state" && dietSelectEditOption != "Choose your diet") {
+            this.editUser = {
+                uid: this.authDataUID,
+                first_name: this.user.first_name,
+                last_name: this.user.last_name,
+                location_city: this.location_edit_city,
+                location_state: stateSelectEditOption,
+                profile_photo_url: this.authDataPhotoUrl,
+                diet: dietSelectEditOption
+            };
+
+            console.log(this.editUser);
+
+            //edit user in DB and update user-profile data within HTML
+            this.fireBaseService.editUserProfilePref(this.editUser).then(function() {
+                console.log("User profile preferences updated");
+
+                $('#user-profile-edit-icon').css("display", "block");
+                $('#user-profile-cancel-icon').hide();
+                $('.user-profile-info-no-edit').css("display", "block");
+                $('.user-profile-comments').css("display", "block");
+                $('.user-profile-favorite-dishes').css("display", "block");
+
+                $('.user-profile-info-edit').hide();
+                $('.user-profile-info-edit')[0].reset();
+            });
+        }
+    }
+
+    /**
      * Add new Foogle user to the database.
      *
      * @param {string} stateSelectOption [State select option from form]
@@ -341,9 +390,6 @@ export class UserProfileComponent implements OnInit {
             };
 
             console.log(this.newUser);
-
-            //close modal
-            //this.DOMelRef.nativeElement.querySelector('#set-user-profile-preferences-modal');
 
             //add user to DB
             this.fireBaseService.addNewUser(this.newUser).then(function() {
@@ -392,16 +438,19 @@ export class UserProfileComponent implements OnInit {
     }
 
     /*openModal() {
-        //alert('You want to open the modal');
-            $('.modal').modal({
-                dismissible: true,
-                opacity: .8,
-                inDuration: 300,
-                outDuration: 200,
-            });
+        alert('You want to open the modal');
+        console.log($('#set-user-profile-preferences-modal').modal({}))
+        $('#set-user-profile-preferences-modal').modal({
+            dismissible: true,
+            opacity: .8,
+            inDuration: 300,
+            outDuration: 200,
+        });
     }*/
 
     editProfile() {
+        $('#user-profile-edit-icon').hide();
+        $('#user-profile-cancel-icon').css("display", "block");
         $('.user-profile-info-no-edit').hide();
         $('.user-profile-comments').hide();
         $('.user-profile-favorite-dishes').hide();
@@ -410,13 +459,23 @@ export class UserProfileComponent implements OnInit {
         $('.user-profile-info-edit').css("display", "block");
     }
 
+    cancelEditProfile() {
+        $('#user-profile-edit-icon').css("display", "block");
+        $('#user-profile-cancel-icon').hide();
+        $('.user-profile-info-no-edit').css("display", "block");
+        $('.user-profile-comments').css("display", "block");
+        $('.user-profile-favorite-dishes').css("display", "block");
+
+        $('.user-profile-info-edit').hide();
+        $('.user-profile-info-edit')[0].reset();
+    }
+
     ngOnInit() {
-        console.log($('#user-profile-edit').html());
+        //console.log($('#user-profile-edit').html());
 
         this.af.auth.subscribe(authData => {
 
             if(authData != null) {
-                this.loading = true;
 
                 this.authDataUID = authData.uid;
                 this.authDataPhotoUrl = authData.google.photoURL;
