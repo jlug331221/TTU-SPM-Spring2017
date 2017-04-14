@@ -5,7 +5,8 @@ import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
-
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'app-dish',
@@ -43,7 +44,7 @@ export class DishComponent implements OnInit {
             if(dish!= null){
             this.dish = dish;
             this.starCount_avg = dish.avg_rating;
-            //console.log(this.dish);
+            console.log(this.dish);
           }
            if(this.dish.place_id != null){
             this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
@@ -55,7 +56,7 @@ export class DishComponent implements OnInit {
 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
-           // console.log(this.comments);
+            console.log(this.comments);
       });
    
     } 

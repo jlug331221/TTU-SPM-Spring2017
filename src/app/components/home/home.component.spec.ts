@@ -79,14 +79,13 @@ describe('HomeComponent', () => {
 
         //tests google api request to get a restaurant id
     it('should return a restaurant id from googles place api',() => {
-        fbService.getRestaurantId("Olive Garden", "Lewisville", "Texas").subscribe(data =>{
+        this.fbService.getRestaurantId("Olive Garden", "Lewisville", "Texas").subscribe(data =>{
             this.res = data;
             console.log(this.res);
         });
         if(this.res != null) 
         expect(this.res).toBe("ChIJ_UypeeMuTIYRGtrKERCRj2U");
        });
-
 });
 
 interface cuisine{

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { HttpModule, Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 let getRestHttp: Http;
 let res;
@@ -13,6 +15,7 @@ export class FireBaseService {
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
 	fbUser: FirebaseObjectObservable<any>;
+	fbRating: FirebaseObjectObservable<any>;
 
 	private res;
 
@@ -68,12 +71,11 @@ export class FireBaseService {
 		let rest = restName;
 		let cit = city;
 		let st = state;
-		
-		let googleResturl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+rest+'+'+cit+'+'+st+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
+		let googleResturl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantId/'+ rest +'/'+ cit +'/'+'/'+ st
 		return this.getRestHttp.get(googleResturl).map( data => {
 				if (data != null){
 					this.res = data.json().results[0].place_id;
-					//console.log(this.res);
+					console.log(this.res);
 					return this.res;
 				}
 			})
@@ -83,20 +85,20 @@ export class FireBaseService {
 	 * based on a google id parameter
 	 */
 	getRestaurantDetails(restId){
-		let googleRestDetailsurl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+restId+'&key=AIzaSyAQvpmdy7gi3VVHuG0hnR0dRaU31MjtQas'
+		console.log(restId);
+		let googleRestDetailsurl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantDetails/'+restId
 			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
-				if (response != null){
+					if(response != null){
 					let body = response.json();
-					//console.log(body);
-					// Request methods you wish to allow					
+					console.log(body);				
 					return body;
 				}
-		});		
+		});			
 	}
 	checkUserRatingExists(user, rating, dish){
 		this.fbUser = this.af.database.object('/userRatings/'+ dish + '/' + user) as FirebaseObjectObservable<any>
 		if(!this.fbUser){
-			this.postDishRating(user,rating,dish);
+			this.postDishRating(user, rating, dish);
 		}
 		else{
 			this.updateDishRating(rating);
@@ -106,11 +108,22 @@ export class FireBaseService {
 		this.fbUser.update({rating: rating});
 	}
 	postDishRating(user, rating, dish) {
-		console.log(user, rating, dish);
-		this.af.database.object('userRatings/'+ dish + '/' + user).set({
+		let u = user;
+		let r = rating;
+		let d = dish;
+		//console.log(user, rating, dish);
+		this.af.database.object('userRatings/'+ d + '/' + u).set({
 			 rating: rating
 			}); 
 		}
+	//returns rating information
+	getRating(user, dish) {
+		let u = user;
+		let d = dish;
+		this.fbRating = this.af.database.object('userRatings/'+ d + '/' + u) as FirebaseObjectObservable<any>
+		return this.fbRating;
+	}
+
 	
 	//returns comments
 	getComments(dish_id) {
@@ -126,7 +139,6 @@ export class FireBaseService {
 		//console.log(cuisineObj);
 	}
 }
-
 interface cuisines {
 	$key?: string;
 	image_url?: string;
