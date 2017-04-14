@@ -24,7 +24,7 @@ export class UserProfileComponent implements OnInit {
     private editUser: User;
     private user: User;
 
-    //user info variables to display in profile
+    //user info variables to display in profile within HTML
     private user_first_name;
     private user_last_name;
     private user_location_city;
@@ -487,12 +487,5 @@ export class UserProfileComponent implements OnInit {
         });
 
     }
-
-    /*ngAfterViewInit() {
-        //console.log($('#setUserProfilePrefModal'));
-        $(document).ready(function() {
-            $('#setUserProfilePrefModal').modal('open')
-        });
-    }*/
 
 }

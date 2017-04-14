@@ -19,7 +19,7 @@ export class FireBaseService {
 	//get cuisine by name
 	getCuisine(name: string) {
 		this.fbCuis = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>;
-		console.log(this.fbCuis);
+		//console.log(this.fbCuis);
 		return this.fbCuis;
 	}
 
@@ -102,23 +102,12 @@ export class FireBaseService {
   	updateCuisinelikes(cuisineObj: cuisine, likes){
 	  	let name = cuisineObj.$key;
 	 	this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
-		console.log(this.fbCuisine);
+		//console.log(this.fbCuisine);
 	  	let likeInc = likes + 1;
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
 	}
 }
-
-/*interface user {
-	$key?: string;
-	uid: string;
-	first_name: string;
-	last_name: string;
-	location_city: string;
-	location_state: string;
-	profile_photo: string;
-	diet: string;
-}*/
 
 interface cuisines {
 	$key?: string;

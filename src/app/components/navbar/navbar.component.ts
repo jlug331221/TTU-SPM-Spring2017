@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import {Router} from '@angular/router';
 
-
-
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -18,9 +15,9 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-	  this.af.auth.subscribe(authData =>{
+	  this.af.auth.subscribe(authData => {
 
-		  if(authData!=null){
+		  if(authData!=null) {
 		  	console.log(authData);
 		  	this.userImage=authData.auth.photoURL;
 			this.userName= authData.auth.displayName;

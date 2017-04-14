@@ -85,15 +85,15 @@
                     </span>
                 </div>
                 <div class="col s2">
-                    <a (click)="editProfile()"><i id="user-profile-edit-icon" class="material-icons">mode_edit</i></a>
+                    <a (click)="editProfile()"><i id="user-profile-edit-icon" class="material-icons edit-icon">mode_edit</i></a>
                     <a (click)="cancelEditProfile()"><i id="user-profile-cancel-icon" class="material-icons">stop</i></a>
                 </div>
             </div>
 
             <div class="row user-profile-info-no-edit">
                 <div class="col s12">
-                    <h5 class="user-profile-h5-small-margin-bottom"><small>{{ user_location_city }}, {{ user_location_state }}</small></h5>
-                    <h5><small>Diet: {{ user_diet }}</small></h5>
+                    <h5 class="user-profile-h5-small-margin-bottom"><small class="user-profile-h5-small-city-state">{{ user_location_city }}, {{ user_location_state }}</small></h5>
+                    <h5><small class="user-profile-h5-small-diet">Diet: {{ user_diet }}</small></h5>
                 </div>
             </div>
         </div>
