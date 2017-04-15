@@ -19,13 +19,16 @@ import { ValidateService } from './services/validate.service';
 import { DishesComponent } from './components/dishes/dishes.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DishComponent } from './components/dish/dish.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 	{path:'settings', component: SettingsComponent},
 	{path: 'dishes/:cuisineName', component: DishesComponent},
   {path: 'dish/:$key', component: DishComponent},
+	{path: 'user-profile', component: UserProfileComponent}
 ];
+
 export const firebaseConfig = {
   	apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
     authDomain: "spm-spring2017-7fbab.firebaseapp.com",
@@ -33,6 +36,7 @@ export const firebaseConfig = {
     storageBucket: "spm-spring2017-7fbab.appspot.com",
     messagingSenderId: "544260738212"
 };
+
 const myFirebaseAuthConfig = {
   provider: AuthProviders.Google,
   method: AuthMethods.Popup
@@ -46,16 +50,17 @@ const myFirebaseAuthConfig = {
     DishesComponent,
     SettingsComponent,
     DishComponent,
+    UserProfileComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   imports: [
     CommonModule,
     BrowserModule,
-	  AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+	AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
     HttpModule,
     RatingModule,
-	  RouterModule.forRoot(appRoutes)
+	RouterModule.forRoot(appRoutes)
   ],
   providers: [ValidateService, FireBaseService],
   bootstrap: [AppComponent]
