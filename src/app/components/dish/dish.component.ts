@@ -44,25 +44,26 @@ export class DishComponent implements OnInit {
             if(dish!= null){
             this.dish = dish;
             this.starCount_avg = dish.avg_rating;
-            console.log(this.dish);
+            //console.log(this.dish);
           }
            if(this.dish.place_id != null){
             this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
                this.details = details
-              console.log(this.details);        
+              //console.log(this.details);        
             });
            }
       });
-
+    //gets comments 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
-            console.log(this.comments);
+            //console.log(this.comments);
       });
    
-    } 
+    }
+    //allows user to rate a dish if they are logged in 
     rateDish(){
       if (this.userExists != false){
-          this.fireBaseService.checkUserRatingExists(this.userID, this.starSelect, this.dish_id)
+          this.fireBaseService.updateDishRating(this.userID, this.starSelect, this.dish_id)
       }
     }
     

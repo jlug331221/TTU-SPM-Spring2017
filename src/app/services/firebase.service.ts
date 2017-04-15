@@ -16,6 +16,7 @@ export class FireBaseService {
 	fbCuis: FirebaseObjectObservable<any>;
 	fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
+	fbUserLike: FirebaseObjectObservable<any>; 
 
 	private res;
 
@@ -90,32 +91,63 @@ export class FireBaseService {
 			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
 					if(response != null){
 					let body = response.json();
-					console.log(body);				
+					//console.log(body);				
 					return body;
 				}
 		});			
 	}
-	checkUserRatingExists(user, rating, dish){
+	
+	//updates the dish rating for a user.  does not allow duplicate ratings.
+	updateDishRating(user, rating, dish){
 		this.fbUser = this.af.database.object('/userRatings/'+ dish + '/' + user) as FirebaseObjectObservable<any>
-		if(!this.fbUser){
-			this.postDishRating(user, rating, dish);
-		}
-		else{
-			this.updateDishRating(rating);
-		}
-	}
-	updateDishRating(rating){
+		//console.log(this.fbUser);
 		this.fbUser.update({rating: rating});
 	}
-	postDishRating(user, rating, dish) {
-		let u = user;
-		let r = rating;
-		let d = dish;
-		//console.log(user, rating, dish);
-		this.af.database.object('userRatings/'+ d + '/' + u).set({
-			 rating: rating
-			}); 
+
+	//updates the like field in theuserCuisineLike table to true or false 
+	//for a specific cuisine.  Tracks user input so no duplicates occur.
+	updateUserLike(user, cuisine){
+		this.fbUserLike= this.af.database.object('/userCuisineLikes/'+ cuisine.$key + '/' + user) as FirebaseObjectObservable<any>
+		let cuisLikes = cuisine.likes
+		let lik;
+
+		this.fbUserLike.subscribe(resp =>{
+			if(resp != null)
+			 lik = resp.likes;
+			 //console.log(lik);
+		})
+
+		if(lik){
+					this.updateUserCuisineLike(false);
+					lik = false;
+					cuisLikes = cuisLikes - 1
+					this.updateCuisineLikes(cuisine, cuisLikes);
+				}	
+			else{
+					this.updateUserCuisineLike(true);
+					lik = true;
+					cuisLikes = cuisLikes + 1
+					this.updateCuisineLikes(cuisine, cuisLikes);
+			}	
+	}
+	//increments the cuisine like field by + or - 1 depending on whether
+	//the user has liked the cuisine before.  The user has the ability to take away 
+	//a cuisine like.
+	updateUserCuisineLike(userLike){
+		this.fbUserLike.update({
+			 likes: userLike
+			});
 		}
+
+	//Updates a cuisine's likes by one.  User can only like a cuisine once.
+  	updateCuisineLikes(cuisineObj: cuisine, likes){
+	  	let lik = likes;
+		  let name = cuisineObj.$key;
+	 	this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
+		this.fbCuisine.update({likes: lik});
+		console.log(lik);
+	}
+	
 	//returns rating information
 	getRating(user, dish) {
 		let u = user;
@@ -129,14 +161,6 @@ export class FireBaseService {
 	getComments(dish_id) {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
 			return this.fbComments;
-	}
-	 //Updates a cuisine's likes by one,*** Needs authentication***
-  	updateCuisinelikes(cuisineObj: cuisine, likes){
-	  	let name = cuisineObj.$key;
-	 	this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
-	  	let likeInc = likes + 1;
-		this.fbCuisine.update({likes: likeInc});
-		//console.log(cuisineObj);
 	}
 }
 interface cuisines {

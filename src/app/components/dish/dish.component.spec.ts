@@ -68,41 +68,22 @@ describe('DishComponent', () => {
         }
        }); 
 
-        it('should check if a user has rated a dish and POST a rating',() => {
-        let user = 123456789;
-        let rating = 5;
-        let dish = 99999999;
-        let res;
-        fbService.checkUserRatingExists(user, rating, dish);
-        fbService.getRating(user, dish).subscribe(rate=>{
-            if(rate != null)
-            res = rate.rating;
-            console.log(res);
-        });
-        if(res !=null)
-        expect(res).toBe("5");
-        })
-        
-
-       /* it('should check if a user has rated a dish and UPDATE a rating',() => {
+    //tests rating update feature             
+    it('should check if rating is updated',() => {
         let user = 123456789
         let rating = 3
         let dish = 99999999
         let res;
-        fbService.checkUserRatingExists(user, rating, dish);
+        fbService.updateDishRating(user, rating, dish);
         fbService.getRating(user, dish).subscribe(rate=>{
             if(rate!= null)
             res = rate.rating;
-            console.log(res);
+            //console.log(rate);
         });
         if(res != null){
-        expect(res.rating).toBe("1");
-        //fbService.checkUserRatingExists(user,"","");
+        expect(res.rating).toBe("3");
         }
-        
-       });*/
-
-
+       });
 });
 
 interface rating {
