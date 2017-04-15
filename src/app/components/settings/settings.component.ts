@@ -25,25 +25,31 @@ declare var jQuery:any;
 	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
    
    ngOnChanges(){
- 	 
+   		
    }	
  
    ngOnInit() {
-	this.fireBaseService.getLocation().subscribe(response=>{
-		if(response.results!=null){
-			this.restaurants = response.results;
-			this.gotresult="true";
-			console.log("this.restaurants"+ response);
-		}
-	});
+	
    	 /* this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
    		    	//this.restaurants = response;
     		 	//console.log(this.restaurants);
    		});*/
 		this.fireBaseService.getCuisines().subscribe(response => {
-			this.cuisine_names= response;
+			if(response!=null){
+				this.cuisine_names= response;
+			}
 			
-		})
+			
+		});
+   		
+		this.fireBaseService.getRestaurantBasedOnLocation().subscribe(
+			response=>{
+   			if(response.results!=null){
+   				this.restaurants = response.results;
+   				this.gotresult="true";
+   				console.log("this.restaurants"+ response);
+   			}
+   		});
 		
    	}
    	onSubmit(){
@@ -62,18 +68,4 @@ declare var jQuery:any;
    		});
 	}
  }
- /*
- 		  for(let name of response){
- 			  newData.data(name.restaurant_name,null);
- 		  }
- 	  	  console.log(newData.data());
  
- 	  };
- 
- 	  jQuery('input.autocomplete').autocomplete({
- 		  data: newData.data(),
- 		  limit: 5
- 	  });
- 	  jQuery('select').material_select(); 
-  
- }*/

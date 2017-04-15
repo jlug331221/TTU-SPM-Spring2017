@@ -22,6 +22,7 @@ export class FireBaseService {
 	longitude:any;
 	apiUrl:string;
 	private res;
+	
 	constructor(private af: AngularFire, private http:Http) { }
 	
 	setAuthData(auth){
@@ -32,15 +33,8 @@ export class FireBaseService {
 		return this.authData;
 	}
 	
-	getMapApi(){
-		this.http.get('https://powerful-thicket-30479.herokuapp.com/listUsers').subscribe(res=>{
-			res.json();
-			console.log(res.json());
-		});
-		
-	}
 	setComments(dish_id,user_name,comment_data){
-		this.commentObject ={user:user_name, comment:comment_data, rating:5};
+		this.commentObject ={user:user_name, comment_data:comment_data, rating:5};
 		
 		
 		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
@@ -51,6 +45,7 @@ export class FireBaseService {
 		console.log(this.fbCuis);
 		return this.fbCuis;
 	}
+	
 	//gets all cuisine types
 	getCuisines() {
 		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines>;
@@ -71,14 +66,6 @@ export class FireBaseService {
 		}) as FirebaseListObservable<dishes[]>;
 
 		return this.dishesForCuisineName;
-	}
-
-	getRestaurantBasedOnLocation(){
-		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/Location/Lubbock',{
-
-		}) as FirebaseListObservable<restaurant []>;
-
-		return this.firebaseCuisines;
 	}
 
 	//returns dish information
@@ -114,11 +101,11 @@ export class FireBaseService {
 			return Observable.of(this.result);
 	}
 	getLocation(){
-		this.latitude=33.5864378802915;
-		this.longitude=-101.8690557197085;
+		this.latitude=23.0078579;
+		this.longitude=72.5138152;
 		
 		
-		this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
+		//this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
 		
 		navigator.geolocation.getCurrentPosition(position=>{
 			this.latitude= position.coords.latitude;
@@ -127,19 +114,23 @@ export class FireBaseService {
 			console.log(position.coords.longitude);
    		 	
 			this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
+  		  	
 			
+		  	
 			
 		});
+	}
+	getRestaurantBasedOnLocation(){
 		
-		return this.http.get(this.apiUrl).map(data=>{
-			if (data != null){
-				this.res = data.json();
-				console.log(this.res);
+		if(this.latitude!=null){
+		  	  return this.http.get(this.apiUrl).map(
+				 data=>{
+				 this.res = data.json();
+				 console.log(this.res);
 				return this.res;
-			}
-		});
-		
-		
+			});
+		}
+	  	
 	}
 	
 }
@@ -161,7 +152,7 @@ interface dish {
 }
 interface comments {
 	user: string;
-	comment: string;
+	comment_data: string;
 	rating: number;
 }
 interface dishes {

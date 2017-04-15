@@ -19,16 +19,16 @@ export class DishComponent implements OnInit {
   private authData:any;
   private addedComment:string;	
   private res: any;
-    private details: any;
-    private open: any[];
-    private close: any[];
+  private details: any;
+  private open: any[];
+  private close: any[];
   constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire) {}
 
   ngOnInit() {
     //gets route parameter
      this.dish_id = this.route.snapshot.params['$key'];
-	 console.log("MapApi");
-	 this.fireBaseService.getMapApi();
+	 
+	 
 	 //gets dish object which corresponds to route parameter '$key'
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             if(dish!= null){

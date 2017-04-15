@@ -9,6 +9,8 @@ import { DebugElement } from '@angular/core';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ValidateService } from './services/validate.service';
+import { FireBaseService } from './services/firebase.service';
 
 describe('AppComponent', () => {
     let component: AppComponent;
@@ -36,6 +38,7 @@ describe('AppComponent', () => {
 			HttpModule,
 			RatingModule  
           ],
+		  providers: [ValidateService, FireBaseService ],
           declarations: [
             AppComponent,
             NavbarComponent,
