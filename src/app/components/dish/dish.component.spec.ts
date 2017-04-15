@@ -9,7 +9,11 @@ import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
 import { FormsModule } from '@angular/forms';
+import { HttpModule, Http} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/Rx';
 
+let fbService: FireBaseService;
 describe('DishComponent', () => {
     let component: DishComponent;
     let fixture: ComponentFixture<DishComponent>;
@@ -30,7 +34,7 @@ describe('DishComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-              RouterTestingModule, RatingModule, FormsModule,
+              RouterTestingModule, RatingModule, FormsModule, HttpModule,
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
             ],
             providers: [ FireBaseService ],
@@ -42,9 +46,46 @@ describe('DishComponent', () => {
         fixture = TestBed.createComponent(DishComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        fbService = fixture.debugElement.injector.get(FireBaseService);
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+       //tests api request to google to get restaurant details.
+       //Returns a specific property (a phone number) from the details object
+    it('should return a specific detail from googles place detail api',() =>{
+        let det;
+        fbService.getRestaurantDetails('ChIJ_UypeeMuTIYRGtrKERCRj2U').subscribe(details =>{
+           if(details != null){
+           det = details.result.formatted_phone_number;
+           }
+        });
+            if(det != null){
+                console.log(det.result.formatted_phone_number);
+                expect(det).toBe("(972) 315-6202");
+        }
+       }); 
+
+    //tests rating update feature             
+    it('should check if rating is updated',() => {
+        let user = 123456789
+        let rating = 3
+        let dish = 99999999
+        let res;
+        fbService.updateDishRating(user, rating, dish);
+        fbService.getRating(user, dish).subscribe(rate=>{
+            if(rate!= null)
+            res = rate.rating;
+            //console.log(rate);
+        });
+        if(res != null){
+        expect(res.rating).toBe("3");
+        }
+       });
 });
+
+interface rating {
+	rating: string;
+}

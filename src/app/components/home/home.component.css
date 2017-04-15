@@ -4,3 +4,6 @@ img{
 .card{
 max-width: 400px;
 }
+.onhover{
+    cursor: pointer;
+} 

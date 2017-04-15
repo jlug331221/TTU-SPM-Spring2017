@@ -1,12 +1,16 @@
+;
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Response, Http} from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FireBaseService } from './services/firebase.service';
 import { RatingModule } from 'ngx-rating';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -17,12 +21,11 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { DishComponent } from './components/dish/dish.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
-
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 	{path:'settings', component: SettingsComponent},
 	{path: 'dishes/:cuisineName', component: DishesComponent},
-  	{path: 'dish/:$key', component: DishComponent},
+  {path: 'dish/:$key', component: DishComponent},
 	{path: 'user-profile', component: UserProfileComponent}
 ];
 
@@ -59,7 +62,7 @@ const myFirebaseAuthConfig = {
     RatingModule,
 	RouterModule.forRoot(appRoutes)
   ],
-  providers: [ValidateService, FireBaseService ],
+  providers: [ValidateService, FireBaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
