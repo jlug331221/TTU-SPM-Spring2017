@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FireBaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 import { User } from '../../interfaces/user.interface';
 

@@ -18,13 +18,11 @@ export class FireBaseService {
 	fbCuis: FirebaseObjectObservable<any>;
 	users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
-  fbUser: FirebaseObjectObservable<any>;
+    fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
 	fbUserLike: FirebaseObjectObservable<any>;
-  
-  private res;
 
-	constructor(private af: AngularFire) { }
+    private res;
 
 	constructor(private af: AngularFire, private getRestHttp: Http) {}
 
@@ -131,12 +129,12 @@ export class FireBaseService {
 			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
 					if(response != null){
 					let body = response.json();
-					//console.log(body);				
+					//console.log(body);
 					return body;
 				}
-		});			
+		});
 	}
-	
+
 	//updates the dish rating for a user.  does not allow duplicate ratings.
 	updateDishRating(user, rating, dish){
 		this.fbUser = this.af.database.object('/userRatings/'+ dish + '/' + user) as FirebaseObjectObservable<any>
@@ -144,7 +142,7 @@ export class FireBaseService {
 		this.fbUser.update({rating: rating});
 	}
 
-	//updates the like field in theuserCuisineLike table to true or false 
+	//updates the like field in theuserCuisineLike table to true or false
 	//for a specific cuisine.  Tracks user input so no duplicates occur.
 	updateUserLike(user, cuisine){
 		this.fbUserLike= this.af.database.object('/userCuisineLikes/'+ cuisine.$key + '/' + user) as FirebaseObjectObservable<any>
@@ -162,17 +160,17 @@ export class FireBaseService {
 					lik = false;
 					cuisLikes = cuisLikes - 1
 					this.updateCuisineLikes(cuisine, cuisLikes);
-				}	
+				}
 			else{
 					this.updateUserCuisineLike(true);
 					lik = true;
 					cuisLikes = cuisLikes + 1
 					this.updateCuisineLikes(cuisine, cuisLikes);
-			}	
+			}
 	}
-  
+
 	//increments the cuisine like field by + or - 1 depending on whether
-	//the user has liked the cuisine before.  The user has the ability to take away 
+	//the user has liked the cuisine before.  The user has the ability to take away
 	//a cuisine like.
 	updateUserCuisineLike(userLike){
 		this.fbUserLike.update({
@@ -188,7 +186,7 @@ export class FireBaseService {
 		this.fbCuisine.update({likes: lik});
 		console.log(lik);
 	}
-	
+
 	//returns rating information
 	getRating(user, dish) {
 		let u = user;
@@ -197,7 +195,7 @@ export class FireBaseService {
 		return this.fbRating;
 	}
 
-	
+
 	//returns comments
 	getComments(dish_id) {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>

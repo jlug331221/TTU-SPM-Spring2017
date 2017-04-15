@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { FireBaseService } from '../../services/firebase.service';
 
@@ -37,7 +38,8 @@ describe('UserProfileComponent', () => {
         TestBed.configureTestingModule({
             imports: [
               RouterTestingModule, FormsModule,
-              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+              HttpModule
             ],
             providers: [ FireBaseService ],
             declarations: [ UserProfileComponent, NavbarComponent ]
