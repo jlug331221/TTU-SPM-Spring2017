@@ -4,6 +4,9 @@ import { FireBaseService } from '../../services/firebase.service';
 import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
+import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'app-dish',
@@ -15,14 +18,21 @@ export class DishComponent implements OnInit {
   private dish: any;
   private comments: any[]; 
   private starCount_avg: number;
-  private res: any;
+  private starSelect;
   private details: any;
-  private open: any[];
-  private close: any[];
+  private userID; 
+  private userExists = false;
 
-  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) {}
+  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService, private af: AngularFire) {}
 
   ngOnInit() {
+    this.af.auth.subscribe(authData => {
+            if(authData != null) {
+                this.userExists = true;
+                this.userID = authData.uid;
+            }
+
+        });
     //gets route parameter
      this.route.params.subscribe(params => {
             this.dish_id = params['$key'];
@@ -39,18 +49,26 @@ export class DishComponent implements OnInit {
            if(this.dish.place_id != null){
             this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
                this.details = details
-              console.log(this.details);        
+              //console.log(this.details);        
             });
            }
       });
-
+    //gets comments 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
-           // console.log(this.comments);
+            //console.log(this.comments);
       });
    
-    }                        
-}
+    }
+    //allows user to rate a dish if they are logged in 
+    rateDish(){
+      if (this.userExists != false){
+          this.fireBaseService.updateDishRating(this.userID, this.starSelect, this.dish_id)
+      }
+    }
+    
+    }
+
   
 
   

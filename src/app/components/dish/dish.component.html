@@ -8,6 +8,7 @@
         	</div>
             <div class = "card-content" *ngIf="details">
                     <h6><strong>Restaurant:</strong> {{ details.result.name }}</h6>
+                    <h6><strong>Description:</strong> {{ dish.description }}</h6>
                     <h6><strong>Address:</strong> {{ details.result.formatted_address }}</h6>
                     <h6><strong>Phone:</strong> {{ details.result.formatted_phone_number }}</h6>
                     <h6><strong>Hours: </strong></h6>
@@ -15,11 +16,25 @@
                     {{ dayhours }}<br>
                     </div>
                 <br>
+            <span><a class="comhover" link="btn light blue" onclick ="comments()"><strong>Comment</strong></a></span>
+            <span><a class= "rate modal-trigger" link="btn light blue" data-target="ratingModal" *ngIf="userExists"><strong>Add Rating!</strong></a></span>
+          
             </div>
         </div>
      </div>
 </div>
-<a class="comhover" link="btn light blue" onclick ="comments()">Comments</a>
+<!-- Modal Structure -->
+ <div id="ratingModal" class="modal modal-fixed-footer">
+        <div class="modal-content" *ngIf="details">
+            <h5>Rate Dish</h5>
+            <h6><strong>{{details.result.name}}:  </strong>{{ dish.name }}</h6>
+            <div><rating [(ngModel)]="starSelect"></rating></div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action waves-effect waves-green btn-flat modal-close" (click)="rateDish()">Submit</a>
+        </div>
+</div>
+  
 <br>
 <br>
 <div id="comments" style="display: none">

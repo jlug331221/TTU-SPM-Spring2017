@@ -1,3 +1,4 @@
+;
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,12 +20,11 @@ import { DishesComponent } from './components/dishes/dishes.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DishComponent } from './components/dish/dish.component';
 
-
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 	{path:'settings', component: SettingsComponent},
 	{path: 'dishes/:cuisineName', component: DishesComponent},
-  {path: 'dish/:$key', component: DishComponent}
+  {path: 'dish/:$key', component: DishComponent},
 ];
 export const firebaseConfig = {
   	apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
@@ -45,7 +45,7 @@ const myFirebaseAuthConfig = {
     HomeComponent,
     DishesComponent,
     SettingsComponent,
-    DishComponent
+    DishComponent,
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   imports: [

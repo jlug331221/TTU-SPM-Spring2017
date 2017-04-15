@@ -60,25 +60,24 @@ describe('HomeComponent', () => {
         let diff: number;
         let name: string;
         let cuis: cuisine;
-        
+        let user = "9999hhhh9999";
         this.name='Italian';
 
         updatelikeService.getCuisine(this.name).subscribe(res=>{
             this.cuis = res;
         });
-    
         initLikes = this.cuis.likes; 
-    //console.log(initLikes);      
-        updatelikeService.updateCuisinelikes(this.cuis, this.cuis.likes);
+        //console.log(initLikes);      
+        updatelikeService.updateUserLike(user, this.cuis);
         postLikes = this.cuis.likes;
-     //console.log(postLikes);
+        //console.log(postLikes);
         diff = postLikes - initLikes;
-     //console.log(diff);
-        expect(diff).toEqual(1);
+        //console.log(diff);
+        expect(diff).toBe(1 || -1);
        });
 
         //tests google api request to get a restaurant id
-    it('should return a restaurant id from googles place api',() => {
+    /*it('should return a restaurant id from googles place api',() => {
         fbService.getRestaurantId("Olive Garden", "Lewisville", "Texas").subscribe(data =>{
             this.res = data;
             console.log(this.res);
@@ -86,8 +85,7 @@ describe('HomeComponent', () => {
         if(this.res != null) 
         expect(this.res).toBe("ChIJ_UypeeMuTIYRGtrKERCRj2U");
        });
-
-});
+});*/
 
 interface cuisine{
 	$key?: string;

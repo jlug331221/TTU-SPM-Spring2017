@@ -10,8 +10,10 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/Rx';
 
-let fbService;
+let fbService: FireBaseService;
 describe('DishComponent', () => {
     let component: DishComponent;
     let fixture: ComponentFixture<DishComponent>;
@@ -53,15 +55,37 @@ describe('DishComponent', () => {
 
        //tests api request to google to get restaurant details.
        //Returns a specific property (a phone number) from the details object
-    /*it('should return a specific detail from googles place detail api',() =>{
+    it('should return a specific detail from googles place detail api',() =>{
+        let det;
         fbService.getRestaurantDetails('ChIJ_UypeeMuTIYRGtrKERCRj2U').subscribe(details =>{
-           this.details = details.result.formatted_phone_number;
+           if(details != null){
+           det = details.result.formatted_phone_number;
+           }
         });
-
-        if(this.details != null){
-        console.log(this.details.result.formatted_phone_number);
-        expect(this.details).toBe("(972) 315-6202");
+            if(det != null){
+                console.log(det.result.formatted_phone_number);
+                expect(det).toBe("(972) 315-6202");
         }
+       }); 
 
-       });*/ 
+    //tests rating update feature             
+    it('should check if rating is updated',() => {
+        let user = 123456789
+        let rating = 3
+        let dish = 99999999
+        let res;
+        fbService.updateDishRating(user, rating, dish);
+        fbService.getRating(user, dish).subscribe(rate=>{
+            if(rate!= null)
+            res = rate.rating;
+            //console.log(rate);
+        });
+        if(res != null){
+        expect(res.rating).toBe("3");
+        }
+       });
 });
+
+interface rating {
+	rating: string;
+}
