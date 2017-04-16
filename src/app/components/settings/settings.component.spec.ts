@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, Injectable } from '@angular/core';
+import { DebugElement, Injectable, NgModule } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { FireBaseService } from '../../services/firebase.service';
@@ -13,7 +13,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SettingsComponent } from './settings.component';
 
-let createService;
+let settingsService;
 describe('SettingsComponent', () => {
     let component: SettingsComponent;
     let fixture: ComponentFixture<SettingsComponent>;
@@ -51,16 +51,16 @@ describe('SettingsComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
 		
-		createService = fixture.debugElement.injector.get(FireBaseService);
-		console.log("Should show "+ createService);
+		settingsService = fixture.debugElement.injector.get(FireBaseService);
+		
     });
 	/*
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 	it('should get Cuisines',()=>{
-		console.log("Should show "+ createService);
-			createService.getCuisines().subscribe(response=>{
+		
+			settingsService.getCuisines().subscribe(response=>{
 				
 				fixture.whenStable().then(() => {
 					expect(response[0].$key).toBe("American");
@@ -69,3 +69,7 @@ describe('SettingsComponent', () => {
 			});
 	});*/
 });
+interface cuisines {
+	$key?: string;
+	image_url?: string;
+}

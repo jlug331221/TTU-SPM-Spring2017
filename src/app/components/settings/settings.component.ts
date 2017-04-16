@@ -38,8 +38,6 @@ declare var jQuery:any;
 			if(response!=null){
 				this.cuisine_names= response;
 			}
-			
-			
 		});
    		
 		this.fireBaseService.getRestaurantBasedOnLocation().subscribe(

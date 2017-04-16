@@ -48,7 +48,7 @@ export class FireBaseService {
 	
 	//gets all cuisine types
 	getCuisines() {
-		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines>;
+		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines[]>;
 		return this.firebaseCuisines;
 	}
 
