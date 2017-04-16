@@ -3,6 +3,8 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 import { HttpModule, Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/finally';
+import {Observable} from "RxJS/Rx";
 
 let getRestHttp: Http;
 let res;
@@ -16,7 +18,7 @@ export class FireBaseService {
 	fbCuis: FirebaseObjectObservable<any>;
 	fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
-	fbUserLike: FirebaseObjectObservable<any>; 
+	fbUserLike:  FirebaseObjectObservable<any>; 
 
 	private res;
 
@@ -86,7 +88,7 @@ export class FireBaseService {
 	 * based on a google id parameter
 	 */
 	getRestaurantDetails(restId){
-		console.log(restId);
+		//console.log(restId);
 		let googleRestDetailsurl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantDetails/'+restId
 			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
 					if(response != null){
@@ -104,48 +106,38 @@ export class FireBaseService {
 		this.fbUser.update({rating: rating});
 	}
 
-	//updates the like field in theuserCuisineLike table to true or false 
+	//updates the like field in theuserCuisineLike table to true or false
 	//for a specific cuisine.  Tracks user input so no duplicates occur.
-	updateUserLike(user, cuisine){
-		this.fbUserLike= this.af.database.object('/userCuisineLikes/'+ cuisine.$key + '/' + user) as FirebaseObjectObservable<any>
+	updateUserLike(user, like, cuisine){
 		let cuisLikes = cuisine.likes
-		let lik;
-
-		this.fbUserLike.subscribe(resp =>{
-			if(resp != null)
-			 lik = resp.likes;
-			 //console.log(lik);
-		})
-
-		if(lik){
-					this.updateUserCuisineLike(false);
-					lik = false;
+		this.fbUserLike = user
+		if(like){
 					cuisLikes = cuisLikes - 1
 					this.updateCuisineLikes(cuisine, cuisLikes);
-				}	
-			else{
-					this.updateUserCuisineLike(true);
-					lik = true;
+				}
+		else if (like == false){
 					cuisLikes = cuisLikes + 1
 					this.updateCuisineLikes(cuisine, cuisLikes);
 			}	
+				
 	}
+	
 	//increments the cuisine like field by + or - 1 depending on whether
 	//the user has liked the cuisine before.  The user has the ability to take away 
 	//a cuisine like.
-	updateUserCuisineLike(userLike){
-		this.fbUserLike.update({
-			 likes: userLike
-			});
+	updateUserCuisineLike(user, userLike){
+		this.fbUserLike = user;
+		console.log(this.fbUserLike);
+		this.fbUserLike.update({ likes: userLike});
 		}
 
 	//Updates a cuisine's likes by one.  User can only like a cuisine once.
   	updateCuisineLikes(cuisineObj: cuisine, likes){
 	  	let lik = likes;
-		  let name = cuisineObj.$key;
+		let name = cuisineObj.$key;
 	 	this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
 		this.fbCuisine.update({likes: lik});
-		console.log(lik);
+		//console.log(lik);
 	}
 	
 	//returns rating information

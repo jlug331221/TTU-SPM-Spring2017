@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   private cuisine: any;
   private userExists = false;
   private userID;
+  private fbUserLike: FirebaseObjectObservable<any>;
 
     constructor(private af: AngularFire, private fireBaseService:FireBaseService ) { }
 
@@ -23,7 +24,8 @@ export class HomeComponent implements OnInit {
       this.af.auth.subscribe(authData => {
             if(authData != null) {
                 this.userExists = true;
-                this.userID = authData.uid;
+                this.userID = authData.uid
+                console.log(this.userExists)
             }
         });
 
@@ -32,10 +34,23 @@ export class HomeComponent implements OnInit {
       });  
   
     }
+    //checks if user is logged in and retrieves user like data for a particular cuisine.
+    //cuisine like data is then updated. 
     likeCuisine(cuisine){
+      let lik
+        
       if(this.userExists){
         this.cuisine= cuisine
-        this.fireBaseService.updateUserLike(this.userID, this.cuisine)
+        this.fbUserLike = this.af.database.object('/userCuisineLikes/'+ this.cuisine.$key + '/' + this.userID) as  FirebaseObjectObservable<any>;
+		
+		    this.fbUserLike.subscribe(resp =>{
+		      if(resp!=null){
+		        lik = resp.likes
+            //console.log(lik)
+            this.fireBaseService.updateUserLike(this.userID, lik, this.cuisine)
+		      }
+        });
+      this.fireBaseService.updateUserCuisineLike(this.fbUserLike, !lik)        
     }
   }
 }

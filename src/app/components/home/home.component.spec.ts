@@ -64,16 +64,18 @@ describe('HomeComponent', () => {
         this.name='Italian';
 
         updatelikeService.getCuisine(this.name).subscribe(res=>{
+            if(res != null)
             this.cuis = res;
         });
+
         initLikes = this.cuis.likes; 
         //console.log(initLikes);      
-        updatelikeService.updateUserLike(user, this.cuis);
+        updatelikeService.updateCuisineLikes(this.cuis, initLikes+1);
         postLikes = this.cuis.likes;
         //console.log(postLikes);
         diff = postLikes - initLikes;
         //console.log(diff);
-        expect(diff).toBe(1 || -1);
+        expect(diff).toBe(1);
        });
 
         //tests google api request to get a restaurant id
@@ -93,3 +95,5 @@ interface cuisine{
 	likes: number;
 	description: string;
 }
+
+
