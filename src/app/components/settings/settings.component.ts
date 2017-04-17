@@ -52,6 +52,7 @@ declare var jQuery:any;
    	}
    	onSubmit(){
 		
+		
    		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName).subscribe(status=>{
    			 console.log("Status is" + status);
    	 		if(status!="Error"){

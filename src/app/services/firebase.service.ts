@@ -22,6 +22,7 @@ export class FireBaseService {
 	longitude:any;
 	apiUrl:string;
 	private res;
+	placeDish:dish;
 	
 	constructor(private af: AngularFire, private http:Http) { }
 	
@@ -87,6 +88,7 @@ export class FireBaseService {
 		this.fbCuisine.update({likes: likeInc});
 		//console.log(cuisineObj);
 	}
+	
 	putImage(image,dish_name,cuisine_name,restaurant_name){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
 		
@@ -96,10 +98,23 @@ export class FireBaseService {
 				storageRef.put(selectedFile).then((snapshot)=>{
 					//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
 					this.result=snapshot
+					console.log(this.result.a.downloadURLs[0]);
+					this.placeDish={
+						name:dish_name,
+						cuisineName:cuisine_name.toLowerCase(),
+						description:dish_name+'at'+restaurant_name,
+						img_url:this.result.a.downloadURLs[0],
+						restaurant_name: restaurant_name,
+						avg_rating: 1
+					}
+					
+					this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
 				});
 			}
+			
 			return Observable.of(this.result);
 	}
+	
 	getLocation(){
 		this.latitude=23.0078579;
 		this.longitude=72.5138152;
@@ -142,13 +157,14 @@ interface cuisines {
 }
 interface dish {
 	$key?: string;
-	dish_id: number;
+	//dish_id: number;
 	name: string;
 	cuisineName: string;
 	description: string;
 	img_url: string;
 	restaurant_name: string;
 	avg_rating: number;
+	
 }
 interface comments {
 	user: string;
