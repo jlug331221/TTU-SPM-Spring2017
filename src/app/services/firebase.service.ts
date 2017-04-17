@@ -105,7 +105,7 @@ export class FireBaseService {
 						description:dish_name+'at'+restaurant_name,
 						img_url:this.result.a.downloadURLs[0],
 						restaurant_name: restaurant_name,
-						avg_rating: 1
+						avg_rating: 2.5
 					}
 					
 					this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
