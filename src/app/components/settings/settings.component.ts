@@ -67,13 +67,8 @@ declare var jQuery:any;
 
   	
    }
-  
-<<<<<<< HEAD
- 
- 
-=======
+
   
 
- }
  
->>>>>>> dbd732f291fa3cd8090121ca0b212128c9f668be
+
