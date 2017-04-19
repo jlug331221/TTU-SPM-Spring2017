@@ -30,11 +30,6 @@ declare var jQuery:any;
  
    ngOnInit() {
 
-	
-   	  this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-   		    	this.restaurants = response;
-    		 	console.log(this.restaurants);
-   		});
 		this.fireBaseService.getCuisines().subscribe(response => {
 			if(response!=null){
 				this.cuisine_names= response;
