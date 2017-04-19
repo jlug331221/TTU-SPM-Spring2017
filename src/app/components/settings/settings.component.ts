@@ -71,7 +71,5 @@ declare var jQuery:any;
   	
    }
   
-  
-
- }
+ 
  

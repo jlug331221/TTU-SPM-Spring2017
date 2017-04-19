@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-
 import { Http, Response, Headers, RequestOptions, HttpModule, Jsonp, URLSearchParams } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import * as firebase from 'firebase';
@@ -291,11 +290,6 @@ export class FireBaseService {
 	}
 	
 	  	
-	}
-	
-
-	
-
 }
 
 

@@ -1,11 +1,10 @@
 import { Component, OnInit, Directive, Input, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods, AuthProviders } from 'angularfire2';
 import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
-import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -27,9 +26,9 @@ export class DishComponent implements OnInit {
   private open: any[];
   private close: any[];
   private starSelect;
-  private details: any;
   private userID; 
   private userExists = false;
+  
   constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire) {}
   ngOnInit() {
      //gets route parameter
