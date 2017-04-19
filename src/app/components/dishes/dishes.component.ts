@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
+import { HttpModule, Http} from '@angular/http';
 
 @Component({
   selector: 'app-dishes',
