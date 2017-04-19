@@ -31,10 +31,10 @@ declare var jQuery:any;
    ngOnInit() {
 
 	
-   	 /* this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-   		    	//this.restaurants = response;
-    		 	//console.log(this.restaurants);
-   		});*/
+   	  this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+   		    	this.restaurants = response;
+    		 	console.log(this.restaurants);
+   		});
 		this.fireBaseService.getCuisines().subscribe(response => {
 			if(response!=null){
 				this.cuisine_names= response;
@@ -68,18 +68,10 @@ declare var jQuery:any;
    		});
 	}
 
-  	  //this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-  		   // this.restaurants=response;
-   		 	//console.log(response[0].$key);	
-      //});
+  	
    }
- 
-   ngAfterViewInit(){
- 	  let newData = jQuery.extend({}, jQuery('input.autocomplete').autocomplete());
   
-      //this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
- 		//});
-   }
+  
 
  }
  
