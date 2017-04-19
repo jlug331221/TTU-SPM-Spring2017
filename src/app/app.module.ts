@@ -1,13 +1,16 @@
+;
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, JsonpModule } from '@angular/http';
-import { RouterModule, Routes} from '@angular/router';
+import { HttpModule, Response, Http} from '@angular/http';
+import {RouterModule, Routes} from '@angular/router';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { FireBaseService } from './services/firebase.service';
 import { RatingModule } from 'ngx-rating';
-import { FlashMessagesModule } from 'angular2-flash-messages';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -22,8 +25,10 @@ const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 	{path:'settings', component: SettingsComponent},
 	{path: 'dishes/:cuisineName', component: DishesComponent},
-  {path: 'dish/:$key', component: DishComponent}
+  {path: 'dish/:$key', component: DishComponent},
+	{path: 'user-profile', component: UserProfileComponent}
 ];
+
 export const firebaseConfig = {
   	apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
     authDomain: "spm-spring2017-7fbab.firebaseapp.com",
@@ -31,6 +36,7 @@ export const firebaseConfig = {
     storageBucket: "spm-spring2017-7fbab.appspot.com",
     messagingSenderId: "544260738212"
 };
+
 const myFirebaseAuthConfig = {
   provider: AuthProviders.Google,
   method: AuthMethods.Popup
@@ -43,7 +49,8 @@ const myFirebaseAuthConfig = {
     HomeComponent,
     DishesComponent,
     SettingsComponent,
-    DishComponent
+    DishComponent,
+    UserProfileComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   imports: [
@@ -61,7 +68,7 @@ const myFirebaseAuthConfig = {
     RatingModule,
 	RouterModule.forRoot(appRoutes)
   ],
-  providers: [ValidateService, FireBaseService ],
+  providers: [ValidateService, FireBaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
