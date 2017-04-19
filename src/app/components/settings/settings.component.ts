@@ -30,8 +30,9 @@ declare var jQuery:any;
  
    ngOnInit() {
 
-	
-	   this.fireBaseService.getCuisines().subscribe(response => {
+
+		this.fireBaseService.getCuisines().subscribe(response => {
+
 			if(response!=null){
 				this.cuisine_names= response;
 			}
@@ -67,5 +68,12 @@ declare var jQuery:any;
   	
    }
   
+<<<<<<< HEAD
  
  
+=======
+  
+
+ }
+ 
+>>>>>>> dbd732f291fa3cd8090121ca0b212128c9f668be
