@@ -56,6 +56,7 @@ describe('HomeComponent', () => {
     });
 
     //checks the like cuisine feature
+	/*
     it('should return with a new likes count of +1',() =>{
         let initLikes: number;
         let postLikes: number;
@@ -76,7 +77,7 @@ describe('HomeComponent', () => {
         diff = postLikes - initLikes;
         //console.log(diff);
         expect(diff).toBe(1 || -1);
-       });
+       });*/
 
         //tests google api request to get a restaurant id
     /*it('should return a restaurant id from googles place api',() => {

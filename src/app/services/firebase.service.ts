@@ -298,6 +298,7 @@ export class FireBaseService {
 interface cuisines {
 	$key?: string;
 	image_url?: string;
+	
 }
 
 interface dish {
