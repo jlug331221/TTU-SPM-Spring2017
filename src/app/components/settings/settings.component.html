@@ -1,8 +1,9 @@
 <form (submit)="onSubmit()">
+
 <label for="dish_name">Restaurant Name</label>
 <select class="browser-default" id="sel1" [(ngModel)]="restaurantName"  [ngModelOptions]="{standalone: true}" required>
 	
-	<option *ngFor="let r of restaurants" [ngValue]="r.$key"  >{{ r.$key }}</option>
+	<option *ngFor="let r of restaurants" [ngValue]="r.name"  >{{ r.name }}</option>
 </select>
 
 <div class="input-field ">

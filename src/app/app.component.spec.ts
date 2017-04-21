@@ -3,10 +3,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+import { RatingModule } from 'ngx-rating';
 import { DebugElement } from '@angular/core';
-
+import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ValidateService } from './services/validate.service';
+import { FireBaseService } from './services/firebase.service';
 
 describe('AppComponent', () => {
     let component: AppComponent;
@@ -29,8 +33,12 @@ describe('AppComponent', () => {
         TestBed.configureTestingModule({
           imports: [
             RouterTestingModule,
-            AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+            AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+			FlashMessagesModule,
+			HttpModule,
+			RatingModule  
           ],
+		  providers: [ValidateService, FireBaseService ],
           declarations: [
             AppComponent,
             NavbarComponent,

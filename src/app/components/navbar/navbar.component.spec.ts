@@ -4,7 +4,9 @@ import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
+import { HttpModule } from '@angular/http';
+import { FireBaseService } from '../../services/firebase.service';
+import { ValidateService } from '../../services/validate.service';
 import { NavbarComponent } from './navbar.component';
 
 describe('NavbarComponent', () => {
@@ -28,8 +30,10 @@ describe('NavbarComponent', () => {
         TestBed.configureTestingModule({
             imports: [
               RouterTestingModule,
-              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+				HttpModule
             ],
+			providers: [ValidateService, FireBaseService ],
             declarations: [ NavbarComponent ]
         }).compileComponents();
     }));
