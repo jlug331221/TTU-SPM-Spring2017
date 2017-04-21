@@ -15,7 +15,7 @@ import { ValidateService } from './services/validate.service';
 import { DishesComponent } from './components/dishes/dishes.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DishComponent } from './components/dish/dish.component';
-import {UserProfileComponent} from './components/user-profile/user-profile.component';
+import { UserProfileComponent} from './components/user-profile/user-profile.component';
 import { AgmCoreModule } from "angular2-google-maps/core";
 import {FlashMessagesModule } from "angular2-flash-messages";
 import {CustomuploadsComponent} from './components/customuploads/customuploads.component';
@@ -27,7 +27,7 @@ const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 	{path:'settings', component: SettingsComponent},
 	{path: 'dishes/:cuisineName', component: DishesComponent},
-  {path: 'dish/:$key', component: DishComponent},
+    {path: 'dish/:$key', component: DishComponent},
 	{path: 'customuploads', component:CustomuploadsComponent},
 	{path: 'user-profile', component: UserProfileComponent}
 ];
