@@ -1,19 +1,24 @@
 /* tslint:disable:no-unused-variable */
-/*import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, Injectable, NgModule } from '@angular/core';
 
+import { FormsModule } from '@angular/forms';
 import { FireBaseService } from '../../services/firebase.service';
-
+import { FlashMessagesModule } from 'angular2-flash-messages';
+import { HttpModule } from '@angular/http';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SettingsComponent } from './settings.component';
 
+let settingsService;
 describe('SettingsComponent', () => {
     let component: SettingsComponent;
     let fixture: ComponentFixture<SettingsComponent>;
-
+	
+	
     const firebaseConfig = {
         apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
         authDomain: "spm-spring2017-7fbab.firebaseapp.com",
@@ -31,7 +36,10 @@ describe('SettingsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
               RouterTestingModule,
-              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+				FormsModule,
+				HttpModule,
+				FlashMessagesModule
             ],
             providers: [ FireBaseService ],
             declarations: [ SettingsComponent, NavbarComponent ]
@@ -42,9 +50,26 @@ describe('SettingsComponent', () => {
         fixture = TestBed.createComponent(SettingsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+		
+		settingsService = fixture.debugElement.injector.get(FireBaseService);
+		
     });
-
+	/*
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-});*/
+	it('should get Cuisines',()=>{
+		
+			settingsService.getCuisines().subscribe(response=>{
+				
+				fixture.whenStable().then(() => {
+					expect(response[0].$key).toBe("American");
+				});
+				
+			});
+	});*/
+});
+interface cuisines {
+	$key?: string;
+	image_url?: string;
+}

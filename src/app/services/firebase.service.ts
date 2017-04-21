@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-import { HttpModule, Http } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, HttpModule, Jsonp, URLSearchParams } from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import * as firebase from 'firebase';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
 
 import { User } from '../interfaces/user.interface';
 
@@ -16,15 +18,38 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-	users: FirebaseListObservable<any[]>;
+  	users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
     fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
 	fbUserLike: FirebaseObjectObservable<any>;
 
-    private res;
-
-	constructor(private af: AngularFire, private getRestHttp: Http) {}
+	aPi:any;
+	result:any;
+	latitude:any;
+	commentObject:comments;
+	authData:any;
+	longitude:any;
+	apiUrl:string;
+	private res;
+	placeDish:dish;
+	
+	constructor(private af: AngularFire, private http:Http) { }
+	
+	setAuthData(auth){
+		this.authData= auth;
+	}
+	
+	getAuthData(){
+		return this.authData;
+	}
+	
+	setComments(dish_id,user_name,comment_data){
+		this.commentObject ={user:user_name, comment_data:comment_data, rating:5};
+		
+		
+		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
+	}
 
 	//get cuisine by name
 	getCuisine(name: string) {
@@ -35,7 +60,7 @@ export class FireBaseService {
 
 	//gets all cuisine types
 	getCuisines() {
-		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines>;
+		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/home/Cuisine') as FirebaseListObservable<cuisines[]>;
 		return this.firebaseCuisines;
 	}
 
@@ -55,7 +80,6 @@ export class FireBaseService {
 
 		return this.dishesForCuisineName;
 	}
-
 	/**
 	 * Add new Foogle user to the database.
 	 *
@@ -88,13 +112,7 @@ export class FireBaseService {
 		});
 	}
 
-	getRestaurantBasedOnLocation(){
-		this.firebaseCuisines = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/Location/Lubbock',{
-
-		}) as FirebaseListObservable<restaurant []>;
-
-		return this.firebaseCuisines;
-	}
+	
 
 	//returns dish information
 	getDish($key) {
@@ -111,7 +129,7 @@ export class FireBaseService {
 		let cit = city;
 		let st = state;
 		let googleResturl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantId/'+ rest +'/'+ cit +'/'+'/'+ st
-		return this.getRestHttp.get(googleResturl).map( data => {
+		return this.http.get(googleResturl).map( data => {
 				if (data != null){
 					this.res = data.json().results[0].place_id;
 					console.log(this.res);
@@ -126,7 +144,7 @@ export class FireBaseService {
 	getRestaurantDetails(restId){
 		console.log(restId);
 		let googleRestDetailsurl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantDetails/'+restId
-			return this.getRestHttp.get(googleRestDetailsurl).map( response => {
+			return this.http.get(googleRestDetailsurl).map( response => {
 					if(response != null){
 					let body = response.json();
 					//console.log(body);
@@ -208,10 +226,72 @@ export class FireBaseService {
 	 	  this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
 		  //console.log(this.fbCuisine);
 	  	let likeInc = likes + 1;
-		  this.fbCuisine.update({likes: likeInc});
-		  //console.log(cuisineObj);
+
+		this.fbCuisine.update({likes: likeInc});
+    
+		//console.log(cuisineObj);
 	}
+	
+	putImage(image,dish_name,cuisine_name,restaurant_name){
+			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
+		
+			const storageRef= firebase.storage().ref().child(path);
+		
+			for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
+				storageRef.put(selectedFile).then((snapshot)=>{
+					//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
+					this.result=snapshot
+					console.log(this.result.a.downloadURLs[0]);
+					this.placeDish={
+						name:dish_name,
+						cuisineName:cuisine_name.toLowerCase(),
+						description:dish_name+'at'+restaurant_name,
+						img_url:this.result.a.downloadURLs[0],
+						restaurant_name: restaurant_name,
+						avg_rating: 2.5
+					}
+					
+					this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
+				});
+			}
+			
+			return Observable.of(this.result);
+	}
+	
+	getLocation(){
+		this.latitude=23.0078579;
+		this.longitude=72.5138152;
+		
+		
+		//this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
+		
+		navigator.geolocation.getCurrentPosition(position=>{
+			this.latitude= position.coords.latitude;
+			this.longitude = position.coords.longitude;
+			console.log(position.coords.latitude);
+			console.log(position.coords.longitude);
+   		 	
+			this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
+  		  	
+			
+		 });
+	}
+  getRestaurantBasedOnLocation(){
+		
+		if(this.latitude!=null){
+		  	  return this.http.get(this.apiUrl).map(
+				 data=>{
+				 this.res = data.json();
+				 console.log(this.res);
+				return this.res;
+			});
+		}
+	  	
+	}
+	
+	  	
 }
+
 
 interface cuisines {
 	$key?: string;
@@ -220,18 +300,19 @@ interface cuisines {
 
 interface dish {
 	$key?: string;
-	dish_id: number;
+	//dish_id: number;
 	name: string;
 	cuisineName: string;
 	description: string;
 	img_url: string;
 	restaurant_name: string;
 	avg_rating: number;
+	
 }
 
 interface comments {
 	user: string;
-	comment: string;
+	comment_data: string;
 	rating: number;
 }
 

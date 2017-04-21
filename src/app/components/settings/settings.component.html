@@ -1,13 +1,38 @@
-<a class="waves-effect waves-light btn">Add New Dish</a>    
-	<div class="input-field col s12">
-    <select ngFor>
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <label>Materialize Select</label>
-  </div>
+<form (submit)="onSubmit()">
+
+<label for="dish_name">Restaurant Name</label>
+<select class="browser-default" id="sel1" [(ngModel)]="restaurantName"  [ngModelOptions]="{standalone: true}" required>
+	
+	<option *ngFor="let r of restaurants" [ngValue]="r.name"  >{{ r.name }}</option>
+</select>
+
+<div class="input-field ">
+          <input id="dish_name" type="text" class="validate" [(ngModel)]="dish_name" name="dish_name" required>
+          <label for="dish_name">Dish Name</label>
+</div>
+<label for="dish_name">Type of Cuisine</label>
+<select class="browser-default" id="sel1" [(ngModel)]="selectedCuisine"  [ngModelOptions]="{standalone: true}" required>
+	
+	<option *ngFor="let cuisine of cuisine_names" [ngValue]="cuisine.$key"  >{{ cuisine.$key }}</option>
+</select>
+
+<div class="file-field input-field">
+      <div class="btn">
+        <span>File</span>
+        <input type="file" [(ngModel)] ="file" name="file" id="fileUpload" required>
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text" placeholder="Upload the image" >
+      </div>
+    </div>
+	
+	<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+	    <i class="material-icons right">send</i>
+	  </button>
+</form>
+
+
+
 
 		   
 

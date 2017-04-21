@@ -20,15 +20,23 @@
             <span><a class= "rate modal-trigger" link="btn light blue" data-target="ratingModal" *ngIf="userExists"><strong>Add Rating!</strong></a></span>
           
             </div>
-        </div>
+		  
      </div>
 </div>
-
-<div class="row container">
-    <a class="comhover" link="btn light blue" onclick ="comments()">Comments</a>
+<a class="comhover" link="btn light blue" >Comments</a>
+<br>
+<br>
+<div id="comments" *ngIf="(af.auth|async)">
+    <div class="input-field col s12 m12 l9">
+        <input id="comment" type="text" class="validate" [(ngModel)]="addedComment" name="addedComment">
+          <label for="comment">Comment</label>
+		  <a class="waves-effect waves-light btn" (click)="onAddedComment()">button</a>
+		  
+    </div>
+   
+     <br>
     <br>
-    <br>
-</div>
+    <div class = "row">
 
 <!-- Modal Structure -->
  <div id="ratingModal" class="modal modal-fixed-footer">
@@ -56,6 +64,7 @@
     </div>
 
     <div class="row container">
+
         <div class="col s12 m12 l12">
             <div class = "card-large c2" *ngFor="let comment of comments">
                 <span class= "userid"><strong>{{ comment.user }}</strong></span>

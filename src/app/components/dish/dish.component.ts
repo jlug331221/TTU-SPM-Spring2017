@@ -1,10 +1,10 @@
 import { Component, OnInit, Directive, Input, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods, AuthProviders } from 'angularfire2';
 import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
-import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -18,14 +18,21 @@ export class DishComponent implements OnInit {
   private dish: any;
   private comments: any[]; 
   private starCount_avg: number;
-  private starSelect;
+
+  private authData:any;
+  private addedComment:string;	
+  private res: any;
   private details: any;
+  private open: any[];
+  private close: any[];
+  private starSelect;
   private userID; 
   private userExists = false;
-
-  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService, private af: AngularFire) {}
-
+  
+  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire) {}
   ngOnInit() {
+     //gets route parameter
+    this.dish_id = this.route.snapshot.params['$key'];
     this.af.auth.subscribe(authData => {
             if(authData != null) {
                 this.userExists = true;
@@ -40,20 +47,17 @@ export class DishComponent implements OnInit {
         });
   
     //gets dish object which corresponds to route parameter '$key'
+
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             if(dish!= null){
             this.dish = dish;
             this.starCount_avg = dish.avg_rating;
             //console.log(this.dish);
           }
-           if(this.dish.place_id != null){
-            this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
-               this.details = details
-              //console.log(this.details);        
-            });
-           }
-      });
-    //gets comments 
+
+     });
+	  
+
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
             //console.log(this.comments);
@@ -67,11 +71,15 @@ export class DishComponent implements OnInit {
       }
     }
     
-    }
+    
 
-  
-
-  
-
-
+	//Call this function when user adds the comment
+	onAddedComment(){
+		console.log("Adding Dish");
+		this.authData=this.fireBaseService.getAuthData();
+		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment);
+		this.addedComment="";
+		
+	  }
+  }
 

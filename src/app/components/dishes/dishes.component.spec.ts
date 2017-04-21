@@ -6,8 +6,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement, Injectable } from '@angular/core';
 import { HttpModule, Http} from '@angular/http';
 
+import { HttpModule } from '@angular/http';
 import { FireBaseService } from '../../services/firebase.service';
-
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishesComponent } from './dishes.component';
 
@@ -40,8 +40,10 @@ describe('DishesComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-              RouterTestingModule, HttpModule,
-              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+              RouterTestingModule,
+              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+			  HttpModule
+
             ],
             providers: [ FireBaseService ],
             declarations: [ DishesComponent, NavbarComponent ]
