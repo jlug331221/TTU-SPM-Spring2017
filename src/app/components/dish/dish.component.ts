@@ -33,7 +33,8 @@ export class DishComponent implements OnInit {
   ngOnInit() {
      //gets route parameter
     this.dish_id = this.route.snapshot.params['$key'];
-    this.af.auth.subscribe(authData => {
+    
+	this.af.auth.subscribe(authData => {
             if(authData != null) {
                 this.userExists = true;
                 this.userID = authData.uid;
@@ -54,10 +55,13 @@ export class DishComponent implements OnInit {
             this.starCount_avg = dish.avg_rating;
             //console.log(this.dish);
           }
-
+	 	 this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
+	 	         this.details = details
+	 	        console.log(this.details);        
+	 	      });
+		  
      });
-	  
-
+	 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
             //console.log(this.comments);

@@ -57,7 +57,7 @@ describe('DishComponent', () => {
 
     });
 
-    it('should create', () => {
+   it('should create', () => {
         expect(component).toBeTruthy();
     });
 
@@ -88,7 +88,7 @@ describe('DishComponent', () => {
         }
        }); 
 
-    //tests rating update feature             
+   //tests rating update feature             
     it('should check if rating is updated',() => {
         let user = 123456789
         let rating = 3
