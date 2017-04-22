@@ -5,9 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpModule, Http} from '@angular/http';
-
 import { FireBaseService } from '../../services/firebase.service';
-
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HomeComponent } from './home.component';
 
@@ -74,6 +72,7 @@ describe('HomeComponent', () => {
         postLikes = this.cuis.likes;
         //console.log(postLikes);
         diff = postLikes - initLikes;
+        updatelikeService.updateCuisineLikes(this.cuis, postLikes-1);
         //console.log(diff);
         expect(diff).toBe(1);
        });

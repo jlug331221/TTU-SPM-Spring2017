@@ -5,6 +5,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/finally';
 import {Observable} from "RxJS/Rx";
+import * as firebase from 'firebase';
+
 
 let getRestHttp: Http;
 let res;
@@ -96,7 +98,7 @@ export class FireBaseService {
 					//console.log(body);				
 					return body;
 				}
-		});			
+			});			
 	}
 	
 	//updates the dish rating for a user.  does not allow duplicate ratings.
@@ -105,33 +107,26 @@ export class FireBaseService {
 		//console.log(this.fbUser);
 		this.fbUser.update({rating: rating});
 	}
-
-	//updates the like field in theuserCuisineLike table to true or false
-	//for a specific cuisine.  Tracks user input so no duplicates occur.
-	updateUserLike(user, like, cuisine){
-		let cuisLikes = cuisine.likes
-		this.fbUserLike = user
-		if(like){
-					cuisLikes = cuisLikes - 1
-					this.updateCuisineLikes(cuisine, cuisLikes);
-				}
-		else if (like == false){
-					cuisLikes = cuisLikes + 1
-					this.updateCuisineLikes(cuisine, cuisLikes);
-			}	
-				
-	}
 	
 	//increments the cuisine like field by + or - 1 depending on whether
 	//the user has liked the cuisine before.  The user has the ability to take away 
 	//a cuisine like.
-	updateUserCuisineLike(user, userLike){
-		this.fbUserLike = user;
-		console.log(this.fbUserLike);
-		this.fbUserLike.update({ likes: userLike});
-		}
-
-	//Updates a cuisine's likes by one.  User can only like a cuisine once.
+	updateUserCuisineLike(user, userLike, cuisine){
+		let cuisLikes = cuisine.likes
+		 this.fbUserLike = this.af.database.object('/userCuisineLikes/' + cuisine.$key + '/' + user) as FirebaseObjectObservable<any>
+		if(userLike == true){
+					cuisLikes = cuisLikes - 1
+					this.fbUserLike.update({ likes: false});
+					this.updateCuisineLikes(cuisine, cuisLikes);
+				}
+		else if (userLike == false){
+					cuisLikes = cuisLikes + 1
+					this.fbUserLike.update({ likes: true});
+					this.updateCuisineLikes(cuisine, cuisLikes);
+			}
+	}
+	
+	//Updates a cuisine's total likes by + or - one.  User can only like a cuisine once.
   	updateCuisineLikes(cuisineObj: cuisine, likes){
 	  	let lik = likes;
 		let name = cuisineObj.$key;

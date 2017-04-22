@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FireBaseService } from '../../services/firebase.service'
 import { HttpModule, Http} from '@angular/http';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-home',
@@ -38,21 +39,24 @@ export class HomeComponent implements OnInit {
     //cuisine like data is then updated. 
     likeCuisine(cuisine){
       let lik
-        
-      if(this.userExists){
-        this.cuisine= cuisine
-        this.fbUserLike = this.af.database.object('/userCuisineLikes/'+ this.cuisine.$key + '/' + this.userID) as  FirebaseObjectObservable<any>;
-		
-		    this.fbUserLike.subscribe(resp =>{
-		      if(resp!=null){
-		        lik = resp.likes
-            //console.log(lik)
-            this.fireBaseService.updateUserLike(this.userID, lik, this.cuisine)
-		      }
-        });
-      this.fireBaseService.updateUserCuisineLike(this.fbUserLike, !lik)        
+      this.cuisine= cuisine
+      if(this.userExists){          
+       firebase.database().ref('/userCuisineLikes/' + cuisine.$key + '/' + this.userID).once('value').then((res)=>{
+            if(res.A.aa!=null){
+                res = res.val().likes 
+                console.log(res)
+                this.fireBaseService.updateUserCuisineLike(this.userID, res, this.cuisine)
+            }
+            else{
+              this.fireBaseService.updateUserCuisineLike(this.userID, false, this.cuisine)
+            }
+        });            
     }
-  }
+    
 }
+}
+  
+
+
       
   

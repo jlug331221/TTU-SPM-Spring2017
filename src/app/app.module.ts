@@ -11,6 +11,7 @@ import { RatingModule } from 'ngx-rating';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import * as firebase from 'firebase';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
