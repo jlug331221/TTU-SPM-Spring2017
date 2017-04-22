@@ -18,8 +18,15 @@ branches:
 
 before_install:
   - export CHROME_BIN=chromium-browser
+  - echo "--no-sandbox" > ~/.config/chromium-flags.conf
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - sudo apt-get update
+  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome*.deb
+  - npm i -g typescript
+  - npm i -g typings
 
 before_script:
 - npm install -g angular-cli
