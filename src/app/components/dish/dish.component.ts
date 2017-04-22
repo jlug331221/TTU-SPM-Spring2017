@@ -56,7 +56,10 @@ export class DishComponent implements OnInit {
           }
 
      });
-	  
+     this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
+        this.details = details
+       console.log(this.details);        
+     });
 
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
