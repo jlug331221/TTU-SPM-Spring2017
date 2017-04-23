@@ -6,8 +6,6 @@ import * as firebase from 'firebase';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/finally';
-import {Observable} from "RxJS/Rx";
-import * as firebase from 'firebase';
 import { User } from '../interfaces/user.interface';
 
 
@@ -28,8 +26,6 @@ export class FireBaseService {
 	fbRating: FirebaseObjectObservable<any>;
 	fbUserLike:  FirebaseObjectObservable<any>; 
 
-
-	fbUserLike: FirebaseObjectObservable<any>;
 	aPi:any;
 	result:any;
 	latitude:any;
@@ -161,9 +157,6 @@ export class FireBaseService {
 				}
 
 			});			
-
-		});
-
 	}
 
 	//updates the dish rating for a user.  does not allow duplicate ratings.
@@ -186,23 +179,11 @@ export class FireBaseService {
 					this.updateCuisineLikes(cuisine, cuisLikes);
 				}
 		else if (userLike == false){
-					this.updateUserCuisineLike(true);
-					lik = true;
 					cuisLikes = cuisLikes + 1
 					this.fbUserLike.update({ likes: true});
 					this.updateCuisineLikes(cuisine, cuisLikes);
 			}
 	}
-
-	//Updates a cuisine's total likes by + or - one.  User can only like a cuisine once.
-	//increments the cuisine like field by + or - 1 depending on whether
-	//the user has liked the cuisine before.  The user has the ability to take away
-	//a cuisine like.
-	updateUserCuisineLike(userLike){
-		this.fbUserLike.update({
-			 likes: userLike
-			});
-		}
 
 	//Updates a cuisine's likes by one.  User can only like a cuisine once.
   	updateCuisineLikes(cuisineObj: cuisine, likes){
