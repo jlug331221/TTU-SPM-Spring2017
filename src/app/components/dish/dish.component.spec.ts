@@ -1,10 +1,11 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, NgModule } from '@angular/core';
+import { DebugElement, NgModule,Injectable } from '@angular/core';
 import { RatingModule } from "ngx-rating";
+import { HttpModule } from '@angular/http';
 import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
@@ -13,7 +14,10 @@ import { HttpModule, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 
-let fbService: FireBaseService;
+
+
+let fbService:FireBaseService;
+
 describe('DishComponent', () => {
     let component: DishComponent;
     let fixture: ComponentFixture<DishComponent>;
@@ -34,8 +38,10 @@ describe('DishComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-              RouterTestingModule, RatingModule, FormsModule, HttpModule,
-              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+
+              RouterTestingModule, RatingModule, FormsModule,
+              AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+			  HttpModule
             ],
             providers: [ FireBaseService ],
             declarations: [ DishComponent, NavbarComponent ]
@@ -46,12 +52,26 @@ describe('DishComponent', () => {
         fixture = TestBed.createComponent(DishComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        fbService = fixture.debugElement.injector.get(FireBaseService);
+
+		  fbService = fixture.debugElement.injector.get(FireBaseService);
+
     });
 
-    it('should create', () => {
+   it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+	it('Should Get dish',()=>{
+		let dish_id=1
+       fbService.getDish(dish_id).subscribe(dish => {
+               if(dish!= null){
+               
+			   expect(dish.avg_rating).toBe(number);
+             }
+           
+         });
+	});
+
 
        //tests api request to google to get restaurant details.
        //Returns a specific property (a phone number) from the details object
@@ -68,7 +88,7 @@ describe('DishComponent', () => {
         }
        }); 
 
-    //tests rating update feature             
+   //tests rating update feature             
     it('should check if rating is updated',() => {
         let user = 123456789
         let rating = 3
@@ -84,6 +104,7 @@ describe('DishComponent', () => {
         expect(res.rating).toBe("3");
         }
        });
+
 });
 
 interface rating {
