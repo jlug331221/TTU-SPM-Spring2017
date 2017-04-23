@@ -5,7 +5,11 @@ import {Observable} from 'rxjs/Rx';
 import * as firebase from 'firebase';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/finally';
+import {Observable} from "RxJS/Rx";
+import * as firebase from 'firebase';
 import { User } from '../interfaces/user.interface';
+
 
 @Injectable()
 export class FireBaseService {
@@ -18,10 +22,13 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-  	users: FirebaseListObservable<any[]>;
+  users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
-    fbUser: FirebaseObjectObservable<any>;
+   fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
+	fbUserLike:  FirebaseObjectObservable<any>; 
+
+
 	fbUserLike: FirebaseObjectObservable<any>;
 	aPi:any;
 	result:any;
@@ -30,6 +37,7 @@ export class FireBaseService {
 	authData:any;
 	longitude:any;
 	apiUrl:string;
+
 	private res;
 	placeDish:dish;
 	private rest;
@@ -143,7 +151,7 @@ export class FireBaseService {
 	 * based on a google id parameter
 	 */
 	getRestaurantDetails(restId){
-		console.log(restId);
+		//console.log(restId);
 		let googleRestDetailsurl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantDetails/'+restId
 			return this.http.get(googleRestDetailsurl).map( response => {
 					if(response != null){
@@ -151,7 +159,11 @@ export class FireBaseService {
 					//console.log(body);
 					return body;
 				}
+
+			});			
+
 		});
+
 	}
 
 	//updates the dish rating for a user.  does not allow duplicate ratings.
@@ -161,33 +173,28 @@ export class FireBaseService {
 		this.fbUser.update({rating: rating});
 	}
 
-	//updates the like field in theuserCuisineLike table to true or false
-	//for a specific cuisine.  Tracks user input so no duplicates occur.
-	updateUserLike(user, cuisine){
-		this.fbUserLike= this.af.database.object('/userCuisineLikes/'+ cuisine.$key + '/' + user) as FirebaseObjectObservable<any>
+	
+	//increments the cuisine like field by + or - 1 depending on whether
+	//the user has liked the cuisine before.  The user has the ability to take away 
+	//a cuisine like.
+	updateUserCuisineLike(user, userLike, cuisine){
 		let cuisLikes = cuisine.likes
-		let lik;
-
-		this.fbUserLike.subscribe(resp =>{
-			if(resp != null)
-			 lik = resp.likes;
-			 //console.log(lik);
-		})
-
-		if(lik){
-					this.updateUserCuisineLike(false);
-					lik = false;
+		 this.fbUserLike = this.af.database.object('/userCuisineLikes/' + cuisine.$key + '/' + user) as FirebaseObjectObservable<any>
+		if(userLike == true){
 					cuisLikes = cuisLikes - 1
+					this.fbUserLike.update({ likes: false});
 					this.updateCuisineLikes(cuisine, cuisLikes);
 				}
-			else{
+		else if (userLike == false){
 					this.updateUserCuisineLike(true);
 					lik = true;
 					cuisLikes = cuisLikes + 1
+					this.fbUserLike.update({ likes: true});
 					this.updateCuisineLikes(cuisine, cuisLikes);
 			}
 	}
 
+	//Updates a cuisine's total likes by + or - one.  User can only like a cuisine once.
 	//increments the cuisine like field by + or - 1 depending on whether
 	//the user has liked the cuisine before.  The user has the ability to take away
 	//a cuisine like.
@@ -200,10 +207,10 @@ export class FireBaseService {
 	//Updates a cuisine's likes by one.  User can only like a cuisine once.
   	updateCuisineLikes(cuisineObj: cuisine, likes){
 	  	let lik = likes;
-		  let name = cuisineObj.$key;
+		let name = cuisineObj.$key;
 	 	this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
 		this.fbCuisine.update({likes: lik});
-		console.log(lik);
+		//console.log(lik);
 	}
 
 	//returns rating information
@@ -213,7 +220,6 @@ export class FireBaseService {
 		this.fbRating = this.af.database.object('userRatings/'+ d + '/' + u) as FirebaseObjectObservable<any>
 		return this.fbRating;
 	}
-
 
 	//returns comments
 	getComments(dish_id) {
@@ -227,18 +233,14 @@ export class FireBaseService {
 	 	  this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
 		  //console.log(this.fbCuisine);
 	  	let likeInc = likes + 1;
-
-		this.fbCuisine.update({likes: likeInc});
-    
-		//console.log(cuisineObj);
+		  this.fbCuisine.update({likes: likeInc});
+		  //console.log(cuisineObj);
 	}
 	
 
 	putImage(image,dish_name,cuisine_name,restaurant_name){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
-		
 			const storageRef= firebase.storage().ref().child(path);
-		
 			for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
 				storageRef.put(selectedFile).then((snapshot)=>{
 					//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
@@ -252,7 +254,6 @@ export class FireBaseService {
 						restaurant_name: restaurant_name,
 						avg_rating: 2.5
 					}
-					
 					this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
 				});
 			}
