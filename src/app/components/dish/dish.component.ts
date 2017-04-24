@@ -18,6 +18,8 @@ export class DishComponent implements OnInit {
   private dish: any;
   private comments: any[]; 
   private starCount_avg: number;
+  private ratingObj: any;
+  private ratingAvg: number;
 
   private authData:any;
   private addedComment:string;	
@@ -48,7 +50,6 @@ export class DishComponent implements OnInit {
         });
   
     //gets dish object which corresponds to route parameter '$key'
-
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             if(dish!= null){
             this.dish = dish;
@@ -62,12 +63,31 @@ export class DishComponent implements OnInit {
 		  
      });
 	 
+     //gets dish comments
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
             //console.log(this.comments);
       });
    
+      //calculates the dish rating average of dish
+      this.fireBaseService.getRatingAverage(this.dish_id).subscribe( rating =>{ 
+          if(rating != null){
+          this.ratingObj = rating;
+          let ratingSum = 0;
+
+          console.log(this.ratingObj)
+
+          rating.forEach(snapshot => {
+            if(snapshot != null)
+              ratingSum = ratingSum + snapshot.rating
+              console.log(ratingSum);
+        });
+          this.ratingAvg = ratingSum / this.ratingObj.length
+          console.log(this.ratingAvg);
+        }
+      });
     }
+
     //allows user to rate a dish if they are logged in 
     rateDish(){
       if (this.userExists != false){
@@ -75,8 +95,6 @@ export class DishComponent implements OnInit {
       }
     }
     
-    
-
 	//Call this function when user adds the comment
 	onAddedComment(){
 		console.log("Adding Dish");
