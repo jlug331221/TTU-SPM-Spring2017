@@ -11,7 +11,7 @@ import { User } from '../interfaces/user.interface';
 
 @Injectable()
 export class FireBaseService {
-	
+
 
 	constructor(private af: AngularFire, private http: Http) { }
 	firebaseCuisines: FirebaseListObservable<any[]>;
@@ -20,11 +20,12 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-  users: FirebaseListObservable<any[]>;
+  	users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
-   fbUser: FirebaseObjectObservable<any>;
+    fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
-	fbUserLike:  FirebaseObjectObservable<any>; 
+	fbUserLike:  FirebaseObjectObservable<any>;
+	userProfileComments: FirebaseListObservable<any[]>;
 
 	aPi:any;
 	result:any;
@@ -38,21 +39,20 @@ export class FireBaseService {
 	placeDish:dish;
 	private rest;
 	private cit;
-	private st;	
-	
+	private st;
+
 	setAuthData(auth){
 		this.authData= auth;
 	}
-	
+
 	getAuthData(){
 		return this.authData;
 	}
 
-	
-	setComments(dish_id,user_name,comment_data){
-		this.commentObject ={user:user_name, comment_data:comment_data, rating:5};
-		
-		
+	setComments(dish_id,user_name,comment_data, user_id){
+		this.commentObject ={user:user_name, comment_data:comment_data, rating:5, uid:user_id};
+
+
 		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
 	}
 
@@ -106,8 +106,8 @@ export class FireBaseService {
 	/**
 	* Update user profile in database
 	*
-	* @param {User} userObj [User profile info from the user-profile edit form]
-	* @return User as FirebaseObjectObservable<any>
+	* @param  {User} userObj [User profile info from the user-profile edit form]
+	* @return {User} as FirebaseObjectObservable<any>
 	*/
 	editUserProfilePref(userObj: User) {
 		return this.af.database.object('users/' + userObj.uid).update({
@@ -117,7 +117,47 @@ export class FireBaseService {
 		});
 	}
 
-	
+	/**
+	 * Get all comments made by a user (used to display on the user profile page).
+	 *
+	 * @return {Comments} [description] userProfileComments
+	 */
+	getCommentsForUserProfile(uid) {
+		let comments;
+		let userComments = [];
+		let userComment: comments;
+
+		let dishes = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes', { preserveSnapshot: true });
+
+		dishes.subscribe(snapshots => {
+			snapshots.forEach(snapshot => {
+				if(snapshot.val().comments != null) {
+					comments = snapshot.val().comments;
+
+					// If comments is not an array, convert JSON object to an array
+					if(! Array.isArray(comments)) {
+						comments = Object.keys(comments).map((key) => {
+							return comments[key];
+						})
+					}
+
+					comments.forEach((comment) => {
+						if(comment.uid != null && comment.uid == uid) {
+							userComment = {
+								user: comment.user,
+								comment_data: comment.comment_data,
+								rating: comment.rating,
+								uid: comment.uid
+							}
+							userComments.push(userComment);
+						}
+					})
+				}
+			})
+		});
+
+		return userComments;
+	}
 
 	//returns dish information
 	getDish($key) {
@@ -156,7 +196,7 @@ export class FireBaseService {
 					return body;
 				}
 
-			});			
+			});
 	}
 
 	//updates the dish rating for a user.  does not allow duplicate ratings.
@@ -166,9 +206,9 @@ export class FireBaseService {
 		this.fbUser.update({rating: rating});
 	}
 
-	
+
 	//increments the cuisine like field by + or - 1 depending on whether
-	//the user has liked the cuisine before.  The user has the ability to take away 
+	//the user has liked the cuisine before.  The user has the ability to take away
 	//a cuisine like.
 	updateUserCuisineLike(user, userLike, cuisine){
 		let cuisLikes = cuisine.likes
@@ -209,15 +249,15 @@ export class FireBaseService {
 	}
 
 	//Updates a cuisine's likes by one,*** Needs authentication***
-  updateCuisinelikes(cuisineObj: cuisine, likes) {
+    updateCuisinelikes(cuisineObj: cuisine, likes) {
 	  	let name = cuisineObj.$key;
 	 	  this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
 		  //console.log(this.fbCuisine);
-	  	let likeInc = likes + 1;
+	  	  let likeInc = likes + 1;
 		  this.fbCuisine.update({likes: likeInc});
 		  //console.log(cuisineObj);
 	}
-	
+
 
 	putImage(image,dish_name,cuisine_name,restaurant_name){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
@@ -238,30 +278,30 @@ export class FireBaseService {
 					this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
 				});
 			}
-			
+
 			return Observable.of(this.result);
 	}
-	
+
 	getLocation(){
 		this.latitude=23.0078579;
 		this.longitude=72.5138152;
-		
-		
+
+
 		//this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
-		
+
 		navigator.geolocation.getCurrentPosition(position=>{
 			this.latitude= position.coords.latitude;
 			this.longitude = position.coords.longitude;
 			console.log(position.coords.latitude);
 			console.log(position.coords.longitude);
-   		 	
+
 			this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
-  		  	
-			
+
+
 		 });
 	}
   getRestaurantBasedOnLocation(){
-		
+
 		if(this.latitude!=null){
 		  	  return this.http.get(this.apiUrl).map(
 				 data=>{
@@ -270,17 +310,17 @@ export class FireBaseService {
 				return this.res;
 			});
 		}
-	  	
+
 	}
-	
-	  	
+
+
 }
 
 
 interface cuisines {
 	$key?: string;
 	image_url?: string;
-	
+
 }
 
 interface dish {
@@ -292,13 +332,14 @@ interface dish {
 	img_url: string;
 	restaurant_name: string;
 	avg_rating: number;
-	
+
 }
 
 interface comments {
 	user: string;
 	comment_data: string;
 	rating: number;
+	uid: string;
 }
 
 interface dishes {
