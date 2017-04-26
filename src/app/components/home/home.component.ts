@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { FireBaseService } from '../../services/firebase.service'
 import { HttpModule, Http} from '@angular/http';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   private cuisine: any;
   private userExists = false;
   private userID;
+  private fbUserLike: FirebaseObjectObservable<any>;
 
     constructor(private af: AngularFire, private fireBaseService:FireBaseService ) { }
 
@@ -23,7 +25,8 @@ export class HomeComponent implements OnInit {
       this.af.auth.subscribe(authData => {
             if(authData != null) {
                 this.userExists = true;
-                this.userID = authData.uid;
+                this.userID = authData.uid
+                console.log(this.userExists)
             }
         });
 
@@ -32,12 +35,28 @@ export class HomeComponent implements OnInit {
       });  
   
     }
+    //checks if user is logged in and retrieves user like data for a particular cuisine.
+    //cuisine like data is then updated. 
     likeCuisine(cuisine){
-      if(this.userExists){
-        this.cuisine= cuisine
-        this.fireBaseService.updateUserLike(this.userID, this.cuisine)
+      let lik
+      this.cuisine= cuisine
+      if(this.userExists){          
+       firebase.database().ref('/userCuisineLikes/' + cuisine.$key + '/' + this.userID).once('value').then((res)=>{
+            if(res.A.aa!=null){
+                res = res.val().likes 
+                console.log(res)
+                this.fireBaseService.updateUserCuisineLike(this.userID, res, this.cuisine)
+            }
+            else{
+              this.fireBaseService.updateUserCuisineLike(this.userID, false, this.cuisine)
+            }
+        });            
     }
-  }
+    
 }
+}
+  
+
+
       
   

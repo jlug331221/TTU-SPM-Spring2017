@@ -10,10 +10,8 @@ import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
-
 
 
 let fbService:FireBaseService;
@@ -72,7 +70,26 @@ describe('DishComponent', () => {
          });
 	});
 
+//tests average rating function.  Test simply checks that the average is a 
+//value less than 5, since the actual average is constantly changing.
+ it('should return a dish average rating less than or equal to 5',() =>{
+     let dish_id = 3
+         fbService.getRatingAverage(dish_id).subscribe( rating =>{ 
+          if(rating != null){
+          let ratingObj = rating;
+          let ratingSum = 0;
+          let avg = 0;
 
+          rating.forEach(snapshot => {
+            if(snapshot != null)
+              ratingSum = ratingSum + snapshot.rating
+             // console.log(ratingSum);
+        });
+          avg = ratingSum / this.ratingObj.length
+          expect(avg).toBeLessThanOrEqual(5);
+        }
+      });
+ }); 
        //tests api request to google to get restaurant details.
        //Returns a specific property (a phone number) from the details object
     it('should return a specific detail from googles place detail api',() =>{
