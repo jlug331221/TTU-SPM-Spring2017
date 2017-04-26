@@ -53,7 +53,6 @@ export class DishComponent implements OnInit {
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             if(dish!= null){
             this.dish = dish;
-            this.starCount_avg = dish.avg_rating;
             //console.log(this.dish);
           }
 	 	 this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
@@ -75,7 +74,7 @@ export class DishComponent implements OnInit {
           this.ratingObj = rating;
           let ratingSum = 0;
 
-          console.log(this.ratingObj)
+          //console.log(this.ratingObj)
 
           rating.forEach(snapshot => {
             if(snapshot != null)
@@ -83,7 +82,7 @@ export class DishComponent implements OnInit {
               console.log(ratingSum);
         });
           this.ratingAvg = ratingSum / this.ratingObj.length
-          console.log(this.ratingAvg);
+          //console.log(this.ratingAvg);
         }
       });
     }
