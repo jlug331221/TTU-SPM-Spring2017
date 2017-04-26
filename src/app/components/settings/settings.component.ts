@@ -5,7 +5,9 @@ import { CompleterService, CompleterData } from 'ng2-completer';
 import { FireBaseService } from '../../services/firebase.service';
 import {Router} from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
-declare var jQuery:any;
+
+// JQuery declaration variable
+declare var $:any;
 
 @Component({
   selector: 'app-settings',
@@ -13,7 +15,7 @@ declare var jQuery:any;
   styleUrls: ['./settings.component.css']
 })
  export class SettingsComponent implements OnInit,OnChanges {
-    elementRef: ElementRef;	
+    elementRef: ElementRef;
 	image:any;
 	restaurantName:any;
 	dish_name:any;
@@ -24,12 +26,10 @@ declare var jQuery:any;
 	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
 
 	ngOnChanges(){
-   		
-   }	
- 
+
+   }
+
    ngOnInit() {
-
-
 
 		this.fireBaseService.getCuisines().subscribe(response => {
 
@@ -37,20 +37,48 @@ declare var jQuery:any;
 				this.cuisine_names= response;
 			}
 		});
-   		
-		this.fireBaseService.getRestaurantBasedOnLocation().subscribe(
-			response=>{
-   			if(response.results!=null){
+
+		this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+   			if(response.results!=null) {
    				this.restaurants = response.results;
    				this.gotresult="true";
-   				console.log("this.restaurants"+ response);
-   			}
-   		});
-		
+   				//console.log("this.restaurants: "+ response.results);
+
+                let restaurantNames = [];
+                let uniqueRestaurantNames = [];
+                for (let i = 0; i < this.restaurants.length; i++) {
+                    restaurantNames.push(this.restaurants[i].name);
+                }
+
+                /*uniqueRestaurantNames = restaurantNames.filter(function(elem, index, self) {
+                    return index  = self.indexOf(elem);
+                });*/
+                for(var i = 0; i < restaurantNames.length; i++){
+                    if(uniqueRestaurantNames.indexOf(restaurantNames[i]) == -1){
+                        uniqueRestaurantNames.push(restaurantNames[i]);
+                    }
+                }
+                //console.log(uniqueRestaurantNames);
+
+                $.typeahead({
+                    input: '.js-typeahead-restaurants',
+                    order: "desc",
+                    source: {
+                        data: uniqueRestaurantNames
+                    },
+                    callback: {
+                        onInit: function (node) {
+                            console.log('Typeahead Initiated on ' + node.selector);
+                        }
+                    }
+                });
+            }
+        });
    	}
+
    	onSubmit(){
-		
-		
+
+
    		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName).subscribe(status=>{
    			 console.log("Status is" + status);
    	 		if(status!="Error"){
@@ -65,11 +93,3 @@ declare var jQuery:any;
    		});
 	}
 }
-
-  	
-
-
-
-  
-   
-
