@@ -24,6 +24,7 @@ export class FireBaseService {
 	user: FirebaseObjectObservable<any>;
    fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
+	fbRatingList: FirebaseListObservable<any>;
 	fbUserLike:  FirebaseObjectObservable<any>; 
 
 	aPi:any;
@@ -200,6 +201,11 @@ export class FireBaseService {
 		let d = dish;
 		this.fbRating = this.af.database.object('userRatings/'+ d + '/' + u) as FirebaseObjectObservable<any>
 		return this.fbRating;
+	}
+
+	getRatingAverage(dish){
+		this.fbRatingList = this.af.database.list('userRatings/' + dish) as FirebaseListObservable<any>;
+		return this.fbRatingList;
 	}
 
 	//returns comments
