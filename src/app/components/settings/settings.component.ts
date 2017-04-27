@@ -21,6 +21,8 @@ declare var jQuery:any;
 	cuisine_names:any;
 	selectedCuisine:any;
 	gotresult:string;
+	city_name:string;
+	state_name:string;
 	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
 
 	ngOnChanges(){
@@ -51,7 +53,8 @@ declare var jQuery:any;
    	onSubmit(){
 		
 		
-   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName).subscribe(status=>{
+		
+   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName.name,this.restaurantName.place_id).subscribe(status=>{
    			 console.log("Status is" + status);
    	 		if(status!="Error"){
    	 			console.log('added');
