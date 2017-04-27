@@ -32,7 +32,7 @@ export class CustomuploadsComponent implements OnInit {
 	
    	onSubmit(){
 		
-		
+		/*
    		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName).subscribe(status=>{
    			 console.log("Status is" + status);
    	 		if(status!="Error"){
@@ -44,7 +44,7 @@ export class CustomuploadsComponent implements OnInit {
    	 			this.flash.show('Please add valid message',{cssClass: 'alert-success', timeout: 5000});
    	 			this.router.navigate(['/']);
    	 		}
-   		});
+   		});*/
 	}
 
 }

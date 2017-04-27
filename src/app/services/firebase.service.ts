@@ -129,7 +129,7 @@ export class FireBaseService {
 		let rest = restName;
 		let cit = city;
 		let st = state;
-		let googleResturl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantId/'+ rest +'/'+ cit +'/'+'/'+ st
+		let googleResturl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantId/'+ rest +'/'+ cit +'/'+ st
 		return this.http.get(googleResturl).map( data => {
 				if (data != null){
 					this.res = data.json().results[0].place_id;
@@ -234,29 +234,33 @@ export class FireBaseService {
 	}
 	
 
-	putImage(image,dish_name,cuisine_name,restaurant_name){
+	putImage(image,dish_name,cuisine_name,restaurant_name,placeId){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
 		
 			const storageRef= firebase.storage().ref().child(path);
-		
-			for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
-				storageRef.put(selectedFile).then((snapshot)=>{
-					//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
-					this.result=snapshot
-					console.log(this.result.a.downloadURLs[0]);
-					this.placeDish={
-						name:dish_name,
-						cuisineName:cuisine_name.toLowerCase(),
-						description:dish_name+'at'+restaurant_name,
-						img_url:this.result.a.downloadURLs[0],
-						restaurant_name: restaurant_name,
-						avg_rating: 2.5
-					}
-					
-					this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
-				});
-			}
 			
+		
+				for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
+					storageRef.put(selectedFile).then((snapshot)=>{
+						//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
+						this.result=snapshot
+						console.log(this.result.a.downloadURLs[0]);
+						this.placeDish={
+							name:dish_name,
+							cuisineName:cuisine_name.toLowerCase(),
+							description:dish_name+'at'+restaurant_name,
+							img_url:this.result.a.downloadURLs[0],
+							restaurant_name: restaurant_name,
+							avg_rating: 2.5,
+							place_id : placeId
+						}
+					
+						this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
+					});
+				}
+			
+			 
+			 
 			return Observable.of(this.result);
 	}
 	
@@ -310,6 +314,7 @@ interface dish {
 	img_url: string;
 	restaurant_name: string;
 	avg_rating: number;
+	place_id:string;
 	
 }
 
