@@ -27,7 +27,6 @@ button{
     float: right;
 }
 .comhover{
-    
     cursor: pointer;
     font-size: 16px;
 }
@@ -40,7 +39,7 @@ button{
     font-size: 12px;
 }
 #ratingModal{
-    height: 200px;
+    height: 280px;
     width: 300px;
 }
 
