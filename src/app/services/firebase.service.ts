@@ -12,7 +12,6 @@ import { User } from '../interfaces/user.interface';
 @Injectable()
 export class FireBaseService {
 
-
 	constructor(private af: AngularFire, private http: Http) { }
 	firebaseCuisines: FirebaseListObservable<any[]>;
 	dishesForCuisineName: FirebaseListObservable<any[]>;
@@ -85,6 +84,7 @@ export class FireBaseService {
 
 		return this.dishesForCuisineName;
 	}
+
 	/**
 	 * Add new Foogle user to the database.
 	 *
@@ -125,7 +125,7 @@ export class FireBaseService {
 	getCommentsForUserProfile(uid) {
 		let comments;
 		let userComments = [];
-		let userComment: comments;
+		let userComment: any;
 
 		let dishes = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes', { preserveSnapshot: true });
 
@@ -143,11 +143,15 @@ export class FireBaseService {
 
 					comments.forEach((comment) => {
 						if(comment.uid != null && comment.uid == uid) {
+							//console.log(snapshot.val().name);
 							userComment = {
 								user: comment.user,
 								comment_data: comment.comment_data,
 								rating: comment.rating,
-								uid: comment.uid
+								uid: comment.uid,
+								dish_name: snapshot.val().name,
+								dish_img: snapshot.val().img_url,
+								dish_description: snapshot.val().description
 							}
 							userComments.push(userComment);
 						}
@@ -332,7 +336,6 @@ interface dish {
 	img_url: string;
 	restaurant_name: string;
 	avg_rating: number;
-
 }
 
 interface comments {
