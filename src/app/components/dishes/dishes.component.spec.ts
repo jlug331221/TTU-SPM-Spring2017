@@ -5,8 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement, Injectable } from '@angular/core';
 import { HttpModule, Http} from '@angular/http';
-
-import { HttpModule } from '@angular/http';
 import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishesComponent } from './dishes.component';

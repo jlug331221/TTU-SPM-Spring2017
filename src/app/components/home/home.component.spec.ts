@@ -3,12 +3,9 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { AuthProviders, AuthMethods, AngularFireModule, FirebaseObjectObservable } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-
 import { DebugElement, Injectable } from '@angular/core';
 import { HttpModule } from '@angular/http';
-
 import { FireBaseService } from '../../services/firebase.service';
-
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HomeComponent } from './home.component';
 
@@ -56,7 +53,6 @@ describe('HomeComponent', () => {
     });
 
     //checks the like cuisine feature
-	/*
     it('should return with a new likes count of +1',() =>{
         let initLikes: number;
         let postLikes: number;
@@ -67,17 +63,21 @@ describe('HomeComponent', () => {
         this.name='Italian';
 
         updatelikeService.getCuisine(this.name).subscribe(res=>{
+            if(res != null)
             this.cuis = res;
         });
+
         initLikes = this.cuis.likes; 
         //console.log(initLikes);      
-        updatelikeService.updateUserLike(user, this.cuis);
+        updatelikeService.updateCuisineLikes(this.cuis, initLikes+1);
         postLikes = this.cuis.likes;
         //console.log(postLikes);
         diff = postLikes - initLikes;
+        updatelikeService.updateCuisineLikes(this.cuis, postLikes-1);
         //console.log(diff);
-        expect(diff).toBe(1 || -1);
-       });*/
+        expect(diff).toBe(1);
+       });
+      
 
         //tests google api request to get a restaurant id
     /*it('should return a restaurant id from googles place api',() => {
@@ -96,3 +96,5 @@ interface cuisine{
 	likes: number;
 	description: string;
 }
+
+

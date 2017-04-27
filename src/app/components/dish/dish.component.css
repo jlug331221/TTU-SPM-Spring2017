@@ -33,7 +33,6 @@ button{
 }
 .rate{
     cursor: pointer;
-    padding-left: 280px;
     display: inline-block;
     font-size: 16px;
 }
