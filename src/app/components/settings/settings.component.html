@@ -1,9 +1,16 @@
+
+<ul class="tabs">
+	 <li class="tab col s3"><a outerLinkActive="active" [routerLink]="['/settings']">Settings</a></li>
+     <li class="tab col s3"><a outerLinkActive="active" [routerLink]="['/customuploads']">Custom </a></li>
+</ul>
+
+<br>
 <form (submit)="onSubmit()">
 
 <label for="dish_name">Restaurant Name</label>
 <select class="browser-default" id="sel1" [(ngModel)]="restaurantName"  [ngModelOptions]="{standalone: true}" required>
 	
-	<option *ngFor="let r of restaurants" [ngValue]="r.name"  >{{ r.name }}</option>
+	<option *ngFor="let r of restaurants" [ngValue]="r"  >{{ r.name }}</option>
 </select>
 
 <div class="input-field ">
@@ -15,6 +22,7 @@
 	
 	<option *ngFor="let cuisine of cuisine_names" [ngValue]="cuisine.$key"  >{{ cuisine.$key }}</option>
 </select>
+
 
 <div class="file-field input-field">
       <div class="btn">
