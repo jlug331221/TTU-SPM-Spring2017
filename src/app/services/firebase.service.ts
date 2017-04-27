@@ -277,7 +277,7 @@ export class FireBaseService {
 						this.placeDish={
 							name:dish_name,
 							cuisineName:cuisine_name.toLowerCase(),
-							description:dish_name+'at'+restaurant_name,
+							description:dish_name,
 							img_url:this.result.a.downloadURLs[0],
 							restaurant_name: restaurant_name,
 							avg_rating: 2.5,
