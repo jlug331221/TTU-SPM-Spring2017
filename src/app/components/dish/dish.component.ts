@@ -11,31 +11,31 @@ import 'rxjs/add/operator/catch';
 @Component({
   selector: 'app-dish',
   templateUrl: './dish.component.html',
-  styleUrls: ['./dish.component.css'], 
+  styleUrls: ['./dish.component.css'],
 })
 export class DishComponent implements OnInit {
   private dish_id: any;
   private dish: any;
-  private comments: any[]; 
+  private comments: any[];
   private starCount_avg: number;
   private ratingObj: any;
   private ratingAvg: number;
 
   private authData:any;
-  private addedComment:string;	
+  private addedComment:string;
   private res: any;
   private details: any;
   private open: any[];
   private close: any[];
   private starSelect;
-  private userID; 
+  private userID;
   private userExists = false;
-  
+
   constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire) {}
   ngOnInit() {
      //gets route parameter
     this.dish_id = this.route.snapshot.params['$key'];
-    
+
 	this.af.auth.subscribe(authData => {
             if(authData != null) {
                 this.userExists = true;
@@ -48,7 +48,7 @@ export class DishComponent implements OnInit {
             this.dish_id = params['$key'];
             this.dish_id = this.dish_id;
         });
-  
+
     //gets dish object which corresponds to route parameter '$key'
      this.fireBaseService.getDish(this.dish_id).subscribe(dish => {
             if(dish!= null){
@@ -57,9 +57,9 @@ export class DishComponent implements OnInit {
           }
 	 	 this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
 	 	         this.details = details
-	 	        console.log(this.details);        
+	 	        console.log(this.details);
 	 	      });
-		  
+
      });
 	 
      //gets dish comments
@@ -93,14 +93,13 @@ export class DishComponent implements OnInit {
           this.fireBaseService.updateDishRating(this.userID, this.starSelect, this.dish_id)
       }
     }
-    
+
 	//Call this function when user adds the comment
 	onAddedComment(){
 		console.log("Adding Dish");
 		this.authData=this.fireBaseService.getAuthData();
-		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment);
+		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid);
 		this.addedComment="";
-		
+
 	  }
   }
-

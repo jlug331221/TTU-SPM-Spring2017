@@ -32,6 +32,7 @@ export class UserProfileComponent implements OnInit {
     private user_location_state;
     private user_diet;
     private user_profile_photo_url;
+    private user_profile_comments;
 
     // Form fields
     private first_name: any;
@@ -481,7 +482,11 @@ export class UserProfileComponent implements OnInit {
                 this.authDataUID = authData.uid;
                 this.authDataPhotoUrl = authData.google.photoURL;
 
-                this.checkIfFirstLogin(authData)
+                this.checkIfFirstLogin(authData);
+
+                this.user_profile_comments = this.fireBaseService.getCommentsForUserProfile(authData.uid);
+
+                console.log(this.user_profile_comments);
 
             }
 
