@@ -19,12 +19,12 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-  	users: FirebaseListObservable<any[]>;
+  users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
-    fbUser: FirebaseObjectObservable<any>;
+  fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
+	fbRatingList: FirebaseListObservable<any>;
 	fbUserLike:  FirebaseObjectObservable<any>;
-	userProfileComments: FirebaseListObservable<any[]>;
 
 	aPi:any;
 	result:any;
@@ -169,7 +169,6 @@ export class FireBaseService {
 		return this.fbDish;
 	}
 
-
 	/* Returns a restaurant identifier from Google's Place Api
 	 * Takes as parameter the city, state and name of the restaurant
 	 */
@@ -177,7 +176,7 @@ export class FireBaseService {
 		let rest = restName;
 		let cit = city;
 		let st = state;
-		let googleResturl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantId/'+ rest +'/'+ cit +'/'+'/'+ st
+		let googleResturl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurantId/'+ rest +'/'+ cit +'/'+ st
 		return this.http.get(googleResturl).map( data => {
 				if (data != null){
 					this.res = data.json().results[0].place_id;
@@ -209,7 +208,6 @@ export class FireBaseService {
 		//console.log(this.fbUser);
 		this.fbUser.update({rating: rating});
 	}
-
 
 	//increments the cuisine like field by + or - 1 depending on whether
 	//the user has liked the cuisine before.  The user has the ability to take away
@@ -246,6 +244,11 @@ export class FireBaseService {
 		return this.fbRating;
 	}
 
+	getRatingAverage(dish){
+		this.fbRatingList = this.af.database.list('userRatings/' + dish) as FirebaseListObservable<any>;
+		return this.fbRatingList;
+	}
+
 	//returns comments
 	getComments(dish_id) {
 		this.fbComments = this.af.database.list('/dishes/'+ dish_id + '/comments') as FirebaseListObservable<comments[]>
@@ -262,27 +265,28 @@ export class FireBaseService {
 		  //console.log(cuisineObj);
 	}
 
-
-	putImage(image,dish_name,cuisine_name,restaurant_name){
+	putImage(image,dish_name,cuisine_name,restaurant_name,placeId){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
 			const storageRef= firebase.storage().ref().child(path);
-			for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
-				storageRef.put(selectedFile).then((snapshot)=>{
-					//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
-					this.result=snapshot
-					console.log(this.result.a.downloadURLs[0]);
-					this.placeDish={
-						name:dish_name,
-						cuisineName:cuisine_name.toLowerCase(),
-						description:dish_name+'at'+restaurant_name,
-						img_url:this.result.a.downloadURLs[0],
-						restaurant_name: restaurant_name,
-						avg_rating: 2.5
-					}
-					this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
-				});
-			}
 
+		  for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
+					storageRef.put(selectedFile).then((snapshot)=>{
+						//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
+						this.result=snapshot
+						console.log(this.result.a.downloadURLs[0]);
+						this.placeDish={
+							name:dish_name,
+							cuisineName:cuisine_name.toLowerCase(),
+							description:dish_name+'at'+restaurant_name,
+							img_url:this.result.a.downloadURLs[0],
+							restaurant_name: restaurant_name,
+							avg_rating: 2.5,
+							place_id : placeId
+						}
+					
+						this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
+					});
+				}
 			return Observable.of(this.result);
 	}
 
@@ -304,6 +308,7 @@ export class FireBaseService {
 
 		 });
 	}
+  
   getRestaurantBasedOnLocation(){
 
 		if(this.latitude!=null){
@@ -317,14 +322,12 @@ export class FireBaseService {
 
 	}
 
-
 }
 
 
 interface cuisines {
 	$key?: string;
 	image_url?: string;
-
 }
 
 interface dish {
@@ -336,6 +339,7 @@ interface dish {
 	img_url: string;
 	restaurant_name: string;
 	avg_rating: number;
+	place_id:string;
 }
 
 interface comments {
