@@ -169,6 +169,18 @@ export class FireBaseService {
 		return this.fbDish;
 	}
 
+	//The Google Maps Embed API
+	getRestaurantMap(placeid){
+		let googleMapUrl = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBDziLzYLL-LKfwOkofcd23p1K4WlZ38Lc&q=place_id:'+placeid
+		return this.http.get(googleMapUrl).map( data => {
+				if (data != null){
+					this.res = data;
+					console.log(this.res);
+					return this.res;
+				}
+			})
+	}
+
 	/* Returns a restaurant identifier from Google's Place Api
 	 * Takes as parameter the city, state and name of the restaurant
 	 */
@@ -255,7 +267,7 @@ export class FireBaseService {
 		return this.fbComments;
 	}
 
-	//Updates a cuisine's likes by one,*** Needs authentication***
+	//Updates a cuisine's likes by one
     updateCuisinelikes(cuisineObj: cuisine, likes) {
 	  	let name = cuisineObj.$key;
 	 	  this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
@@ -310,7 +322,6 @@ export class FireBaseService {
 	}
   
   getRestaurantBasedOnLocation(){
-
 		if(this.latitude!=null){
 		  	  return this.http.get(this.apiUrl).map(
 				 data=>{

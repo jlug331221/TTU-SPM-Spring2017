@@ -15,6 +15,12 @@
                     <div class="hours" *ngFor="let dayhours of this.details.result.opening_hours.weekday_text">
                     {{ dayhours }}<br>
                     </div>
+                    <iframe *ngIf="map" 
+                        width="450"
+                         height="250"
+                        frameborder="0" style="border:0"
+                        [src] = "map">
+                    </iframe>
                 <br>
                 <span><a class="rate modal-trigger" link="btn light blue" data-target="ratingModal"><strong>Add Rating!</strong></a></span>
             </div>
