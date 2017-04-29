@@ -64,7 +64,7 @@ const myFirebaseAuthConfig = {
   schemas: [ NO_ERRORS_SCHEMA ],
   imports: [
 	AgmCoreModule.forRoot({
-	        apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
+	        apiKey: "AIzaSyB_VbainwU1HeZt3FUJ443xnp6_D1M2SpQ",
 	        libraries: ["places"]
 	 }),  
     CommonModule,

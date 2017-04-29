@@ -15,6 +15,10 @@
                     <div class="hours" *ngFor="let dayhours of this.details.result.opening_hours.weekday_text">
                     {{ dayhours }}<br>
                     </div>
+					<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="22">
+						<sebm-google-map-marker [latitude]="lat" [longitude]="lng" [label]="'M'">
+						     </sebm-google-map-marker>
+					</sebm-google-map>
                 <br>
                 <span><a class="rate modal-trigger" link="btn light blue" data-target="ratingModal"><strong>Add Rating!</strong></a></span>
             </div>
