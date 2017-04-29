@@ -1,11 +1,11 @@
 <div class = "row container">
-    <div class = "col s12 m8 offset-m2 l12" *ngIf="dish">
+    <div class = "col s12 m8 offset-m2 l6" *ngIf="dish">
         <div class = "card-medium">
             <span class="card-title"><strong>{{ dish.name }} &nbsp;</strong></span>
             <span><rating [(ngModel)]="ratingAvg" [readonly]="true"></rating></span>
             <div class="card-image">
-          	    <img src="{{ dish.img_url }}" alt="" class="responsive-img">
-        	</div>
+          	     <img src="{{ dish.img_url }}" alt="" class="responsive-img">
+            </div>
             <div class = "card-content" *ngIf="details">
                     <h6><strong>Restaurant:</strong> {{ details.result.name }}</h6>
                     <h6><strong>Description:</strong> {{ dish.description }}</h6>
@@ -15,17 +15,18 @@
                     <div class="hours" *ngFor="let dayhours of this.details.result.opening_hours.weekday_text">
                     {{ dayhours }}<br>
                     </div>
-                    <iframe *ngIf="map" 
-                        width="450"
-                         height="250"
-                        frameborder="0" style="border:0"
-                        [src] = "map">
-                    </iframe>
                 <br>
-                <span><a class="rate modal-trigger" link="btn light blue" data-target="ratingModal"><strong>Add Rating!</strong></a></span>
-            </div>
+                <div><a class="rate modal-trigger" link="btn light blue" data-target="ratingModal"><strong>Add Rating!</strong></a></div>
+                <br>
+                <div *ngIf= "details">
+                    <sebm-google-map [latitude]=" this.details.result.geometry.location.lat" [longitude]="this.details.result.geometry.location.lng" [zoom]="17">
+ 			        <sebm-google-map-marker [latitude]="this.details.result.geometry.location.lat" [longitude]="this.details.result.geometry.location.lng" [label]="M">
+ 			        </sebm-google-map-marker>
+ 	                </sebm-google-map>
+                </div>
+            </div> 
         </div> 
-    </div>
+    </div> 
 </div>
 <br>
 <br>

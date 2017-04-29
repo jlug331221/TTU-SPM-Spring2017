@@ -6,6 +6,7 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMeth
 import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -54,14 +55,7 @@ export class DishComponent implements OnInit {
 	 	      });
 
      });
-
-     this.fireBaseService.getRestaurantMap(this.dish.place_id).subscribe(gmap =>{
-       if(gmap!=null)
-        this.map = this.sanitizer.bypassSecurityTrustResourceUrl(gmap.url)
-        console.log(this.map)
-     })
    
-	 
      //gets dish comments
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;

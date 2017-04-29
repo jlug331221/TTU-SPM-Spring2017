@@ -169,18 +169,6 @@ export class FireBaseService {
 		return this.fbDish;
 	}
 
-	//The Google Maps Embed API
-	getRestaurantMap(placeid){
-		let googleMapUrl = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBDziLzYLL-LKfwOkofcd23p1K4WlZ38Lc&q=place_id:'+placeid
-		return this.http.get(googleMapUrl).map( data => {
-				if (data != null){
-					this.res = data;
-					console.log(this.res);
-					return this.res;
-				}
-			})
-	}
-
 	/* Returns a restaurant identifier from Google's Place Api
 	 * Takes as parameter the city, state and name of the restaurant
 	 */
