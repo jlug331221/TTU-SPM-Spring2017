@@ -16,18 +16,19 @@ declare var $:any;
 })
  export class SettingsComponent implements OnInit,OnChanges {
     elementRef: ElementRef;
-	image:any;
-	restaurantName:any;
-	dish_name:any;
+    image:any;
+    restaurantName:any;
+    dish_name:any;
     restaurants:any;
-	cuisine_names:any;
-	selectedCuisine:any;
-	gotresult:string;
-	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
+    cuisine_names:any;
+    selectedCuisine:any;
+    gotresult:string;
 
-	ngOnChanges(){
+    constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
 
-   }
+    ngOnChanges(){
+
+    }
 
    ngOnInit() {
 
@@ -46,19 +47,16 @@ declare var $:any;
 
                 let restaurantNames = [];
                 let uniqueRestaurantNames = [];
+
                 for (let i = 0; i < this.restaurants.length; i++) {
                     restaurantNames.push(this.restaurants[i].name);
                 }
 
-                /*uniqueRestaurantNames = restaurantNames.filter(function(elem, index, self) {
-                    return index  = self.indexOf(elem);
-                });*/
-                for(var i = 0; i < restaurantNames.length; i++){
+                for(var i = 0; i < restaurantNames.length; i++) {
                     if(uniqueRestaurantNames.indexOf(restaurantNames[i]) == -1){
                         uniqueRestaurantNames.push(restaurantNames[i]);
                     }
                 }
-                //console.log(uniqueRestaurantNames);
 
                 $.typeahead({
                     input: '.js-typeahead-restaurants',
@@ -76,18 +74,31 @@ declare var $:any;
         });
    	}
 
-   	onSubmit(){
+    fetchPlaceID(restaurantName: string) {
+        for(var i = 0; i < this.restaurants.length; i++) {
+            if(this.restaurants[i].name == restaurantName) {
+                return this.restaurants[i].place_id;
+            }
+        }
+    }
 
+   	onSubmit() {
 
-   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName).subscribe(status=>{
-   			 console.log("Status is" + status);
-   	 		if(status!="Error"){
+         let placeID = this.fetchPlaceID($('.js-typeahead-restaurants').val());
+
+         //console.log("Typeahead restaurant name: " + $('.js-typeahead-restaurants').val());
+         //console.log("Typeahead restaurant place id: " + placeID);
+
+   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,$('.js-typeahead-restaurants').val(),placeID).subscribe(status => {
+   			//console.log("Status is" + status);
+   	 		if(status != "Error") {
    	 			console.log('added');
+
    	 			this.router.navigate(['/']);
    	 			this.flash.show('Thank You for your input',{cssClass: 'alert-success', timeout: 5000});
-   	 		}else{
+   	 		} else {
    	 			console.log('Not added');
-   	 			this.flash.show('Please add valid message',{cssClass: 'alert-success', timeout: 5000});
+   	 			this.flash.show('Please add valid message', {cssClass: 'alert-success', timeout: 5000});
    	 			this.router.navigate(['/']);
    	 		}
    		});
