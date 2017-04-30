@@ -16,7 +16,7 @@
                     {{ dayhours }}<br>
                     </div>
                 <br>
-                <div><a class="rate modal-trigger" link="btn light blue" data-target="ratingModal"><strong>Add Rating!</strong></a></div>
+                <div><a class="rate modal-trigger" link="btn light blue" data-target="ratingModal" (click)="openModal()"><strong>Add Rating!</strong></a></div>
                 <br>
                 <div *ngIf= "details">
                     <sebm-google-map [latitude]=" this.details.result.geometry.location.lat" [longitude]="this.details.result.geometry.location.lng" [zoom]="17">
@@ -56,13 +56,13 @@
         </div>
     </div>
  <!-- Modal Structure -->
-           <div id="ratingModal" class="modal">
+           <div id="ratingModal" class="modal" materialize="modal">
                 <div class="modal-content" *ngIf="details dish">
                     <h5>Rate Dish</h5>
                     <h6><strong>{{details.result.name}}:  </strong>{{ dish.name }}</h6>
                     <div><rating [(ngModel)]="starSelect"></rating></div>
                 </div>
                 <div class="modal-footer">
-                    <a class="modal-action waves-effect waves-green btn-flat modal-close" (click)="rateDish()">Submit</a>
+                    <a class="modal-action waves-effect waves-blue btn-flat modal-close" (click)="rateDish()">Submit</a>
             </div> 
         </div>

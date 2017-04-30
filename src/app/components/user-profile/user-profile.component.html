@@ -12,11 +12,11 @@
         <h3 class="user-profile-preferences-h3">Go ahead and setup your profile</h3>
 
         <!-- Modal Trigger -->
-        <a class="waves-effect waves-light btn-large user-profile-preferences-button modal-trigger" data-target="set-user-profile-preferences-modal">Set Profile Preferences</a>
+        <a class="waves-effect waves-light btn-large user-profile-preferences-button modal-trigger" data-target="set-user-profile-preferences-modal" (click)="openModal()">Set Profile Preferences</a>
     </div>
 
     <div class="col s12">
-        <div id="set-user-profile-preferences-modal" class="modal modal-fixed-footer">
+        <div id="set-user-profile-preferences-modal" class="modal modal-fixed-footer" materialize="modal">
             <form #userPrefForm="ngForm">
                 <div class="modal-content">
                     <h4>Set your preferneces below</h4>
@@ -47,7 +47,6 @@
                             <span class="user-profile-span-red-error-msg" *ngIf="mustEnterState"><small>Please choose your state</small></span>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="input-field col s12 m6 l6 form-group">
                             <select #dietSelectOption ngControl="dietSelectOption" class="form-control" required>

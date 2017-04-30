@@ -7,6 +7,7 @@ import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { MaterializeModule } from "angular2-materialize";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 

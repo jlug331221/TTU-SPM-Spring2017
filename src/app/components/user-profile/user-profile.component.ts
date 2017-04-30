@@ -3,6 +3,7 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 import { FireBaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { MaterializeModule } from "angular2-materialize";
 
 import { User } from '../../interfaces/user.interface';
 

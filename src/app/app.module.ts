@@ -20,6 +20,7 @@ import { UserProfileComponent} from './components/user-profile/user-profile.comp
 import { AgmCoreModule } from "angular2-google-maps/core";
 import {FlashMessagesModule } from "angular2-flash-messages";
 import {CustomuploadsComponent} from './components/customuploads/customuploads.component';
+import { MaterializeModule } from "angular2-materialize";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -62,7 +63,8 @@ const myFirebaseAuthConfig = {
 	AgmCoreModule.forRoot({
             apiKey: "AIzaSyB_VbainwU1HeZt3FUJ443xnp6_D1M2SpQ",
 	        libraries: ["places"]
-	 }),  
+	 }),
+     MaterializeModule,
     CommonModule,
     BrowserModule,
 	AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
