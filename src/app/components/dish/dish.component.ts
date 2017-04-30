@@ -1,4 +1,4 @@
-import { Component, OnInit, Directive, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Directive, Input, ElementRef, NgModule, NO_ERRORS_SCHEMA  } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
@@ -10,11 +10,13 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+
 @Component({
   selector: 'app-dish',
   templateUrl: './dish.component.html',
   styleUrls: ['./dish.component.css'],
 })
+
 export class DishComponent implements OnInit {
   private dish_id: any;
   private dish: any;
@@ -30,7 +32,7 @@ export class DishComponent implements OnInit {
   private userID;
   private userExists = false;
 
-  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire, private sanitizer:DomSanitizer) {}
+  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire) {}
   ngOnInit() {
      //gets route parameter
     this.dish_id = this.route.snapshot.params['$key'];
