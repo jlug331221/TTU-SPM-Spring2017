@@ -1,10 +1,12 @@
 import { Component, OnInit, Directive, Input, ElementRef } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FireBaseService } from '../../services/firebase.service';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthMethods, AuthProviders } from 'angularfire2';
 import { RatingModule } from 'ngx-rating';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -17,21 +19,18 @@ export class DishComponent implements OnInit {
   private dish_id: any;
   private dish: any;
   private comments: any[];
-  private starCount_avg: number;
   private ratingObj: any;
   private ratingAvg: number;
-
+  private map: SafeResourceUrl;
   private authData:any;
   private addedComment:string;
   private res: any;
   private details: any;
-  private open: any[];
-  private close: any[];
   private starSelect;
   private userID;
   private userExists = false;
 
-  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire) {}
+  constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService,private af: AngularFire, private sanitizer:DomSanitizer) {}
   ngOnInit() {
      //gets route parameter
     this.dish_id = this.route.snapshot.params['$key'];
@@ -42,11 +41,6 @@ export class DishComponent implements OnInit {
                 this.userID = authData.uid;
             }
 
-        });
-    //gets route parameter
-     this.route.params.subscribe(params => {
-            this.dish_id = params['$key'];
-            this.dish_id = this.dish_id;
         });
 
     //gets dish object which corresponds to route parameter '$key'
@@ -61,7 +55,7 @@ export class DishComponent implements OnInit {
 	 	      });
 
      });
-	 
+   
      //gets dish comments
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;

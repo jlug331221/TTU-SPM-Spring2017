@@ -11,8 +11,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import * as firebase from 'firebase';
-
-
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -64,7 +62,7 @@ const myFirebaseAuthConfig = {
   schemas: [ NO_ERRORS_SCHEMA ],
   imports: [
 	AgmCoreModule.forRoot({
-	        apiKey: "AIzaSyA0o_LSdE-c3c_8hPIoTY9LggnJXy6lTak",
+            apiKey: "AIzaSyB_VbainwU1HeZt3FUJ443xnp6_D1M2SpQ",
 	        libraries: ["places"]
 	 }),  
     CommonModule,
