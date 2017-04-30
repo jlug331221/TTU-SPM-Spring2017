@@ -255,7 +255,7 @@ export class FireBaseService {
 		return this.fbComments;
 	}
 
-	//Updates a cuisine's likes by one,*** Needs authentication***
+	//Updates a cuisine's likes by one
     updateCuisinelikes(cuisineObj: cuisine, likes) {
 	  	let name = cuisineObj.$key;
 	 	  this.fbCuisine = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>
@@ -310,7 +310,6 @@ export class FireBaseService {
 	}
   
   getRestaurantBasedOnLocation(){
-
 		if(this.latitude!=null){
 		  	  return this.http.get(this.apiUrl).map(
 				 data=>{

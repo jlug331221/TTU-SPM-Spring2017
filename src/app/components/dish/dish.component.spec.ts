@@ -3,9 +3,10 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, NgModule,Injectable } from '@angular/core';
+import { DebugElement, NgModule, Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RatingModule } from "ngx-rating";
 import { HttpModule } from '@angular/http';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
@@ -17,6 +18,7 @@ import 'rxjs/Rx';
 let fbService:FireBaseService;
 
 describe('DishComponent', () => {
+
     let component: DishComponent;
     let fixture: ComponentFixture<DishComponent>;
 
@@ -36,10 +38,10 @@ describe('DishComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
               RouterTestingModule, RatingModule, FormsModule,
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
-			  HttpModule
+			  HttpModule,
+              AgmCoreModule
             ],
             providers: [ FireBaseService ],
             declarations: [ DishComponent, NavbarComponent ]
