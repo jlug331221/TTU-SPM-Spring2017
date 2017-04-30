@@ -392,7 +392,7 @@ export class UserProfileComponent implements OnInit {
                 diet: dietSelectOption
             };
 
-            console.log(this.newUser);
+            //console.log(this.newUser);
 
             //add user to DB
             this.fireBaseService.addNewUser(this.newUser).then(function() {

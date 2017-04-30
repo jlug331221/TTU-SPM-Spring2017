@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="input-field col s12 m6 l6 form-group">
-                            <select #stateSelectOption ngControl="stateSelectOption" class="form-control" required>
+                            <select materialize="material_select" #stateSelectOption ngControl="stateSelectOption" class="form-control" required>
                                 <option [value]="" disabled selected>Choose your state</option>
                                 <option *ngFor="let state of states" [value]="state.value">{{state.name}}</option>
                             </select>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m6 l6 form-group">
-                            <select #dietSelectOption ngControl="dietSelectOption" class="form-control" required>
+                            <select materialize="material_select" #dietSelectOption ngControl="dietSelectOption" class="form-control" required>
                                 <option [value]="" disabled selected>Choose your diet</option>
                                 <option *ngFor="let diet of diets" [value]="diet.value">{{diet.name}}</option>
                             </select>
