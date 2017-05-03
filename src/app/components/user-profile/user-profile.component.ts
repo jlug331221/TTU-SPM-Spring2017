@@ -3,6 +3,7 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 import { FireBaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { MaterializeModule } from "angular2-materialize";
 
 import { User } from '../../interfaces/user.interface';
 
@@ -391,7 +392,7 @@ export class UserProfileComponent implements OnInit {
                 diet: dietSelectOption
             };
 
-            console.log(this.newUser);
+            //console.log(this.newUser);
 
             //add user to DB
             this.fireBaseService.addNewUser(this.newUser).then(function() {
