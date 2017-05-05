@@ -20,6 +20,7 @@ import { UserProfileComponent} from './components/user-profile/user-profile.comp
 import { AgmCoreModule } from "angular2-google-maps/core";
 import {FlashMessagesModule } from "angular2-flash-messages";
 import {CustomuploadsComponent} from './components/customuploads/customuploads.component';
+import { RecommendComponent} from './components/recommend/recommend.component';
 import { MaterializeModule } from "angular2-materialize";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -31,6 +32,7 @@ const appRoutes:  Routes = [
 	{path: 'dishes/:cuisineName', component: DishesComponent},
     {path: 'dish/:$key', component: DishComponent},
 	{path: 'customuploads', component:CustomuploadsComponent},
+	{path: 'recommend', component:RecommendComponent},
 	{path: 'user-profile', component: UserProfileComponent}
 ];
 
@@ -56,6 +58,7 @@ const myFirebaseAuthConfig = {
     SettingsComponent,
     DishComponent,
 	CustomuploadsComponent,
+	RecommendComponent,  
     UserProfileComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],

@@ -265,7 +265,7 @@ export class FireBaseService {
 		  //console.log(cuisineObj);
 	}
 
-	putImage(image,dish_name,cuisine_name,restaurant_name,placeId){
+	putImage(image,dish_name,cuisine_name,restaurant_name,placeId,userID){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
 			const storageRef= firebase.storage().ref().child(path);
 
@@ -281,7 +281,8 @@ export class FireBaseService {
 							img_url:this.result.a.downloadURLs[0],
 							restaurant_name: restaurant_name,
 							avg_rating: 2.5,
-							place_id : placeId
+							place_id : placeId,
+							userId: userID
 						}
 					
 						this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
@@ -339,6 +340,7 @@ interface dish {
 	restaurant_name: string;
 	avg_rating: number;
 	place_id:string;
+	userId:string;
 }
 
 interface comments {

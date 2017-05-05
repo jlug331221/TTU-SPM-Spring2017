@@ -3,6 +3,7 @@ import {FormControl} from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { CompleterService, CompleterData } from 'ng2-completer';
 import { FireBaseService } from '../../services/firebase.service';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import {Router} from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 declare var jQuery:any;
@@ -23,14 +24,21 @@ declare var jQuery:any;
 	gotresult:string;
 	city_name:string;
 	state_name:string;
-	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
+	userID:string;
+	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService, private af:AngularFire){}
 
 	ngOnChanges(){
    		
    }	
  
    ngOnInit() {
-
+	   this.af.auth.subscribe(authData=>{
+           if(authData != null) {
+               
+               this.userID = authData.uid
+               
+           }
+	   });
 
 
 		this.fireBaseService.getCuisines().subscribe(response => {
@@ -54,7 +62,7 @@ declare var jQuery:any;
 		
 		
 		
-   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName.name,this.restaurantName.place_id).subscribe(status=>{
+   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName.name,this.restaurantName.place_id,this.userID).subscribe(status=>{
    			 console.log("Status is" + status);
    	 		if(status!="Error"){
    	 			console.log('added');

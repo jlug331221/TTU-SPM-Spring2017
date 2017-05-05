@@ -6,6 +6,22 @@
             <div class="card-image">
           	     <img src="{{ dish.img_url }}" alt="" class="responsive-img">
             </div>
+            <div class="flex-center" *ngIf="!details">
+				Loading Up Contents.
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class = "card-content" *ngIf="details">
                     <h6><strong>Restaurant:</strong> {{ details.result.name }}</h6>
                     <h6><strong>Description:</strong> {{ dish.description }}</h6>
