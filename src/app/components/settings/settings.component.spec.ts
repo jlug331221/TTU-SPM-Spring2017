@@ -4,7 +4,6 @@ import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement, Injectable, NgModule } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
 import { FireBaseService } from '../../services/firebase.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';

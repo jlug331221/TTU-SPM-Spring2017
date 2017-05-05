@@ -16,65 +16,65 @@ declare var $:any;
 })
 
 export class SettingsComponent implements OnInit, OnChanges {
-    elementRef: ElementRef;
-    image:any;
-    restaurantName:any;
-    dish_name:any;
-    restaurants:any;
-    cuisine_names:any;
-    selectedCuisine:any;
-    gotresult:string;
-    latitude:any;
-    longitude:any;
-    apiUrl:string
+   elementRef: ElementRef;
+   image:any;
+   restaurantName:any;
+   dish_name:any;
+   restaurants:any;
+	 cuisine_names:any;
+	 selectedCuisine:any;
+	 gotresult:string;
+	 city_name:string;
+	 state_name:string;
+	
+   constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
 
-    constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
+   ngOnChanges(){
 
-    ngOnChanges(){
-
-    }
+   }
 
    ngOnInit() {
 
-		this.fireBaseService.getCuisines().subscribe(response => {
-			if(response != null){
-				this.cuisine_names= response;
-			}
-		});
+      this.fireBaseService.getCuisines().subscribe(response => {
+        if(response != null){
+          this.cuisine_names= response;
+        }
+      });
 
-		this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-   			if(response.results != null) {
-   				this.restaurants = response.results;
-   				this.gotresult="true";
-   				//console.log("this.restaurants: "+ response.results);
+      this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
+          if(response.results != null) {
+              this.restaurants = response.results;
+              this.gotresult="true";
+              //console.log("this.restaurants: "+ response.results);
 
-                let restaurantNames = [];
-                let uniqueRestaurantNames = [];
+              let restaurantNames = [];
+              let uniqueRestaurantNames = [];
 
-                for (let i = 0; i < this.restaurants.length; i++) {
-                    restaurantNames.push(this.restaurants[i].name);
-                }
+              for (let i = 0; i < this.restaurants.length; i++) {
+                  restaurantNames.push(this.restaurants[i].name);
+              }
 
-                for(var i = 0; i < restaurantNames.length; i++) {
-                    if(uniqueRestaurantNames.indexOf(restaurantNames[i]) == -1){
-                        uniqueRestaurantNames.push(restaurantNames[i]);
-                    }
-                }
+              for(var i = 0; i < restaurantNames.length; i++) {
+                  if(uniqueRestaurantNames.indexOf(restaurantNames[i]) == -1){
+                      uniqueRestaurantNames.push(restaurantNames[i]);
+                  }
+              }
 
-                $.typeahead({
-                    input: '.js-typeahead-restaurants',
-                    order: "desc",
-                    source: {
-                        data: uniqueRestaurantNames
-                    },
-                    callback: {
-                        onInit: function (node) {
-                            console.log('Typeahead Initiated on ' + node.selector);
-                        }
-                    }
-                });
+              $.typeahead({
+                  input: '.js-typeahead-restaurants',
+                  order: "desc",
+                  source: {
+                      data: uniqueRestaurantNames
+                  },
+                  callback: {
+                      onInit: function (node) {
+                          console.log('Typeahead Initiated on ' + node.selector);
+                      }
+                  }
+              });
             }
         });
+     
    	}
 
     fetchPlaceID(restaurantName: string) {
@@ -85,25 +85,26 @@ export class SettingsComponent implements OnInit, OnChanges {
         }
     }
 
-   	onSubmit() {
+    onSubmit() {
 
-         let placeID = this.fetchPlaceID($('.js-typeahead-restaurants').val());
+      let placeID = this.fetchPlaceID($('.js-typeahead-restaurants').val());
 
-         //console.log("Typeahead restaurant name: " + $('.js-typeahead-restaurants').val());
-         //console.log("Typeahead restaurant place id: " + placeID);
+      //console.log("Typeahead restaurant name: " + $('.js-typeahead-restaurants').val());
+      //console.log("Typeahead restaurant place id: " + placeID);
 
-   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,$('.js-typeahead-restaurants').val(),placeID).subscribe(status => {
-   			//console.log("Status is" + status);
-   	 		if(status != "Error") {
-   	 			console.log('added');
+      this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,$('.js-typeahead-restaurants').val(),placeID).subscribe(status => {
+          //console.log("Status is" + status);
+          if(status != "Error") {
+            console.log('added');
 
-   	 			this.router.navigate(['/']);
-   	 			this.flash.show('Thank You for your input',{cssClass: 'alert-success', timeout: 5000});
-   	 		} else {
-   	 			console.log('Not added');
-   	 			this.flash.show('Please add valid message', {cssClass: 'alert-success', timeout: 5000});
-   	 			this.router.navigate(['/']);
-   	 		}
-   		});
-	}
+            this.router.navigate(['/']);
+            this.flash.show('Thank You for your input',{cssClass: 'alert-success', timeout: 5000});
+          } else {
+            console.log('Not added');
+            this.flash.show('Please add valid message', {cssClass: 'alert-success', timeout: 5000});
+            this.router.navigate(['/']);
+          }
+      });
+
+    }
 }

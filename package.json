@@ -21,6 +21,8 @@
     "@angular/platform-browser": "^4.0.2",
     "@angular/platform-browser-dynamic": "^4.0.2",
     "@angular/router": "^4.0.2",
+    "angular2-flash-messages": "^1.0.8",
+    "angular2-materialize": "^15.0.1",
     "angularfire2": "^2.0.0-beta.8",
     "firebase": "^3.8.0",
     "ng2-auto-complete": "^0.4.2",

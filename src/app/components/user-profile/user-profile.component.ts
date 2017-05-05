@@ -3,6 +3,7 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 import { FireBaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { MaterializeModule } from "angular2-materialize";
 
 import { User } from '../../interfaces/user.interface';
 
@@ -32,6 +33,7 @@ export class UserProfileComponent implements OnInit {
     private user_location_state;
     private user_diet;
     private user_profile_photo_url;
+    private user_profile_comments;
 
     // Form fields
     private first_name: any;
@@ -390,7 +392,7 @@ export class UserProfileComponent implements OnInit {
                 diet: dietSelectOption
             };
 
-            console.log(this.newUser);
+            //console.log(this.newUser);
 
             //add user to DB
             this.fireBaseService.addNewUser(this.newUser).then(function() {
@@ -481,7 +483,11 @@ export class UserProfileComponent implements OnInit {
                 this.authDataUID = authData.uid;
                 this.authDataPhotoUrl = authData.google.photoURL;
 
-                this.checkIfFirstLogin(authData)
+                this.checkIfFirstLogin(authData);
+
+                this.user_profile_comments = this.fireBaseService.getCommentsForUserProfile(authData.uid);
+
+                console.log(this.user_profile_comments);
 
             }
 

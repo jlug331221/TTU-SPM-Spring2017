@@ -12,11 +12,11 @@
         <h3 class="user-profile-preferences-h3">Go ahead and setup your profile</h3>
 
         <!-- Modal Trigger -->
-        <a class="waves-effect waves-light btn-large user-profile-preferences-button modal-trigger" data-target="set-user-profile-preferences-modal">Set Profile Preferences</a>
+        <a class="waves-effect waves-light btn-large user-profile-preferences-button modal-trigger" data-target="set-user-profile-preferences-modal" (click)="openModal()">Set Profile Preferences</a>
     </div>
 
     <div class="col s12">
-        <div id="set-user-profile-preferences-modal" class="modal modal-fixed-footer">
+        <div id="set-user-profile-preferences-modal" class="modal modal-fixed-footer" materialize="modal">
             <form #userPrefForm="ngForm">
                 <div class="modal-content">
                     <h4>Set your preferneces below</h4>
@@ -40,17 +40,16 @@
                         </div>
 
                         <div class="input-field col s12 m6 l6 form-group">
-                            <select #stateSelectOption ngControl="stateSelectOption" class="form-control" required>
+                            <select materialize="material_select" #stateSelectOption ngControl="stateSelectOption" class="form-control" required>
                                 <option [value]="" disabled selected>Choose your state</option>
                                 <option *ngFor="let state of states" [value]="state.value">{{state.name}}</option>
                             </select>
                             <span class="user-profile-span-red-error-msg" *ngIf="mustEnterState"><small>Please choose your state</small></span>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="input-field col s12 m6 l6 form-group">
-                            <select #dietSelectOption ngControl="dietSelectOption" class="form-control" required>
+                            <select materialize="material_select" #dietSelectOption ngControl="dietSelectOption" class="form-control" required>
                                 <option [value]="" disabled selected>Choose your diet</option>
                                 <option *ngFor="let diet of diets" [value]="diet.value">{{diet.name}}</option>
                             </select>
@@ -70,8 +69,8 @@
 
 <!-- Show profile of user -->
 <div *ngIf="! loading && userExists" class="row container">
-    <div class="col s12 m7 offset-m3 l9 offset-l2">
-        <div class="card-panel grey lighten-5 z-depth-1 hoverable user-profile-card">
+    <div class="col s12 m6 offset-m3 l8 offset-l2">
+        <div class="card-panel grey lighten-3 z-depth-1 hoverable user-profile-card">
             <div class="row valign-wrapper">
                 <div class="col s2">
                     <img src="{{ user_profile_photo_url }}" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
@@ -129,8 +128,29 @@
         </form>
 
         <section class="user-profile-comments">
-            <h5><strong>Your most recent comments</strong></h5><br><br><br>
+            <h5 class="user-profile-comments-section-h5"><strong>Your most recent comments</strong></h5>
+
+            <div class="row">
+                <div *ngFor="let user_profile_comment of user_profile_comments">
+                    <div class="col s12 m12 l6">
+                        <img class="user-profile-comment-dish-img" src="{{user_profile_comment.dish_img}}">
+                    </div>
+
+                    <div class="col s12 m12 l6">
+                        <strong><p class="user-profile-comment-dish-name">{{user_profile_comment.dish_name}}</p></strong>
+                        <p class="user-profile-comment-dish-description">{{user_profile_comment.dish_description}}</p>
+                    </div>
+
+                    <div class="col s12">
+                        <p class="user-profile-comment-data">{{user_profile_comment.comment_data}}</p>
+
+                        <hr class="user-profile-comment-hr">
+                    </div>
+                </div>
+            </div>
         </section>
+
+        <br>
 
         <section class="user-profile-favorite-dishes">
             <h5><strong>Here are your favorite dishes</strong></h5>

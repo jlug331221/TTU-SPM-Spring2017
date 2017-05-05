@@ -37,7 +37,6 @@
         <app-root>
             <div class="container">
                 <h3 class="loading-dishes">Loading up some Dishes...</h3>
-
                 <div class="flex-center">
                     <div class="preloader-wrapper big active">
                         <div class="spinner-layer spinner-blue-only">
@@ -56,8 +55,15 @@
             </div>
         </app-root>
 
-        <!--JQuery-->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        
+        <!-- Typeahead.js -->
+        <script src="/assets/js/jquerytypeahead.min.js"></script>
+      
+        <!-- MaterializeJS compiled and minified -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+      
         <!--comments toggle (hide and display)-->
         <script type="text/javascript">
             function comments() {
@@ -65,21 +71,12 @@
             }
         </script>
 
-
         <script type="text/javascript">
-            $(document).ready(function(){
+           $(document).ready(function() {
                 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
                 $('#ratingModal').modal();
             });
         </script>
-
-        <!-- JQuery -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-
-        <!-- MaterializeJS compiled and minified -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script></script>
-
-        <script src="/assets/js/jquerytypeahead.min.js"></script>
 
         <!-- SideNav JS -->
         <script type="text/javascript">

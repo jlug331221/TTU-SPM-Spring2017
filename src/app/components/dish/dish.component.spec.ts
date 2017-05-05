@@ -3,22 +3,22 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, NgModule,Injectable } from '@angular/core';
+import { DebugElement, NgModule, Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RatingModule } from "ngx-rating";
 import { HttpModule } from '@angular/http';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
-
 
 
 let fbService:FireBaseService;
 
 describe('DishComponent', () => {
+
     let component: DishComponent;
     let fixture: ComponentFixture<DishComponent>;
 
@@ -38,10 +38,10 @@ describe('DishComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-
               RouterTestingModule, RatingModule, FormsModule,
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
-			  HttpModule
+			  HttpModule,
+              AgmCoreModule
             ],
             providers: [ FireBaseService ],
             declarations: [ DishComponent, NavbarComponent ]
@@ -72,7 +72,26 @@ describe('DishComponent', () => {
          });
 	});
 
+//tests average rating function.  Test simply checks that the average is a 
+//value less than 5, since the actual average is constantly changing.
+ it('should return a dish average rating less than or equal to 5',() =>{
+     let dish_id = 3
+         fbService.getRatingAverage(dish_id).subscribe( rating =>{ 
+          if(rating != null){
+          let ratingObj = rating;
+          let ratingSum = 0;
+          let avg = 0;
 
+          rating.forEach(snapshot => {
+            if(snapshot != null)
+              ratingSum = ratingSum + snapshot.rating
+             // console.log(ratingSum);
+        });
+          avg = ratingSum / this.ratingObj.length
+          expect(avg).toBeLessThanOrEqual(5);
+        }
+      });
+ }); 
        //tests api request to google to get restaurant details.
        //Returns a specific property (a phone number) from the details object
     it('should return a specific detail from googles place detail api',() =>{

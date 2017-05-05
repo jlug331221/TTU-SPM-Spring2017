@@ -70,3 +70,27 @@ i#user-profile-cancel-icon {
 button#edit-profile-button {
     margin-bottom: 4rem;
 }
+
+h5.user-profile-comments-section-h5 {
+    padding-bottom: 1rem;
+}
+
+img.user-profile-comment-dish-img {
+    border-radius: 10px;
+    width: 250px;
+    height: 150px;
+}
+
+p.user-profile-comment-dish-name{
+    margin-top: 0;
+    font-size: 1.4rem;
+}
+
+p.user-profile-comment-dish-description {
+    font-size: 1.2rem;
+}
+
+hr.user-profile-comment-hr {
+    border-top: 3px solid #00BD6C;
+    margin-bottom: 3rem;
+}

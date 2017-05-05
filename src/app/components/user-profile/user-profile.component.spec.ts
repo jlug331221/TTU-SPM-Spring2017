@@ -82,10 +82,10 @@ describe('UserProfileComponent', () => {
             location_city: 'Random City',
             location_state: 'TX',
             profile_photo_url: 'http://lorempixel.com/400/200/'
-            diet: 'omnivore',
+            diet: 'omnivore'
         }
 
-        //Simulating adding newUser added to database
+        // Simulating adding newUser added to database
         component.userExists = true;
 
         component.user_first_name = newUser.first_name;
@@ -105,5 +105,62 @@ describe('UserProfileComponent', () => {
 
         de = fixture.debugElement.query(By.css('.user-profile-h5-small-diet')).nativeElement;
         expect(de.innerHTML).toBe("Diet: omnivore");
+    });
+
+    it('should see any comments that a user has made for a particular dish', () => {
+        let user = {
+            uid: '12345qwert',
+            first_name: 'Testy',
+            last_name: 'Tester',
+            location_city: 'Random City',
+            location_state: 'TX',
+            profile_photo_url: 'http://lorempixel.com/400/200/'
+            diet: 'omnivore'
+        };
+
+        // Simulating that the user has already created a profile
+        component.userExists = true;
+
+        // Dish with the comment from the test user above
+        let dish = {
+            comments: [
+                {
+                    comment_data: 'This is a test comment.',
+                    rating: 5,
+                    uid: '12345qwert',
+                    user: 'Testy Tester',
+                    date: '4-21-17'
+                }
+            ],
+            name: 'Test dish name',
+            cuisineName: 'american',
+            price: '8.99',
+            description: 'Test description for test dish.',
+            img_url: 'http://viztangocafe.com/wp-content/uploads/2015/06/food2.jpg'
+        };
+
+        let user_comment = [
+            {
+                comment_data: 'This is a test comment.',
+                dish_description: 'Test description for test dish.',
+                dish_img: 'http://viztangocafe.com/wp-content/uploads/2015/06/food2.jpg',
+                dish_name: 'Test dish name',
+                uid: '12345qwert'
+                user: 'Testy Tester'
+            }
+        ];
+
+        component.user_profile_comments = user_comment;
+
+        fixture.detectChanges();
+
+        de = fixture.debugElement.query(By.css('.user-profile-comment-dish-name')).nativeElement;
+        expect(de.innerHTML).toBe("Test dish name");
+
+        de = fixture.debugElement.query(By.css('.user-profile-comment-dish-description')).nativeElement;
+        expect(de.innerHTML).toBe("Test description for test dish.");
+
+        de = fixture.debugElement.query(By.css('.user-profile-comment-data')).nativeElement;
+        expect(de.innerHTML).toBe("This is a test comment.");
     });
 });
