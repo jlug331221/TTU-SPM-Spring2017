@@ -16,7 +16,7 @@
                     {{ dayhours }}<br>
                     </div>
                 <br>
-                <div><a class="rate modal-trigger" link="btn light blue" data-target="ratingModal" (click)="openModal()"><strong>Add Rating!</strong></a></div>
+                <div><a class="rate modal-trigger" link="btn light blue" data-target="ratingModal"><strong>Add Rating!</strong></a></div>
                 <br>
                 <div *ngIf= "details">
                     <sebm-google-map [latitude]=" this.details.result.geometry.location.lat" [longitude]="this.details.result.geometry.location.lng" [zoom]="17">

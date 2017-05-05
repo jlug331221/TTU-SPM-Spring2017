@@ -204,9 +204,13 @@ export class FireBaseService {
 
 	//updates the dish rating for a user.  does not allow duplicate ratings.
 	updateDishRating(user, rating, dish){
+		let total1 = 0;
 		this.fbUser = this.af.database.object('/userRatings/'+ dish + '/' + user) as FirebaseObjectObservable<any>
 		//console.log(this.fbUser);
 		this.fbUser.update({rating: rating});
+		//updates user ranking after adding a new dish
+		this.updateUserRanking(user)
+			
 	}
 
 	//increments the cuisine like field by + or - 1 depending on whether
@@ -264,8 +268,27 @@ export class FireBaseService {
 		  this.fbCuisine.update({likes: likeInc});
 		  //console.log(cuisineObj);
 	}
+	updateUserRanking(userid){
+		let total1 = 0;
+			//gets a user ranking object from the userRankings table
+			this.fbUserLike = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
+			
+			//gets the total number of dishes and rating added from the userRanking table and adds 1 to it
+			 this.fbUserLike.subscribe(res =>{
+				if (res != null){
+					total1 = res.total + 1
+				}
+			})
+			
+			if(total1 <= 10)
+			this.fbUserLike.update({total: total1, ranking: "Foogler"})
+			else if(total1 <= 25)
+			this.fbUserLike.update({total: total1, ranking: "Top Foogler"})
+			else
+			this.fbUserLike.update({total: total1, ranking: "Distinguished Foogler"})
+	}
 
-	putImage(image,dish_name,cuisine_name,restaurant_name,placeId){
+	putImage(image,dish_name,cuisine_name,restaurant_name,placeId,userID){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
 			const storageRef= firebase.storage().ref().child(path);
 
@@ -281,12 +304,15 @@ export class FireBaseService {
 							img_url:this.result.a.downloadURLs[0],
 							restaurant_name: restaurant_name,
 							avg_rating: 2.5,
-							place_id : placeId
+							place_id : placeId,
+							userId: userID
 						}
 					
 						this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
 					});
 				}
+				//updates user ranking after adding a new dish
+				this.updateUserRanking(userID)
 			return Observable.of(this.result);
 	}
 
@@ -339,6 +365,7 @@ interface dish {
 	restaurant_name: string;
 	avg_rating: number;
 	place_id:string;
+	userId: any;
 }
 
 interface comments {
