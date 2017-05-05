@@ -99,4 +99,7 @@ export class DishComponent implements OnInit {
 		this.addedComment="";
 
 	  }
+	  likeComment(){
+	  	
+	  }
   }

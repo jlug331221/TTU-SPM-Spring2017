@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-import { FireBaseService } from '../../services/firebase.service'
+import { FireBaseService } from '../../services/firebase.service';
+import { ActivatedRoute } from '@angular/router';
 import { HttpModule, Http} from '@angular/http';
 import * as firebase from 'firebase';
 
@@ -10,49 +11,38 @@ import * as firebase from 'firebase';
   styleUrls: ['./recommend.component.css']
 })
 export class RecommendComponent implements OnInit {
-	cuisines:any;
-  private cuisineName: string;
-  private likes: any;
-  private cuisine: any;
-  private userExists = false;
-  private userID;
-  private fbUserLike: FirebaseObjectObservable<any>;
+    private cuisineName: string;
+    private sub: any;
+    private dishes: any;
 
-    constructor(private af: AngularFire, private fireBaseService:FireBaseService ) { }
+    private noDishes = false;
+    private oneDish = false;
+    private multipleDishes = true;
+
+    constructor(private route: ActivatedRoute, private fireBaseService: FireBaseService) { }
 
     ngOnInit() {
-
-      this.af.auth.subscribe(authData => {
-            if(authData != null) {
-                this.userExists = true;
-                this.userID = authData.uid
-                console.log(this.userExists)
-            }
+        // Get cuisine name parameter from URL
+        this.sub = this.route.params.subscribe(params => {
+            this.cuisineName = params['cuisineName'];
+            this.cuisineName = this.cuisineName;
         });
 
-      this.fireBaseService.getCuisines().subscribe(cuisine => {
-    	  this.cuisines = cuisine;
-      });  
-  
-    }
-    //checks if user is logged in and retrieves user like data for a particular cuisine.
-    //cuisine like data is then updated. 
-    likeCuisine(cuisine){
-      let lik
-      this.cuisine= cuisine
-      if(this.userExists){          
-       firebase.database().ref('/userCuisineLikes/' + cuisine.$key + '/' + this.userID).once('value').then((res)=>{
-            if(res.A.aa!=null){
-                res = res.val().likes 
-                console.log(res)
-                this.fireBaseService.updateUserCuisineLike(this.userID, res, this.cuisine)
+        // Make call to firebase DB for dishes that match the cuisine name
+        this.fireBaseService.getDishesForCuisineName(this.cuisineName).subscribe(response => {
+            if(response.length == 0) {
+                this.noDishes = true;
+                this.multipleDishes = false;
             }
-            else{
-              this.fireBaseService.updateUserCuisineLike(this.userID, false, this.cuisine)
+
+            if(response.length == 1) {
+                this.oneDish = true;
+                this.multipleDishes = false;
             }
-        });            
+
+            this.dishes = response;
+            //console.log(this.dishes);
+        });
     }
-    
-}
 
 }

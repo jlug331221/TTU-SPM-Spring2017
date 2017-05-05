@@ -3,6 +3,7 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 import { FireBaseService } from '../../services/firebase.service'
 import { HttpModule, Http} from '@angular/http';
 import * as firebase from 'firebase';
+import {PushNotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-home',
@@ -18,10 +19,10 @@ export class HomeComponent implements OnInit {
   private userID;
   private fbUserLike: FirebaseObjectObservable<any>;
 
-    constructor(private af: AngularFire, private fireBaseService:FireBaseService ) { }
+    constructor(private af: AngularFire, private fireBaseService:FireBaseService, private pushService:PushNotificationsService ) { }
 
     ngOnInit() {
-
+		this.pushService.requestPermission()
       this.af.auth.subscribe(authData => {
             if(authData != null) {
                 this.userExists = true;
@@ -52,7 +53,10 @@ export class HomeComponent implements OnInit {
             }
         });            
     }
-    
+		this.pushService.create('Test',{body: 'something'}).subscribe(
+            res => console.log(res),
+            err => console.log(err)
+        );
 }
 }
   

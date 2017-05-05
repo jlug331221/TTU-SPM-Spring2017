@@ -1,9 +1,4 @@
-<div class="container">
-  <ul class="tabs">
-     <li class="tab col s3"><a outerLinkActive="active" [routerLink]="['/']">Home</a></li>
-       <li class="tab col s3"><a outerLinkActive="active" [routerLink]="['/recommend']">Trending </a></li>
-  </ul>
-</div>
+
   <div class="row container" *ngIf = "cuisines">
     <div class="col s12 m6 l4" *ngFor="let cuisine of cuisines">
     	<div class="card small z-depth-4">

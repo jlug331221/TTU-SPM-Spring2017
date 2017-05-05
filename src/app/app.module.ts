@@ -9,6 +9,7 @@ import { FireBaseService } from './services/firebase.service';
 import { RatingModule } from 'ngx-rating';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase';
+import { PushNotificationsModule } from 'angular2-notifications';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -32,7 +33,7 @@ const appRoutes:  Routes = [
 	{path: 'dishes/:cuisineName', component: DishesComponent},
     {path: 'dish/:$key', component: DishComponent},
 	{path: 'customuploads', component:CustomuploadsComponent},
-	{path: 'recommend', component:RecommendComponent},
+	{path: 'recommend/:cuisineName', component:RecommendComponent},
 	{path: 'user-profile', component: UserProfileComponent}
 ];
 
@@ -69,6 +70,7 @@ const myFirebaseAuthConfig = {
 	 }),
      MaterializeModule,
     CommonModule,
+	 PushNotificationsModule,
     BrowserModule,
 	AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
     FormsModule,
