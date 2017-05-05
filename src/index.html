@@ -16,6 +16,9 @@
         <!-- MaterialzeCSS Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+        <!-- Optional CSS -->
+        <link rel="stylesheet" href="/assets/css/jquerytypeahead.min.css">
+
         <!-- Custom CSS for main loading screen-->
         <style>
             h3.loading-dishes {
@@ -54,6 +57,9 @@
 
         <!-- JQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        
+        <!-- Typeahead.js -->
+        <script src="/assets/js/jquerytypeahead.min.js"></script>
       
         <!-- MaterializeJS compiled and minified -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
@@ -66,7 +72,7 @@
         </script>
 
         <script type="text/javascript">
-           $(document).ready(function(){
+           $(document).ready(function() {
                 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
                 $('#ratingModal').modal();
             });
