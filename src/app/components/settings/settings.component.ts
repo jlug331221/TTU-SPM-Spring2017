@@ -14,7 +14,8 @@ declare var $:any;
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
- export class SettingsComponent implements OnInit,OnChanges {
+
+export class SettingsComponent implements OnInit, OnChanges {
     elementRef: ElementRef;
     image:any;
     restaurantName:any;
@@ -23,6 +24,9 @@ declare var $:any;
     cuisine_names:any;
     selectedCuisine:any;
     gotresult:string;
+    latitude:any;
+    longitude:any;
+    apiUrl:string
 
     constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
 
@@ -33,14 +37,13 @@ declare var $:any;
    ngOnInit() {
 
 		this.fireBaseService.getCuisines().subscribe(response => {
-
-			if(response!=null){
+			if(response != null){
 				this.cuisine_names= response;
 			}
 		});
 
 		this.fireBaseService.getRestaurantBasedOnLocation().subscribe(response => {
-   			if(response.results!=null) {
+   			if(response.results != null) {
    				this.restaurants = response.results;
    				this.gotresult="true";
    				//console.log("this.restaurants: "+ response.results);

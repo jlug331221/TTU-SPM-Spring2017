@@ -12,7 +12,6 @@ import { User } from '../interfaces/user.interface';
 @Injectable()
 export class FireBaseService {
 
-
 	constructor(private af: AngularFire, private http: Http) { }
 	firebaseCuisines: FirebaseListObservable<any[]>;
 	dishesForCuisineName: FirebaseListObservable<any[]>;
@@ -20,9 +19,9 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-  users: FirebaseListObservable<any[]>;
+    users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
-   fbUser: FirebaseObjectObservable<any>;
+    fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
 	fbUserLike:  FirebaseObjectObservable<any>;
 
@@ -243,31 +242,30 @@ export class FireBaseService {
 			return Observable.of(this.result);
 	}
 
-	getLocation(){
+	getLocation() {
 		this.latitude=23.0078579;
 		this.longitude=72.5138152;
 
 
 		//this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
 
-		navigator.geolocation.getCurrentPosition(position=>{
+		navigator.geolocation.getCurrentPosition(position => {
 			this.latitude= position.coords.latitude;
 			this.longitude = position.coords.longitude;
 			console.log(position.coords.latitude);
 			console.log(position.coords.longitude);
 
 			this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
-
-
-		 });
+		});
 	}
-  getRestaurantBasedOnLocation(){
 
-		if(this.latitude!=null){
-		  	  return this.http.get(this.apiUrl).map(
-				 data=>{
-				 this.res = data.json();
-				 console.log(this.res);
+	getRestaurantBasedOnLocation() {
+
+		if(this.latitude != null) {
+		  	return this.http.get(this.apiUrl).map(
+				data => {
+				this.res = data.json();
+				console.log(this.res);
 				return this.res;
 			});
 		}
@@ -293,7 +291,7 @@ interface dish {
 	img_url: string;
 	restaurant_name: string;
 	avg_rating: number;
-
+	place_id:string;
 }
 
 interface comments {
