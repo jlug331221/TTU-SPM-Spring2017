@@ -204,12 +204,12 @@ export class FireBaseService {
 
 	//updates the dish rating for a user.  does not allow duplicate ratings.
 	updateDishRating(user, rating, dish){
-		let total1 = 0;
+		let incr = .5;
 		this.fbUser = this.af.database.object('/userRatings/'+ dish + '/' + user) as FirebaseObjectObservable<any>
 		//console.log(this.fbUser);
 		this.fbUser.update({rating: rating});
 		//updates user ranking after adding a new dish
-		this.updateUserRanking(user)
+		this.updateUserRanking(user, incr)
 			
 	}
 
@@ -268,30 +268,31 @@ export class FireBaseService {
 		  this.fbCuisine.update({likes: likeInc});
 		  //console.log(cuisineObj);
 	}
-	updateUserRanking(userid){
-		let total1 = 0;
+	updateUserRanking(userid, inc){
+		let total1;
 			//gets a user ranking object from the userRankings table
 			this.fbUserLike = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
 			
-			//gets the total number of dishes and rating added from the userRanking table and adds 1 to it
-			 this.fbUserLike.subscribe(res =>{
-				if (res != null){
-					total1 = res.total + 1
-				}
-			})
-			
-			if(total1 <= 10)
-			this.fbUserLike.update({total: total1, ranking: "Foogler"})
-			else if(total1 <= 25)
-			this.fbUserLike.update({total: total1, ranking: "Top Foogler"})
+		 firebase.database().ref('/userRankings/' + userid).once('value').then((res)=>{
+            if(res.A.aa!=null){
+                total1 = res.val().total + inc
+                console.log(res.val().total)
+                
+			if(total1 <= 15)
+				this.fbUserLike.update({total: total1, ranking: "Foogler"})
+			else if(total1 <= 30)
+				this.fbUserLike.update({total: total1, ranking: "Top Foogler"})
 			else
-			this.fbUserLike.update({total: total1, ranking: "Distinguished Foogler"})
+				this.fbUserLike.update({total: total1, ranking: "Distinguished Foogler"})
+			}
+			console.log(total1);
+        });  			
 	}
 
 	putImage(image,dish_name,cuisine_name,restaurant_name,placeId,userID){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
 			const storageRef= firebase.storage().ref().child(path);
-
+			let incr = 1;
 		  for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
 					storageRef.put(selectedFile).then((snapshot)=>{
 						//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
@@ -312,7 +313,7 @@ export class FireBaseService {
 					});
 				}
 				//updates user ranking after adding a new dish
-				this.updateUserRanking(userID)
+				this.updateUserRanking(userID, incr)
 			return Observable.of(this.result);
 	}
 
