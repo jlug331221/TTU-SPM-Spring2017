@@ -163,4 +163,29 @@ describe('UserProfileComponent', () => {
         de = fixture.debugElement.query(By.css('.user-profile-comment-data')).nativeElement;
         expect(de.innerHTML).toBe("This is a test comment.");
     });
+
+    it('should show the cuisines the user has liked in their respective profile', () => {
+        let user = {
+            uid: '12345qwert',
+            first_name: 'Testy',
+            last_name: 'Tester',
+            location_city: 'Random City',
+            location_state: 'TX',
+            profile_photo_url: 'http://lorempixel.com/400/200/'
+            diet: 'omnivore'
+        };
+
+        // Simulating that the user has already created a profile
+        component.userExists = true;
+
+        // Some cuisines the user has liked so that they can appear on the profile
+        let userCuisineLikes = ["Mexican"];
+
+        component.cuisinesLiked = userCuisineLikes;
+
+        fixture.detectChanges();
+
+        de = fixture.debugElement.query(By.css('.cuisineLiked')).nativeElement;
+        expect(de.innerHTML).toBe("Mexican");
+    });
 });

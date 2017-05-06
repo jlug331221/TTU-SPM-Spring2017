@@ -34,7 +34,6 @@ export class UserProfileComponent implements OnInit {
     private user_diet;
     private user_profile_photo_url;
     private user_profile_comments;
-    private user_profile_cuisineLikes;
     private cuisinesLiked;
 
     // Form fields
@@ -478,9 +477,6 @@ export class UserProfileComponent implements OnInit {
                 this.user_profile_comments = this.fireBaseService.getCommentsForUserProfile(authData.uid);
 
                 this.cuisinesLiked = this.fireBaseService.getUserCuisineLikesForUserProfile(authData.uid);
-
-                //console.log(this.user_profile_comments);
-                console.log(this.cuisinesLiked);
 
             }
 
