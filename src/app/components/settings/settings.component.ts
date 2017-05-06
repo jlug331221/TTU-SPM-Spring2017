@@ -35,11 +35,8 @@ declare var jQuery:any;
 	   this.af.auth.subscribe(authData=>{
            if(authData != null) {
                this.userID = authData.uid
-               
            }
 	   });
-
-
 		this.fireBaseService.getCuisines().subscribe(response => {
 
 			if(response!=null){

@@ -19,9 +19,9 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-  users: FirebaseListObservable<any[]>;
+  	users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
-  fbUser: FirebaseObjectObservable<any>;
+  	fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
 	fbRatingList: FirebaseListObservable<any>;
 	fbUserLike:  FirebaseObjectObservable<any>;
@@ -268,24 +268,37 @@ export class FireBaseService {
 		  this.fbCuisine.update({likes: likeInc});
 		  //console.log(cuisineObj);
 	}
+	getUserRank(userid){
+			this.fbUserLike = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
+			let rank
+			this.fbUserLike.subscribe(res=>{
+				if (res!=null){
+				rank = res.ranking
+				//console.log(rank)
+				return rank
+				}
+			})
+	}
 	updateUserRanking(userid, inc){
 		let total1;
 			//gets a user ranking object from the userRankings table
 			this.fbUserLike = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
-			
+
 		 firebase.database().ref('/userRankings/' + userid).once('value').then((res)=>{
-            if(res.A.aa!=null){
-                total1 = res.val().total + inc
-                console.log(res.val().total)
+		    if(res.A.aa!=null){
+                	total1 = res.val().total + inc
+                	//console.log(res.val().total)
                 
-			if(total1 <= 15)
-				this.fbUserLike.update({total: total1, ranking: "Foogler"})
-			else if(total1 <= 30)
-				this.fbUserLike.update({total: total1, ranking: "Top Foogler"})
-			else
-				this.fbUserLike.update({total: total1, ranking: "Distinguished Foogler"})
+					if(total1 <= 15)
+						this.fbUserLike.update({total: total1, ranking: "Foogler"})
+					else if(total1 <= 30)
+						this.fbUserLike.update({total: total1, ranking: "Top Foogler"})
+					else
+						this.fbUserLike.update({total: total1, ranking: "Distinguished Foogler"})
+				}
+			else{
+				this.fbUserLike.update({total: inc, ranking: "Foogler"})
 			}
-			console.log(total1);
         });  			
 	}
 
