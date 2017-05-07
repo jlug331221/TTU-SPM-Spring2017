@@ -66,6 +66,7 @@ export class FireBaseService {
 		}
 
 		this.commentObject ={user:user_name, comment_data:comment_data, rating: rating, uid:user_id, ranking: rank};
+
 		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
 	}
 	//get cuisine by name
@@ -347,37 +348,35 @@ export class FireBaseService {
 			return Observable.of(this.result);
 	}
 
-	getLocation(){
+	getLocation() {
 		this.latitude=23.0078579;
 		this.longitude=72.5138152;
 
 
 		//this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
 
-		navigator.geolocation.getCurrentPosition(position=>{
+		navigator.geolocation.getCurrentPosition(position => {
 			this.latitude= position.coords.latitude;
 			this.longitude = position.coords.longitude;
 			console.log(position.coords.latitude);
 			console.log(position.coords.longitude);
 
 			this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
-
-
-		 });
+		});
 	}
-  
-  getRestaurantBasedOnLocation(){
-		if(this.latitude!=null){
-		  	  return this.http.get(this.apiUrl).map(
-				 data=>{
-				 this.res = data.json();
-				 console.log(this.res);
-				return this.res;
-			});
+
+	getRestaurantBasedOnLocation() {
+
+		if(this.latitude != null) {
+      return this.http.get(this.apiUrl).map(data => {
+        this.res = data.json();
+        console.log(this.res);
+        return this.res;
+      });
 		}
 
 	}
-
+  
 }
 
 interface cuisines {
