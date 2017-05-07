@@ -3,6 +3,7 @@ import {FormControl} from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { CompleterService, CompleterData } from 'ng2-completer';
 import { FireBaseService } from '../../services/firebase.service';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import {Router} from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
@@ -14,6 +15,33 @@ declare var $:any;
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
+
+
+export class SettingsComponent implements OnInit,OnChanges {
+    elementRef: ElementRef;	
+	image:any;
+	restaurantName:any;
+	dish_name:any;
+    restaurants:any;
+	cuisine_names:any;
+	selectedCuisine:any;
+	gotresult:string;
+	city_name:string;
+	state_name:string;
+	userID:string;
+	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService, private af:AngularFire){}
+
+	ngOnChanges(){
+   		
+   }	
+ 
+   ngOnInit() {
+	   this.af.auth.subscribe(authData=>{
+           if(authData != null) {
+               this.userID = authData.uid
+           }
+	   });
+		this.fireBaseService.getCuisines().subscribe(response => {
 
 export class SettingsComponent implements OnInit, OnChanges {
    elementRef: ElementRef;
@@ -77,6 +105,24 @@ export class SettingsComponent implements OnInit, OnChanges {
      
    	}
 
+
+   	onSubmit(){
+		
+   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName.name,this.restaurantName.place_id,this.userID).subscribe(status=>{
+   			 console.log("Status is" + status);
+   	 		if(status!="Error"){
+   	 			console.log('added');
+   	 			this.router.navigate(['/']);
+   	 			this.flash.show('Thank You for your input',{cssClass: 'alert-success', timeout: 5000});
+   	 		}else{
+   	 			console.log('Not added');
+   	 			this.flash.show('Please add valid message',{cssClass: 'alert-success', timeout: 5000});
+   	 			this.router.navigate(['/']);
+   	 		}
+   		});
+	}
+}
+
     fetchPlaceID(restaurantName: string) {
         for(var i = 0; i < this.restaurants.length; i++) {
             if(this.restaurants[i].name == restaurantName) {
@@ -91,6 +137,13 @@ export class SettingsComponent implements OnInit, OnChanges {
 
       //console.log("Typeahead restaurant name: " + $('.js-typeahead-restaurants').val());
       //console.log("Typeahead restaurant place id: " + placeID);
+
+
+  	
+
+
+
+  
 
       this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,$('.js-typeahead-restaurants').val(),placeID).subscribe(status => {
           //console.log("Status is" + status);

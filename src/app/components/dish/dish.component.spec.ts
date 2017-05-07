@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
+import { AuthProviders, AuthMethods, AngularFireModule,  FirebaseObjectObservable, AngularFire} from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement, NgModule, Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -11,6 +11,7 @@ import { FireBaseService } from '../../services/firebase.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { DishComponent } from './dish.component';
 import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 
@@ -18,7 +19,7 @@ import 'rxjs/Rx';
 let fbService:FireBaseService;
 
 describe('DishComponent', () => {
-
+    
     let component: DishComponent;
     let fixture: ComponentFixture<DishComponent>;
 
@@ -61,7 +62,7 @@ describe('DishComponent', () => {
         expect(component).toBeTruthy();
     });
 
-	it('Should Get dish',()=>{
+	/*it('Should Get dish',()=>{
 		let dish_id=1
        fbService.getDish(dish_id).subscribe(dish => {
                if(dish!= null){
@@ -70,7 +71,7 @@ describe('DishComponent', () => {
              }
            
          });
-	});
+	});*/
 
 //tests average rating function.  Test simply checks that the average is a 
 //value less than 5, since the actual average is constantly changing.
@@ -107,12 +108,32 @@ describe('DishComponent', () => {
         }
        }); 
 
+        //tests ranking update feature             
+  it('should check if user rank is updated',() => {
+        let userid = 123456789
+        let inc = 1
+        
+        fbService.updateUserRanking(userid, inc)
+       let rank 
+       
+       fbService.getUserRank(userid).subscribe(res=>{
+           if (res!= null)
+           rank = res.ranking
+       })
+
+        if(rank!= null){
+        console.log(rank)
+        expect(rank).toBe("Foogler");
+        }
+    });
+
    //tests rating update feature             
     it('should check if rating is updated',() => {
         let user = 123456789
         let rating = 3
-        let dish = 99999999
+        let dish = 99999
         let res;
+        
         fbService.updateDishRating(user, rating, dish);
         fbService.getRating(user, dish).subscribe(rate=>{
             if(rate!= null)
@@ -120,12 +141,14 @@ describe('DishComponent', () => {
             //console.log(rate);
         });
         if(res != null){
+            console.log(res.rating)
         expect(res.rating).toBe("3");
         }
        });
 
-});
 
+
+});
 interface rating {
 	rating: string;
 }
