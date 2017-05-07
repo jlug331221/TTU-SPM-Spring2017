@@ -19,9 +19,9 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-  users: FirebaseListObservable<any[]>;
+    users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
-  fbUser: FirebaseObjectObservable<any>;
+    fbUser: FirebaseObjectObservable<any>;
 	fbRating: FirebaseObjectObservable<any>;
 	fbRatingList: FirebaseListObservable<any>;
 	fbUserLike:  FirebaseObjectObservable<any>;
@@ -119,9 +119,10 @@ export class FireBaseService {
 	/**
 	 * Get all comments made by a user (used to display on the user profile page).
 	 *
-	 * @return {Comments} [description] userProfileComments
+	 * @param  {uid} string [uid of logged in user.]
+	 * @return {Comments[]} [Comments that User uid has made on any dish.]
 	 */
-	getCommentsForUserProfile(uid) {
+	getCommentsForUserProfile(uid: string) {
 		let comments;
 		let userComments = [];
 		let userComment: any;
@@ -160,6 +161,31 @@ export class FireBaseService {
 		});
 
 		return userComments;
+	}
+
+	/**
+	* Get all cuisine likes that have been made by User with user ID uid (used to display on the user profile page).
+	*
+	* @param  {uid} string [User uid]
+	* @return {string[]} [Cuisines that the user has liked.]
+	*/
+	getUserCuisineLikesForUserProfile(uid: string) {
+		let cuisinesLiked = [];
+
+		let userCuisineLikes = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/userCuisineLikes', { preserveSnapshot: true });
+
+		userCuisineLikes.subscribe(snapshots => {
+			snapshots.forEach(snapshot => {
+				snapshot.forEach(uidSnap => {
+					if(uidSnap.key == uid) {
+						cuisinesLiked.push(snapshot.key);
+					}
+				});
+			});
+			//console.log(cuisinesLiked);
+		});
+
+		return cuisinesLiked;
 	}
 
 	//returns dish information
@@ -282,7 +308,7 @@ export class FireBaseService {
 							avg_rating: 2.5,
 							place_id : placeId
 						}
-					
+
 						this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
 					});
 				}
@@ -307,7 +333,6 @@ export class FireBaseService {
 	}
 
 	getRestaurantBasedOnLocation() {
-
 		if(this.latitude != null) {
       return this.http.get(this.apiUrl).map(data => {
         this.res = data.json();
@@ -315,7 +340,6 @@ export class FireBaseService {
         return this.res;
       });
 		}
-
 	}
   
 }
