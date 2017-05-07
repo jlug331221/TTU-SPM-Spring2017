@@ -41,27 +41,6 @@ export class SettingsComponent implements OnInit,OnChanges {
                this.userID = authData.uid
            }
 	   });
-		this.fireBaseService.getCuisines().subscribe(response => {
-
-export class SettingsComponent implements OnInit, OnChanges {
-   elementRef: ElementRef;
-   image:any;
-   restaurantName:any;
-   dish_name:any;
-   restaurants:any;
-	 cuisine_names:any;
-	 selectedCuisine:any;
-	 gotresult:string;
-	 city_name:string;
-	 state_name:string;
-	
-   constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService){}
-
-   ngOnChanges(){
-
-   }
-
-   ngOnInit() {
 
       this.fireBaseService.getCuisines().subscribe(response => {
         if(response != null){
@@ -105,24 +84,6 @@ export class SettingsComponent implements OnInit, OnChanges {
      
    	}
 
-
-   	onSubmit(){
-		
-   		 this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,this.restaurantName.name,this.restaurantName.place_id,this.userID).subscribe(status=>{
-   			 console.log("Status is" + status);
-   	 		if(status!="Error"){
-   	 			console.log('added');
-   	 			this.router.navigate(['/']);
-   	 			this.flash.show('Thank You for your input',{cssClass: 'alert-success', timeout: 5000});
-   	 		}else{
-   	 			console.log('Not added');
-   	 			this.flash.show('Please add valid message',{cssClass: 'alert-success', timeout: 5000});
-   	 			this.router.navigate(['/']);
-   	 		}
-   		});
-	}
-}
-
     fetchPlaceID(restaurantName: string) {
         for(var i = 0; i < this.restaurants.length; i++) {
             if(this.restaurants[i].name == restaurantName) {
@@ -138,14 +99,7 @@ export class SettingsComponent implements OnInit, OnChanges {
       //console.log("Typeahead restaurant name: " + $('.js-typeahead-restaurants').val());
       //console.log("Typeahead restaurant place id: " + placeID);
 
-
-  	
-
-
-
-  
-
-      this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,$('.js-typeahead-restaurants').val(),placeID).subscribe(status => {
+      this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,$('.js-typeahead-restaurants').val(),placeID,this.userID).subscribe(status => {
           //console.log("Status is" + status);
           if(status != "Error") {
             console.log('added');
