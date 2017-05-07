@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthProviders, AuthMethods, AngularFireModule } from 'angularfire2';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+import { NgModule } from "@angular/core";
 import { HttpModule } from '@angular/http';
 import { RatingModule } from 'ngx-rating';
 import { DebugElement } from '@angular/core';
@@ -36,7 +37,7 @@ describe('AppComponent', () => {
             AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
 			FlashMessagesModule,
 			HttpModule,
-			RatingModule  
+			RatingModule
           ],
 		  providers: [ValidateService, FireBaseService ],
           declarations: [
