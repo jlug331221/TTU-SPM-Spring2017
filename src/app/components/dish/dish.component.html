@@ -31,23 +31,22 @@
 <br>
 <br>
 
-<div class="container" id="comments" *ngIf="(af.auth|async)">
+<div class="row container" id="comments" *ngIf="(af.auth|async)">
     <div class="input-field col s12 m12 l9">
         <input id="comment" type="text" class="validate" [(ngModel)]="addedComment" name="addedComment">
           <label for="comment">Comment</label>
 		  <a class="waves-effect waves-light btn" (click)="onAddedComment()">Submit</a> 
     </div>
 </div>
-     <br>
-    <br>
-<br>
-
+   <br>  
 <div class="row container">
         <div class="col s12 m12 l12">
             <div class = "card-large c2" *ngFor="let comment of comments">
                 <span class= "userid"><strong>{{ comment.user }}</strong></span>
                     <span class="date"><strong>{{ comment.date }}</strong></span>
                 <div class= "card-content">
+                    <div><strong>{{ comment.ranking }}</strong></div>
+                    <br>
                     <div><strong>Comment: </strong>{{ comment.comment_data }}</div>
                     <rating [(ngModel)]="comment.rating" [readonly]="true"></rating>
                 </div>

@@ -25,6 +25,7 @@ export class FireBaseService {
 	fbRating: FirebaseObjectObservable<any>;
 	fbRatingList: FirebaseListObservable<any>;
 	fbUserLike:  FirebaseObjectObservable<any>;
+	fbUserRank:  FirebaseObjectObservable<any>;
 
 	aPi:any;
 	result:any;
@@ -48,13 +49,25 @@ export class FireBaseService {
 		return this.authData;
 	}
 
-	setComments(dish_id,user_name,comment_data, user_id){
-		this.commentObject ={user:user_name, comment_data:comment_data, rating:5, uid:user_id};
+	setComments(dish_id,user_name,comment_data, user_id, rank){
+		let actRating = this.getRating(user_id, dish_id)
+		let rating=0
+		let r = rank
+		
+		//console.log(actRating)
 
+		actRating.subscribe(res=>{
+			if (res.rating!=null)
+			rating = res.rating
+		})
 
+		if(r == null){
+			r = "Foogler"
+		}
+
+		this.commentObject ={user:user_name, comment_data:comment_data, rating: rating, uid:user_id, ranking: rank};
 		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
 	}
-
 	//get cuisine by name
 	getCuisine(name: string) {
 		this.fbCuis = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>;
@@ -205,9 +218,19 @@ export class FireBaseService {
 	//updates the dish rating for a user.  does not allow duplicate ratings.
 	updateDishRating(user, rating, dish){
 		let incr = .5;
+		let rating1
+		
+		if(rating == null){
+			rating1 = 0
+		}
+		else{
+			rating1 = rating
+		}
+		//console.log(rating1)
+
 		this.fbUser = this.af.database.object('/userRatings/'+ dish + '/' + user) as FirebaseObjectObservable<any>
 		//console.log(this.fbUser);
-		this.fbUser.update({rating: rating});
+		this.fbUser.update({rating: rating1});
 		//updates user ranking after adding a new dish
 		this.updateUserRanking(user, incr)
 			
@@ -269,37 +292,31 @@ export class FireBaseService {
 		  //console.log(cuisineObj);
 	}
 	getUserRank(userid){
-			this.fbUserLike = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
-			let rank
-			this.fbUserLike.subscribe(res=>{
-				if (res!=null){
-				rank = res.ranking
-				//console.log(rank)
-				return rank
-				}
-			})
+			this.fbUserRank = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
+			//console.log(this.fbUserRank)
+			return this.fbUserRank;
 	}
 	updateUserRanking(userid, inc){
 		let total1;
 			//gets a user ranking object from the userRankings table
 			this.fbUserLike = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
-
-		 firebase.database().ref('/userRankings/' + userid).once('value').then((res)=>{
-		    if(res.A.aa!=null){
-                	total1 = res.val().total + inc
-                	//console.log(res.val().total)
-                
-					if(total1 <= 15)
-						this.fbUserLike.update({total: total1, ranking: "Foogler"})
-					else if(total1 <= 30)
-						this.fbUserLike.update({total: total1, ranking: "Top Foogler"})
+			this.fbUserLike.subscribe(res=>{
+				if(res!=null){
+					if(res.total!=null)
+						total1 = res.total+inc
 					else
-						this.fbUserLike.update({total: total1, ranking: "Distinguished Foogler"})
+						total1 = inc;					 
 				}
-			else{
-				this.fbUserLike.update({total: inc, ranking: "Foogler"})
-			}
-        });  			
+			});
+			if(total1!=null){
+			if(total1 <= 20)
+						this.fbUserLike.update({total: total1, ranking: "Foogler"})
+					else if(total1 <= 50)
+						this.fbUserLike.update({total: total1, ranking: "* Top Foogler *"})
+					else
+						this.fbUserLike.update({total: total1, ranking: "** Distinguished Foogler **"})	
+			}	
+			
 	}
 
 	putImage(image,dish_name,cuisine_name,restaurant_name,placeId,userID){
@@ -363,7 +380,6 @@ export class FireBaseService {
 
 }
 
-
 interface cuisines {
 	$key?: string;
 	image_url?: string;
@@ -384,6 +400,7 @@ interface dish {
 
 interface comments {
 	user: string;
+	ranking: string;
 	comment_data: string;
 	rating: number;
 	uid: string;
