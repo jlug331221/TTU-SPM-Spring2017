@@ -33,6 +33,7 @@ export class FireBaseService {
 	authData:any;
 	longitude:any;
 	apiUrl:string;
+	
 
 	private res;
 	placeDish:dish;
@@ -49,7 +50,8 @@ export class FireBaseService {
 	}
 
 	setComments(dish_id,user_name,comment_data, user_id){
-		this.commentObject ={user:user_name, comment_data:comment_data, rating:5, uid:user_id};
+		this.af.database.list('/userComments/'+dish_id+'/'+user_id).push({commented: true});
+		this.commentObject ={user:user_name, comment_data:comment_data, like:0, uid:user_id};
 
 
 		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
@@ -283,6 +285,7 @@ export class FireBaseService {
 							avg_rating: 2.5,
 							place_id : placeId,
 							userId: userID
+							
 						}
 					
 						this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
@@ -321,6 +324,12 @@ export class FireBaseService {
 		}
 
 	}
+	updateCommentLike(comment,dish_id,likes,userId){
+		this.fbUserLike= this.af.database.object('/userCommentLikes/'+userId+"/"+comment.$key) as FirebaseObjectObservable<commentLike>
+		this.fbUserLike.update({like: likes})
+		this.fbUserLike= this.af.database.object('dishes/'+dish_id+"/comments/"+comment.$key) as FirebaseObjectObservable<comments>
+		this.fbUserLike.update({like: likes});
+	}
 
 }
 
@@ -342,12 +351,15 @@ interface dish {
 	place_id:string;
 	userId:string;
 }
-
+interface commentLike{
+	like:number;
+}
 interface comments {
+	$key?:string;
 	user: string;
 	comment_data: string;
-	rating: number;
 	uid: string;
+	like:number;
 }
 
 interface dishes {

@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, Http} from '@angular/http';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { MaterializeModule } from "angular2-materialize";
+import * as firebase from 'firebase';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -95,11 +96,28 @@ export class DishComponent implements OnInit {
 	onAddedComment(){
 		console.log("Adding Dish");
 		this.authData=this.fireBaseService.getAuthData();
-		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid);
-		this.addedComment="";
+		firebase.database().ref('/userComments/'+this.dish_id+'/'+this.userID).once('value').then((res)=>{
+		  if(res.A.aa!=null){
+			  console.log("You have commented on this dish");
+		  }else{
+	  		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid);
+	  		this.addedComment="";
+		  }
+		})
+		
 
 	  }
-	  likeComment(){
-	  	
+	  likeComment(comment){
+		  console.log(comment.$key);
+		  firebase.database().ref('/userCommentLikes/'+this.userID+'/'+comment.$key).once('value').then((res)=>{
+			  console.log(res);
+			  if(res.A.aa!=null){
+			  	
+			  }else{
+				  comment.like=comment.like+1;
+				  this.fireBaseService.updateCommentLike(comment,this.dish_id,comment.like,this.userID);
+			  }
+		  })
+		  
 	  }
   }

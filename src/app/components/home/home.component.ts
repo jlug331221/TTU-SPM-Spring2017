@@ -53,11 +53,8 @@ export class HomeComponent implements OnInit {
             }
         });            
     }
-		this.pushService.create('Test',{body: 'something'}).subscribe(
-            res => console.log(res),
-            err => console.log(err)
-        );
-}
+		
+	}
 }
   
 
