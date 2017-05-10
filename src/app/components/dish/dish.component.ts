@@ -25,6 +25,8 @@ export class DishComponent implements OnInit {
   private comments: any[];
   private ratingObj: any;
   private ratingAvg: number;
+  private ranking: any;
+  private rank: any;
   private map: SafeResourceUrl;
   private authData:any;
   private addedComment:string;
@@ -43,8 +45,20 @@ export class DishComponent implements OnInit {
             if(authData != null) {
                 this.userExists = true;
                 this.userID = authData.uid;
-            }
 
+                 //gets users Foogle ranking
+                 this.fireBaseService.getUserRank(this.userID).subscribe(response=>{
+                    if(response!= null){
+                      this.rank =response.ranking
+
+                      //sets a new Foogle ranking if the user does not have one
+                      if(this.rank == null){
+                          this.rank = "Foogler"
+                      }
+                      //console.log(response)
+                    }
+                 });
+            }
         });
 
     //gets dish object which corresponds to route parameter '$key'
@@ -55,7 +69,7 @@ export class DishComponent implements OnInit {
           }
 	 	 this.fireBaseService.getRestaurantDetails(this.dish.place_id).subscribe(details =>{
 	 	         this.details = details
-	 	        console.log(this.details);
+	 	       // console.log(this.details);
 	 	      });
 
      });
@@ -77,26 +91,29 @@ export class DishComponent implements OnInit {
           rating.forEach(snapshot => {
             if(snapshot != null)
               ratingSum = ratingSum + snapshot.rating
-              console.log(ratingSum);
+              //console.log(ratingSum);
         });
           this.ratingAvg = ratingSum / this.ratingObj.length
           //console.log(this.ratingAvg);
         }
       });
+      
     }
 
     //allows user to rate a dish if they are logged in 
     rateDish(){
+      let total1
       if (this.userExists != false){
           this.fireBaseService.updateDishRating(this.userID, this.starSelect, this.dish_id)
+        }
       }
-    }
+       
 
 	//Call this function when user adds the comment
 	onAddedComment(){
 		console.log("Adding Dish");
 		this.authData=this.fireBaseService.getAuthData();
-		firebase.database().ref('/userComments/'+this.dish_id+'/'+this.userID).once('value').then((res)=>{
+    firebase.database().ref('/userComments/'+this.dish_id+'/'+this.userID).once('value').then((res)=>{
 		  if(res.A.aa!=null){
 			  console.log("You have commented on this dish");
 			  this.addedComment="";
@@ -106,6 +123,10 @@ export class DishComponent implements OnInit {
 		  }
 		})
 		
+
+		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid, this.rank);
+		this.addedComment="";
+
 
 	  }
 	  likeComment(comment){

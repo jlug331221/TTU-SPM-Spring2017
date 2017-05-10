@@ -26,7 +26,6 @@ import { MaterializeModule } from "angular2-materialize";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-
 const appRoutes:  Routes = [
 	{path:'', component: HomeComponent},
 	{path:'settings', component: SettingsComponent},
