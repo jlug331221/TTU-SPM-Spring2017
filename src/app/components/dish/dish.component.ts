@@ -49,7 +49,7 @@ export class DishComponent implements OnInit {
                  //gets users Foogle ranking
                  this.fireBaseService.getUserRank(this.userID).subscribe(response=>{
                     if(response!= null){
-                      this.rank =response.ranking
+                      this.rank = response.ranking
 
                       //sets a new Foogle ranking if the user does not have one
                       if(this.rank == null){
@@ -73,15 +73,15 @@ export class DishComponent implements OnInit {
 	 	      });
 
      });
-   
+
      //gets dish comments
     this.fireBaseService.getComments(this.dish_id).subscribe(comments => {
             this.comments = comments;
             //console.log(this.comments);
       });
-   
+
       //calculates the dish rating average of dish
-      this.fireBaseService.getRatingAverage(this.dish_id).subscribe( rating =>{ 
+      this.fireBaseService.getRatingAverage(this.dish_id).subscribe( rating =>{
           if(rating != null){
           this.ratingObj = rating;
           let ratingSum = 0;
@@ -97,17 +97,17 @@ export class DishComponent implements OnInit {
           //console.log(this.ratingAvg);
         }
       });
-      
+
     }
 
-    //allows user to rate a dish if they are logged in 
+    //allows user to rate a dish if they are logged in
     rateDish(){
       let total1
       if (this.userExists != false){
           this.fireBaseService.updateDishRating(this.userID, this.starSelect, this.dish_id)
         }
       }
-       
+
 
 	//Call this function when user adds the comment
 	onAddedComment(){

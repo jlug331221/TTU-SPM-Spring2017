@@ -35,6 +35,7 @@ export class UserProfileComponent implements OnInit {
     private user_profile_photo_url;
     private user_profile_comments;
     private cuisinesLiked;
+    private user_ranking;
 
     // Form fields
     private first_name: any;
@@ -473,6 +474,17 @@ export class UserProfileComponent implements OnInit {
                 this.authDataPhotoUrl = authData.google.photoURL;
 
                 this.checkIfFirstLogin(authData);
+
+                this.user_ranking = this.fireBaseService.getUserRank(authData.uid).subscribe(response => {
+                   if(response!= null) {
+                     this.user_ranking = response.ranking
+
+                     //sets a new Foogle ranking if the user does not have one
+                     if(this.user_ranking == null){
+                         this.user_ranking = "Foogler"
+                     }
+                   }
+                });
 
                 this.user_profile_comments = this.fireBaseService.getCommentsForUserProfile(authData.uid);
 
