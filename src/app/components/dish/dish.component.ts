@@ -99,6 +99,7 @@ export class DishComponent implements OnInit {
 		firebase.database().ref('/userComments/'+this.dish_id+'/'+this.userID).once('value').then((res)=>{
 		  if(res.A.aa!=null){
 			  console.log("You have commented on this dish");
+			  this.addedComment="";
 		  }else{
 	  		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid);
 	  		this.addedComment="";
