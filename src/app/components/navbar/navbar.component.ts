@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
 	userName:string;
 	userEmail:string;
 
-  constructor(private af: AngularFire, private router:Router, private fireBaseService:FireBaseService) { 
+  constructor(private af: AngularFire, private router:Router, private fireBaseService:FireBaseService) {
 
   }
 
@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
 	  this.af.auth.subscribe(authData => {
 
 		  if(authData!=null) {
-		  	console.log(authData);
+		  	//console.log(authData);
 		  	this.userImage=authData.auth.photoURL;
 			this.userName= authData.auth.displayName;
 			this.userEmail= authData.auth.email;

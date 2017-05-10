@@ -34,6 +34,8 @@ export class UserProfileComponent implements OnInit {
     private user_diet;
     private user_profile_photo_url;
     private user_profile_comments;
+    private cuisinesLiked;
+    private user_ranking;
 
     // Form fields
     private first_name: any;
@@ -426,7 +428,7 @@ export class UserProfileComponent implements OnInit {
 
                 this.user = snapshot.val();
 
-                console.log(this.user);
+                //console.log(this.user);
 
                 this.user_first_name = this.user.first_name;
                 this.user_last_name = this.user.last_name;
@@ -439,17 +441,6 @@ export class UserProfileComponent implements OnInit {
             }
         });
     }
-
-    /*openModal() {
-        alert('You want to open the modal');
-        console.log($('#set-user-profile-preferences-modal').modal({}))
-        $('#set-user-profile-preferences-modal').modal({
-            dismissible: true,
-            opacity: .8,
-            inDuration: 300,
-            outDuration: 200,
-        });
-    }*/
 
     editProfile() {
         $('#user-profile-edit-icon').hide();
@@ -474,7 +465,6 @@ export class UserProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        //console.log($('#user-profile-edit').html());
 
         this.af.auth.subscribe(authData => {
 
@@ -485,9 +475,20 @@ export class UserProfileComponent implements OnInit {
 
                 this.checkIfFirstLogin(authData);
 
+                this.user_ranking = this.fireBaseService.getUserRank(authData.uid).subscribe(response => {
+                   if(response!= null) {
+                     this.user_ranking = response.ranking
+
+                     //sets a new Foogle ranking if the user does not have one
+                     if(this.user_ranking == null){
+                         this.user_ranking = "Foogler"
+                     }
+                   }
+                });
+
                 this.user_profile_comments = this.fireBaseService.getCommentsForUserProfile(authData.uid);
 
-                console.log(this.user_profile_comments);
+                this.cuisinesLiked = this.fireBaseService.getUserCuisineLikesForUserProfile(authData.uid);
 
             }
 

@@ -19,12 +19,15 @@ export class FireBaseService {
 	fbDish: FirebaseObjectObservable<any>;
 	fbCuisine: FirebaseObjectObservable<any>;
 	fbCuis: FirebaseObjectObservable<any>;
-  users: FirebaseListObservable<any[]>;
+
+  	users: FirebaseListObservable<any[]>;
 	user: FirebaseObjectObservable<any>;
-  fbUser: FirebaseObjectObservable<any>;
+  	fbUser: FirebaseObjectObservable<any>;
+
 	fbRating: FirebaseObjectObservable<any>;
 	fbRatingList: FirebaseListObservable<any>;
 	fbUserLike:  FirebaseObjectObservable<any>;
+	fbUserRank:  FirebaseObjectObservable<any>;
 
 	aPi:any;
 	result:any;
@@ -49,14 +52,30 @@ export class FireBaseService {
 		return this.authData;
 	}
 
-	setComments(dish_id,user_name,comment_data, user_id){
-		this.af.database.list('/userComments/'+dish_id+'/'+user_id).push({commented: true});
-		this.commentObject ={user:user_name, comment_data:comment_data, like:0, uid:user_id};
 
+	setComments(dish_id,user_name,comment_data, user_id, rank){
+    this.af.database.list('/userComments/'+dish_id+'/'+user_id).push({commented: true});
+		this.commentObject ={user:user_name, comment_data:comment_data, like:0, uid:user_id};
+		let actRating = this.getRating(user_id, dish_id)
+		let rating=0
+		let r = rank
+
+		//console.log(actRating)
+
+		actRating.subscribe(res=>{
+			if (res.rating!=null)
+			rating = res.rating
+		})
+
+		if(r == null){
+			r = "Foogler"
+		}
+
+
+		this.commentObject ={user:user_name, comment_data:comment_data, rating: rating, uid:user_id, ranking: rank};
 
 		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
 	}
-
 	//get cuisine by name
 	getCuisine(name: string) {
 		this.fbCuis = this.af.database.object('/home/Cuisine/'+ name) as FirebaseObjectObservable<cuisine>;
@@ -122,9 +141,10 @@ export class FireBaseService {
 	/**
 	 * Get all comments made by a user (used to display on the user profile page).
 	 *
-	 * @return {Comments} [description] userProfileComments
+	 * @param  {uid} string [uid of logged in user.]
+	 * @return {Comments[]} [Comments that User uid has made on any dish.]
 	 */
-	getCommentsForUserProfile(uid) {
+	getCommentsForUserProfile(uid: string) {
 		let comments;
 		let userComments = [];
 		let userComment: any;
@@ -163,6 +183,31 @@ export class FireBaseService {
 		});
 
 		return userComments;
+	}
+
+	/**
+	* Get all cuisine likes that have been made by User with user ID uid (used to display on the user profile page).
+	*
+	* @param  {uid} string [User uid]
+	* @return {string[]} [Cuisines that the user has liked.]
+	*/
+	getUserCuisineLikesForUserProfile(uid: string) {
+		let cuisinesLiked = [];
+
+		let userCuisineLikes = this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/userCuisineLikes', { preserveSnapshot: true });
+
+		userCuisineLikes.subscribe(snapshots => {
+			snapshots.forEach(snapshot => {
+				snapshot.forEach(uidSnap => {
+					if(uidSnap.key == uid) {
+						cuisinesLiked.push(snapshot.key);
+					}
+				});
+			});
+			//console.log(cuisinesLiked);
+		});
+
+		return cuisinesLiked;
 	}
 
 	//returns dish information
@@ -206,9 +251,23 @@ export class FireBaseService {
 
 	//updates the dish rating for a user.  does not allow duplicate ratings.
 	updateDishRating(user, rating, dish){
+		let incr = .5;
+		let rating1
+
+		if(rating == null){
+			rating1 = 0
+		}
+		else{
+			rating1 = rating
+		}
+		//console.log(rating1)
+
 		this.fbUser = this.af.database.object('/userRatings/'+ dish + '/' + user) as FirebaseObjectObservable<any>
 		//console.log(this.fbUser);
-		this.fbUser.update({rating: rating});
+		this.fbUser.update({rating: rating1});
+		//updates user ranking after adding a new dish
+		this.updateUserRanking(user, incr)
+
 	}
 
 	//increments the cuisine like field by + or - 1 depending on whether
@@ -267,10 +326,39 @@ export class FireBaseService {
 		  //console.log(cuisineObj);
 	}
 
+	getUserRank(userid){
+			this.fbUserRank = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
+			//console.log(this.fbUserRank)
+			return this.fbUserRank;
+	}
+
+	updateUserRanking(userid, inc){
+		let total1;
+			//gets a user ranking object from the userRankings table
+			this.fbUserLike = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
+			this.fbUserLike.subscribe(res=>{
+				if(res!=null){
+					if(res.total!=null)
+						total1 = res.total+inc
+					else
+						total1 = inc;
+				}
+			});
+			if(total1!=null){
+			if(total1 <= 20)
+						this.fbUserLike.update({total: total1, ranking: "Foogler"})
+					else if(total1 <= 50)
+						this.fbUserLike.update({total: total1, ranking: "* Top Foogler *"})
+					else
+						this.fbUserLike.update({total: total1, ranking: "** Distinguished Foogler **"})
+			}
+
+	}
+
 	putImage(image,dish_name,cuisine_name,restaurant_name,placeId,userID){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
 			const storageRef= firebase.storage().ref().child(path);
-
+			let incr = 1;
 		  for(let selectedFile of [(<HTMLInputElement>document.getElementById('fileUpload')).files[0]]){
 					storageRef.put(selectedFile).then((snapshot)=>{
 						//this.uploadedFileSnapshot = snapshot.downloadURL as Observable<string> ;
@@ -285,45 +373,45 @@ export class FireBaseService {
 							avg_rating: 2.5,
 							place_id : placeId,
 							userId: userID
-							
+
 						}
-					
+
 						this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
 					});
 				}
+				//updates user ranking after adding a new dish
+				this.updateUserRanking(userID, incr)
 			return Observable.of(this.result);
 	}
 
-	getLocation(){
+	getLocation() {
 		this.latitude=23.0078579;
 		this.longitude=72.5138152;
 
 
 		//this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
 
-		navigator.geolocation.getCurrentPosition(position=>{
+		navigator.geolocation.getCurrentPosition(position => {
 			this.latitude= position.coords.latitude;
 			this.longitude = position.coords.longitude;
-			console.log(position.coords.latitude);
-			console.log(position.coords.longitude);
+			//console.log(position.coords.latitude);
+			//console.log(position.coords.longitude);
 
 			this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
-
-
-		 });
+		});
 	}
-  
-  getRestaurantBasedOnLocation(){
-		if(this.latitude!=null){
-		  	  return this.http.get(this.apiUrl).map(
-				 data=>{
-				 this.res = data.json();
-				 console.log(this.res);
-				return this.res;
-			});
+
+	getRestaurantBasedOnLocation() {
+		if(this.latitude != null) {
+      return this.http.get(this.apiUrl).map(data => {
+        this.res = data.json();
+        console.log(this.res);
+        return this.res;
+      });
 		}
-
 	}
+
+
 	updateCommentLike(comment,dish_id,likes,userId){
 		this.fbUserLike= this.af.database.object('/userCommentLikes/'+userId+"/"+comment.$key) as FirebaseObjectObservable<commentLike>
 		this.fbUserLike.update({like: likes})
@@ -332,7 +420,6 @@ export class FireBaseService {
 	}
 
 }
-
 
 interface cuisines {
 	$key?: string;
@@ -349,14 +436,19 @@ interface dish {
 	restaurant_name: string;
 	avg_rating: number;
 	place_id:string;
+
 	userId:string;
 }
 interface commentLike{
 	like:number;
+
+	userId: any;
+
 }
 interface comments {
 	$key?:string;
 	user: string;
+	ranking: string;
 	comment_data: string;
 	uid: string;
 	like:number;

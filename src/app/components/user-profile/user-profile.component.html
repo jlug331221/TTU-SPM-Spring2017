@@ -19,7 +19,7 @@
         <div id="set-user-profile-preferences-modal" class="modal modal-fixed-footer" materialize="modal">
             <form #userPrefForm="ngForm">
                 <div class="modal-content">
-                    <h4>Set your preferneces below</h4>
+                    <h4>Set your preferences below</h4>
 
                     <div class="row">
                         <div class="input-field col s12 m6 l6 form-group">
@@ -82,6 +82,9 @@
                     <span class="black-text user-profile-name">
                         {{ user_last_name }}
                     </span>
+                    <span class="black-text user-profile-ranking">
+                        {{ user_ranking }}
+                    </span>
                 </div>
                 <div class="col s2">
                     <a (click)="editProfile()"><i id="user-profile-edit-icon" class="material-icons edit-icon">mode_edit</i></a>
@@ -128,15 +131,15 @@
         </form>
 
         <section class="user-profile-comments">
-            <h5 class="user-profile-comments-section-h5"><strong>Your most recent comments</strong></h5>
+            <h4 class="user-profile-comments-section-h5"><strong>Your most recent comments:</strong></h4>
 
             <div class="row">
                 <div *ngFor="let user_profile_comment of user_profile_comments">
-                    <div class="col s12 m12 l6">
+                    <div class="col s12 l6">
                         <img class="user-profile-comment-dish-img" src="{{user_profile_comment.dish_img}}">
                     </div>
 
-                    <div class="col s12 m12 l6">
+                    <div class="col s12 l6">
                         <strong><p class="user-profile-comment-dish-name">{{user_profile_comment.dish_name}}</p></strong>
                         <p class="user-profile-comment-dish-description">{{user_profile_comment.dish_description}}</p>
                     </div>
@@ -150,10 +153,16 @@
             </div>
         </section>
 
-        <br>
-
         <section class="user-profile-favorite-dishes">
-            <h5><strong>Here are your favorite dishes</strong></h5>
+            <h4><strong>Here are your favorite cuisines:</strong></h4>
+
+            <div class="row">
+                <div *ngFor="let cuisineLiked of cuisinesLiked">
+                    <div class="col s12">
+                        <a [routerLink]="['/dishes', cuisineLiked.toLowerCase()]"><strong><h5 class="cuisineLiked">{{cuisineLiked}}</h5></strong></a>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </div>
