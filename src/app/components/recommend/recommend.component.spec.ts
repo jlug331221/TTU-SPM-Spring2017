@@ -6,12 +6,15 @@ import { By } from '@angular/platform-browser';
 import { DebugElement, Injectable } from '@angular/core';
 import { HttpModule, Http} from '@angular/http';
 import { FireBaseService } from '../../services/firebase.service';
+import { ActivatedRoute } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { RecommendComponent } from './recommend.component';
+import * as firebase from 'firebase';
 
+let dishesService;
 describe('RecommendComponent', () => {
-    let component: DishesComponent;
-    let fixture: ComponentFixture<DishesComponent>;
+    let component: RecommendComponent;
+    let fixture: ComponentFixture<RecommendComponent>;
     let de;
 
     const firebaseConfig = {
@@ -42,12 +45,12 @@ describe('RecommendComponent', () => {
 
             ],
             providers: [ FireBaseService ],
-            declarations: [ DishesComponent, NavbarComponent ]
+            declarations: [ RecommendComponent, NavbarComponent ]
         }).compileComponents(); // compile HTML template and CSS files
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DishesComponent);
+        fixture = TestBed.createComponent(RecommendComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
 

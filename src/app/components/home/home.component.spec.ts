@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement, Injectable } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FireBaseService } from '../../services/firebase.service';
+import {PushNotificationsService} from 'angular2-notifications';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HomeComponent } from './home.component';
 
@@ -35,7 +36,7 @@ describe('HomeComponent', () => {
               AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
 				HttpModule
             ],
-            providers: [ FireBaseService ],
+            providers: [ FireBaseService,PushNotificationsService ],
             declarations: [ HomeComponent, NavbarComponent ]
         }).compileComponents();
     }));
@@ -87,8 +88,8 @@ describe('HomeComponent', () => {
         });
         if(this.res != null) 
         expect(this.res).toBe("ChIJ_UypeeMuTIYRGtrKERCRj2U");
-       });
-});*/
+       });*/
+});
 
 interface cuisine{
 	$key?: string;
