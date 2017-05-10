@@ -59,7 +59,7 @@ export class FireBaseService {
 		let actRating = this.getRating(user_id, dish_id)
 		let rating=0
 		let r = rank
-		
+
 		//console.log(actRating)
 
 		actRating.subscribe(res=>{
@@ -253,7 +253,7 @@ export class FireBaseService {
 	updateDishRating(user, rating, dish){
 		let incr = .5;
 		let rating1
-		
+
 		if(rating == null){
 			rating1 = 0
 		}
@@ -267,7 +267,7 @@ export class FireBaseService {
 		this.fbUser.update({rating: rating1});
 		//updates user ranking after adding a new dish
 		this.updateUserRanking(user, incr)
-			
+
 	}
 
 	//increments the cuisine like field by + or - 1 depending on whether
@@ -325,11 +325,13 @@ export class FireBaseService {
 		  this.fbCuisine.update({likes: likeInc});
 		  //console.log(cuisineObj);
 	}
+
 	getUserRank(userid){
 			this.fbUserRank = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
 			//console.log(this.fbUserRank)
 			return this.fbUserRank;
 	}
+
 	updateUserRanking(userid, inc){
 		let total1;
 			//gets a user ranking object from the userRankings table
@@ -339,7 +341,7 @@ export class FireBaseService {
 					if(res.total!=null)
 						total1 = res.total+inc
 					else
-						total1 = inc;					 
+						total1 = inc;
 				}
 			});
 			if(total1!=null){
@@ -348,9 +350,9 @@ export class FireBaseService {
 					else if(total1 <= 50)
 						this.fbUserLike.update({total: total1, ranking: "* Top Foogler *"})
 					else
-						this.fbUserLike.update({total: total1, ranking: "** Distinguished Foogler **"})	
-			}	
-			
+						this.fbUserLike.update({total: total1, ranking: "** Distinguished Foogler **"})
+			}
+
 	}
 
 	putImage(image,dish_name,cuisine_name,restaurant_name,placeId,userID){
@@ -392,8 +394,8 @@ export class FireBaseService {
 		navigator.geolocation.getCurrentPosition(position => {
 			this.latitude= position.coords.latitude;
 			this.longitude = position.coords.longitude;
-			console.log(position.coords.latitude);
-			console.log(position.coords.longitude);
+			//console.log(position.coords.latitude);
+			//console.log(position.coords.longitude);
 
 			this.apiUrl = 'https://powerful-thicket-30479.herokuapp.com/getRestaurant/'+this.latitude+'/'+this.longitude;
 		});
@@ -409,13 +411,13 @@ export class FireBaseService {
 		}
 	}
 
+
 	updateCommentLike(comment,dish_id,likes,userId){
 		this.fbUserLike= this.af.database.object('/userCommentLikes/'+userId+"/"+comment.$key) as FirebaseObjectObservable<commentLike>
 		this.fbUserLike.update({like: likes})
 		this.fbUserLike= this.af.database.object('dishes/'+dish_id+"/comments/"+comment.$key) as FirebaseObjectObservable<comments>
 		this.fbUserLike.update({like: likes});
 	}
-
 
 }
 

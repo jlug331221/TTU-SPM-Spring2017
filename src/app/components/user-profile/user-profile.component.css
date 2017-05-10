@@ -46,6 +46,10 @@ span.user-profile-name {
     font-size: 2rem;
 }
 
+span.user-profile-ranking {
+    font-size: .75rem;
+}
+
 div.user-profile-card {
     margin-bottom: 3rem;
 }
