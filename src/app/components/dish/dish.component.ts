@@ -46,18 +46,16 @@ export class DishComponent implements OnInit {
                 this.userExists = true;
                 this.userID = authData.uid;
 
-                 //gets users Foogle ranking
-                 this.fireBaseService.getUserRank(this.userID).subscribe(response=>{
-                    if(response!= null){
-                      this.rank = response.ranking
-
-                      //sets a new Foogle ranking if the user does not have one
-                      if(this.rank == null){
-                          this.rank = "Foogler"
-                      }
-                      //console.log(response)
-                    }
-                 });
+              firebase.database().ref('/userRankings/' + authData.uid).once('value').then((res)=>{
+                        if(res.A.aa!=null){
+                            res = res.val().ranking
+                            console.log(res)
+                            this.rank = res
+                        }
+                    else{
+                        this.rank = "Foogler"
+                        }
+                }); 
             }
         });
 

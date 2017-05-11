@@ -267,6 +267,7 @@ export class FireBaseService {
 		this.fbUser.update({rating: rating1});
 		//updates user ranking after adding a new dish
 		this.updateUserRanking(user, incr)
+		//console.log("made it")
 
 	}
 
@@ -329,31 +330,35 @@ export class FireBaseService {
 	getUserRank(userid){
 			this.fbUserRank = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
 			//console.log(this.fbUserRank)
-			return this.fbUserRank;
-	}
+			return this.fbUserRank;				
+            }
+                   
 
 	updateUserRanking(userid, inc){
 		let total1;
 			//gets a user ranking object from the userRankings table
 			this.fbUserLike = this.af.database.object('/userRankings/'+ userid) as FirebaseObjectObservable<any>
-			this.fbUserLike.subscribe(res=>{
-				if(res!=null){
-					if(res.total!=null)
-						total1 = res.total+inc
-					else
-						total1 = inc;
-				}
-			});
-			if(total1!=null){
-			if(total1 <= 20)
+	
+			 firebase.database().ref('/userRankings/' + userid).once('value').then((res)=>{
+                        if(res.A.aa!=null){
+                            res = res.val().total
+                            //console.log(res)
+                            total1 = res + inc
+                        }
+                    else{
+                        total1 = inc
+					}
+					//console.log(total1)
+					if(total1 <= 20)
 						this.fbUserLike.update({total: total1, ranking: "Foogler"})
 					else if(total1 <= 50)
 						this.fbUserLike.update({total: total1, ranking: "* Top Foogler *"})
 					else
 						this.fbUserLike.update({total: total1, ranking: "** Distinguished Foogler **"})
+                });  
+					
 			}
 
-	}
 
 	putImage(image,dish_name,cuisine_name,restaurant_name,placeId,userID){
 			let path = "'"+restaurant_name+"/"+cuisine_name+"/"+dish_name+"'";
@@ -405,7 +410,7 @@ export class FireBaseService {
 		if(this.latitude != null) {
       return this.http.get(this.apiUrl).map(data => {
         this.res = data.json();
-        console.log(this.res);
+        //console.log(this.res);
         return this.res;
       });
 		}

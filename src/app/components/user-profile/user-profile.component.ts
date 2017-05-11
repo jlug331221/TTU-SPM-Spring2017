@@ -4,6 +4,7 @@ import { FireBaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { MaterializeModule } from "angular2-materialize";
+import * as firebase from 'firebase';
 
 import { User } from '../../interfaces/user.interface';
 
@@ -474,18 +475,18 @@ export class UserProfileComponent implements OnInit {
                 this.authDataPhotoUrl = authData.google.photoURL;
 
                 this.checkIfFirstLogin(authData);
-
-                this.user_ranking = this.fireBaseService.getUserRank(authData.uid).subscribe(response => {
-                   if(response!= null) {
-                     this.user_ranking = response.ranking
-
-                     //sets a new Foogle ranking if the user does not have one
-                     if(this.user_ranking == null){
-                         this.user_ranking = "Foogler"
-                     }
-                   }
-                });
-
+                
+                firebase.database().ref('/userRankings/' + authData.uid).once('value').then((res)=>{
+                        if(res.A.aa!=null){
+                            res = res.val().ranking
+                            console.log(res)
+                            this.user_ranking = res
+                        }
+                    else{
+                        this.user_ranking = "Foogler"
+                        }
+                });  
+                
                 this.user_profile_comments = this.fireBaseService.getCommentsForUserProfile(authData.uid);
 
                 this.cuisinesLiked = this.fireBaseService.getUserCuisineLikesForUserProfile(authData.uid);

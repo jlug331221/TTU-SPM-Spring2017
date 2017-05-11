@@ -1,0 +1,162 @@
+d68ec152,danielmcadams86,2017-05-07,merge conflicts resolved with setting.component.ts
+c4c06539,danielmcadams86,2017-05-06,Merge pull request #45 from jlug331221/foogle-rank-feature
+3f0cb516,danielmcadams86,2017-05-06,Merge branch 'development' into foogle-rank-feature
+72ff50b3,danielmcadams86,2017-05-06,Merge pull request #44 from jlug331221/user-profile-cuisineLikes
+e21962c3,danielmcadams86,2017-05-06,Merge branch 'development' into foogle-rank-feature
+34e10900,danielmcadams86,2017-05-06,ranking feature now can be seen in the user comments.  comments also reflect actual ratings rather than a dummy rating
+4d7b7100,danielmcadams86,2017-05-06,finished testing rank feature,  Just need to apply the ranking to the user profile and comments
+93798f87,Justin Lugo,2017-05-06,Merge branch 'development' into user-profile-cuisineLikes
+e35a35fb,Justin Lugo,2017-05-06,Merge branch 'development' into user-profile-cuisineLikes
+4e1f3e2c,jlug331221,2017-05-06,User profile cuisine likes feature tested locally. Ready for pull request.
+0b604833,danielmcadams86,2017-05-05,Merge pull request #43 from jlug331221/typeahead-restaurants-test
+9f913b38,jlug331221,2017-05-05,User can now see the cuisines they have liked in their user profile. Need to test this newly added feature.
+c2229b4b,Justin Lugo,2017-05-05,Merge branch 'development' into typeahead-restaurants-test
+f946686b,danielmcadams86,2017-05-05,Issue resolved with ranking counter
+8243340a,jlug331221,2017-05-05,Finish the test for the typeahead feature within the settings component. Ready to do a pull request.
+4fe733cd,danielmcadams86,2017-05-04,Added a user ranking for all users based on the number of dishes added and the number of dishes rated.  userRanking table also created in firebase.
+c5c52e6e,jlug331221,2017-04-30,User preferences modal select options bug has been fixed. The state and diets are now displaying like before.
+88c4f370,danielmcadams86,2017-04-30,resolved modal behavior issue
+2b100a73,danielmcadams86,2017-04-30,Merge pull request #41 from jlug331221/embedded-map-feature
+55e62099,danielmcadams86,2017-04-30,all tests now passing for embedded map feature
+dad7250b,jlug331221,2017-04-29,Typeahead.js component in settings module complete. Users can now type a restaurant name in the form to add a dish and they will be shown a list of the corresponding restaurants. Will need to test.
+a4f41d70,danielmcadams86,2017-04-29,Utilized angular's google maps module.  Maps completed, just needs testing
+b8efc031,danielmcadams86,2017-04-27,added in google maps to the dish page.  Just need to test
+dc5f12ad,jlug331221,2017-04-27,Change column size in user profile component. Content was shifted over one extra column.
+f3c78c6d,jlug331221,2017-04-27,Add a margin bottom to the <hr> tag in the user profile comment section.
+e664978e,Samip1211,2017-04-26,Changed description
+871a9900,danielmcadams86,2017-04-26,Merge branch 'development' of https://github.com/jlug331221/TTU-SPM-Spring2017 into development
+9df3c1a4,danielmcadams86,2017-04-26,Merge pull request #38 from jlug331221/user-profile-comments
+24f93e50,Justin Lugo,2017-04-26,Merge branch 'development' into user-profile-comments
+5c4e8656,danielmcadams86,2017-04-26,changed rating box size
+e34b7339,jlug331221,2017-04-26,User comments now showing within the user profile. Feature has been tested and is ready for a pull request.
+3433f818,danielmcadams86,2017-04-26,Merge pull request #37 from jlug331221/Tabs
+4358db61,Samip1211,2017-04-26,Merge branch 'development' into Tabs
+7083b481,Samip Kothari,2017-04-26,Now getting placeId
+0762c09f,danielmcadams86,2017-04-25,Merge pull request #36 from jlug331221/rating-average-feature
+70654253,danielmcadams86,2017-04-25,completed testing for average rating
+101fb272,Samip Kothari,2017-04-25,Added form in custom upload
+cc55742a,jlug331221,2017-04-25,Typeahead feature for restaurant names added to settings component. Basic listing of restaurant names.
+b2bd820e,Samip Kothari,2017-04-25,Some commit
+0f49fe3b,jlug331221,2017-04-24,User comments now available for the user profile. Had to put containers back into every component.html and remove the main container from app.component.html.
+9b5acb23,danielmcadams86,2017-04-24,completed the rating average for each dish.  utilized the userRating table to create the average.  Testing to follow.
+398f40cd,danielmcadams86,2017-04-22,resolved rating-feature merge issues
+171c375c,danielmcadams86,2017-04-22,Merge pull request #27 from jlug331221/rating-feature
+15a14568,danielmcadams86,2017-04-22,Merge branch 'development' into rating-feature
+68fb7aa6,danielmcadams86,2017-04-22,Cuisine like feature now works correctly on page refresh.
+b7a3f662,Samip1211,2017-04-22,Update .travis.yml
+2ec784f0,jlug331221,2017-04-21,Reverting back to the original travis.yml file.
+80fba6c2,jlug331221,2017-04-21,Noticed that '-ng build' was not in the travis.yml file. Reverting back to the original .yml with '-ng build'.
+1cbcf640,jlug331221,2017-04-21,Still trying to fix scipt error in TravisCI.
+5f377899,jlug331221,2017-04-21,Trying to see if this change to the travis.yml file fixes the TravisCI script error.
+4473f91f,Samip Kothari,2017-04-21,Check if build passsing
+f44c4a36,Samip Kothari,2017-04-21,Check if build pass
+249924a9,Samip Kothari,2017-04-21,Dish component comments
+678799f7,Samip Kothari,2017-04-21,Solved Agm Issue
+5681df0e,Samip Kothari,2017-04-21,Solved errors in merging
+68d7c599,Justin Lugo,2017-04-21,Merge pull request #22 from jlug331221/get-restaurant
+ca8aac93,Samip Kothari,2017-04-21,Add custom upload in app module
+a1adea66,Samip Kothari,2017-04-18,another changes
+c7690f48,Samip Kothari,2017-04-18,settings error
+bc743cad,Samip Kothari,2017-04-18,Minor errors arised out of merging
+dbd732f2,Samip1211,2017-04-18,Some minor changes
+e1729e3f,Samip Kothari,2017-04-18,Solved errors
+70923515,Samip Kothari,2017-04-18,Solved merging error
+874acc14,Samip Kothari,2017-04-18,Merge branch 'get-restaurant' of https://github.com/jlug331221/TTU-SPM-Spring2017 into get-restaurant
+50d09773,Samip1211,2017-04-18,Merge branch 'development' into get-restaurant
+2ccb9c4d,Samip Kothari,2017-04-17,Working on tabs
+f79c899a,Samip Kothari,2017-04-17,Now showing added dish to list
+9846f6a6,danielmcadams86,2017-04-16,Resolved issue with cuisine like feature.
+60ff2589,Samip Kothari,2017-04-16,Tested Dish Component
+11a62e57,Samip Kothari,2017-04-15,Cannot see service in test
+31acb1c6,jlug331221,2017-04-15,Needed to add HttpModule to my user-profile compoent test as the tests were now failing, issue now resolved. Made a mistake during the pull request merging conflicts... Had to remove an extra constructor for the firebase service. Change my modal code to reflect the solution provided by Daniel.
+32421ecd,Justin Lugo,2017-04-15,Merge pull request #24 from jlug331221/user-profile
+e37f6172,Justin Lugo,2017-04-15,Merge branch 'development' into user-profile
+5508bd5c,Justin Lugo,2017-04-15,Merge pull request #25 from jlug331221/rating-feature
+3bf84595,danielmcadams86,2017-04-15,rating feature completed. Cuisine likes feature also refined so user can only like a cuisine once.
+d3f17989,jlug331221,2017-04-14,Testing complete for user-profile component.
+20f15632,danielmcadams86,2017-04-13,Changed google api calls to heroku.  Almost done with testing rating feature.
+1b95d948,danielmcadams86,2017-04-13,completed three functions to check rating status for each user for a specific dish, to update rating of a dish, and to post a new rating for a dish
+83e814b7,Samip Kothari,2017-04-13,Solved Cors
+cbc7bed0,jlug331221,2017-04-13,User can successfully edit their profile preferences (city, state and diet). Client side validation has been implemented. On to testing the user-profile component.
+c1ac6f2c,jlug331221,2017-04-12,Implemented basic layout of user profile page. Add edit button icon so that when the users click this icon, an edit form will be displayed. This form will allow the user to update their city, state and diet.
+f0ee4431,jlug331221,2017-04-12,Minor bug with the state validation in the user preferences form. Issue fixed.
+5df48b14,Samip Kothari,2017-04-12,Users can now comment
+e59db1a7,jlug331221,2017-04-11,Removing test for Google API call within the dish component testing spec. This is temporary, as this test is causing the Travis CI build to fail. Need to find a solution to test a CORS request.
+75281168,Samip Kothari,2017-04-10,Merge conflict
+500860bc,jlug331221,2017-04-10,Had to fix a bug where the modal was no longer opening. Fix implemented. Still need to style profile page after user submits their intial profile and still need to test.
+23db2cd8,Samip Kothari,2017-04-10,Some commit
+d4b9d6fe,Justin Lugo,2017-04-10,Merge pull request #23 from jlug331221/restaurant-hours
+6c819da8,jlug331221,2017-04-09,User preferences form validation added.
+972b2bb2,Samip Kothari,2017-04-08,Added Components in testing
+756e165b,Samip Kothari,2017-04-08,Working on Place APi
+efdbe569,danielmcadams86,2017-04-08,Google API fully implemented in dish details page.  Restaurant hours displaying.
+b8353f21,jlug331221,2017-04-08,Can successfully grab data from initial user preferences form and add user to the database. Need to add validation and work on redirecting the user back to the user-profile page after they set up their initial preferences.
+b810bc8c,Samip Kothari,2017-04-08,Locating Restaurant
+e9af0940,danielmcadams86,2017-04-08,Added get restaurant list based on user inputs,city, and state
+21f6dfb9,danielmcadams86,2017-04-08,Mapped data from the api to the dish page
+a1ffde58,danielmcadams86,2017-04-08,Added Google's Place API and created get requests to fetch restaurant ids and restaurant details. Tests completed in home.comp.spec.ts
+c242544a,jlug331221,2017-04-07,Working on building the form to get the initial preferences data from the user upon first login to Foogle.
+cf32b114,Samip Kothari,2017-04-07,User can select cuisine
+fc89fdc8,Samip Kothari,2017-04-06,Forgot variable declaration
+d385bea4,Samip Kothari,2017-04-06,Done Adding dishes by user test remaining
+4f501c1a,jlug331221,2017-04-05,Begin user profile page layout. Enabled check to see if user exists within the db upon first login. This will allow the user to setup their profile if it is their first login. Otherwise, they can edit their profile preferences.
+52709155,jlug331221,2017-04-04,Working on user profile feature. Need to understand how data will be handled for a user. Also, async calls to the database are causing me trouble.
+a04651b3,danielmcadams86,2017-04-04,Added restaurant hours to italian dish.
+e0660219,Justin Lugo,2017-04-04,Merge pull request #20 from jlug331221/test-cuisine-feature
+6e393ffd,danielmcadams86,2017-04-04,Unit test completed for cuisine like feature.  Still needs authentication added.
+2c07a34f,jlug331221,2017-04-03,Small changes to the column width for the home and dish component (within the HTML).
+9c69b057,Justin Lugo,2017-04-03,Merge pull request #19 from jlug331221/test-cuisine-feature
+5b07c54e,danielmcadams86,2017-04-02,Added like option to cuisines which updates to FB.  Still needs authentication.
+19d39cd6,danielmcadams86,2017-04-02,Resolved home page image sizing
+e906370f,Samip Kothari,2017-03-31,Merge branch 'development' of https://github.com/jlug331221/TTU-SPM-Spring2017 into development
+524ff7a2,Samip Kothari,2017-03-31,Hot fix
+db44f40b,danielmcadams86,2017-03-31,Merge branch 'development' of https://github.com/jlug331221/TTU-SPM-Spring2017 into development
+18faedcd,danielmcadams86,2017-03-31,Added actual content to dish.json and home.json.  Home page cards may need some revision.
+2292a3ec,Samip Kothari,2017-03-29,Solved the prodcution bug
+97f2fd05,Samip Kothari,2017-03-29,Production mode for development branch
+4099cbd8,Samip Kothari,2017-03-29,Merge branch 'development' of https://github.com/jlug331221/TTU-SPM-Spring2017 into development
+a955d61e,danielmcadams86,2017-03-29,Resolved testing issue with dish.component.ts.  FormsModule dependency added to dish.component.spec.ts
+883a028f,Samip Kothari,2017-03-29,firebase deploy
+f6d1e877,jlug331221,2017-03-27,Add Travis CI build status to readme for dev branch.
+059d0b55,jlug331221,2017-03-27,Travis CI cannot see angularfire2 or firebase. Add both to the before script section of the .travis.yml.
+bbe0ff64,jlug331221,2017-03-27,Travis CI build failed again. This was because karma was looking for the karma.config.js file in a config directory and there is no config directory in our project. Problem has been fixed, hopefully this time, Travis CI build will pass.
+1a526517,jlug331221,2017-03-27,Travis CI failed with last push. Remove ng build from .travis.yml.
+bd15fd72,jlug331221,2017-03-27,Testing Travis CI with the development branch.
+498bc8f6,jlug331221,2017-03-26,Temporarily remove test to create dish component as it is currently failing. Will look into the issue.
+947ee269,jlug331221,2017-03-26,Merge test-dishes-component and development branches.
+e10b816f,jlug331221,2017-03-26,Dishes component now tested. Data received from Firebase service is being validated as well as HTML view content within the component.
+388c4734,danielmcadams86,2017-03-24,modified home page and added cuisine description
+c8c1454a,danielmcadams86,2017-03-19,Finalized comments section in dish.js.  Applied ngx-star ratings.
+4ec0a5e5,jlug331221,2017-03-19,Calling service to get dishes by cuisine name but test is failing because of the async call to Firebase.
+b506e03f,Samip Kothari,2017-03-17,soled merging error
+f01e4fe4,Samip Kothari,2017-03-17,select problem
+5d42e27a,Samip Kothari,2017-03-17,select-dilemma
+c29275f7,jlug331221,2017-03-17,Update JSON files for home/Cuisines and dishes.
+ef3d55c2,jlug331221,2017-03-15,Testing suite is now working properly.
+e0c59b08,jlug331221,2017-03-15,Merge branch 'testing-angular2-components' into development
+78e61a0f,jlug331221,2017-03-15,Testing is now working correctly. The tests were not passing because of the firebase dependencies in some of the components.
+84aa5c78,danielmcadams86,2017-03-15,Add dish component with comments
+e2e38e47,jlug331221,2017-03-15,The mobile nav slide out now closes on a click. Modify the dishes data and add to firebase.
+d8779352,danielmcadams86,2017-03-15,Added dish component with comments
+1446a4ba,Samip Kothari,2017-03-15,Autocomplete Scandal
+e5cc101d,Samip1211,2017-03-15,Minor change in home.component.html
+88e4282d,Samip Kothari,2017-03-12,Merge branch 'development' of https://github.com/jlug331221/TTU-SPM-Spring2017 into development
+9ccb0435,Samip Kothari,2017-03-12,Modified Navbarand Settings Page
+d35bb23e,jlug331221,2017-03-11,Dishes of a particular cuisine now being displayed properly. Need to test.
+c06ec767,jlug331221,2017-03-11,Can successfully grab all dishes pertaining to a particular cuisine name from the firebase DB. Next, add dish cards to dishes component HTML.
+d4dd075a,jlug331221,2017-03-11,Able to display parameter passed from home page to dishes page. Now to work on getting all dishes from DB that match the parameter cuisine name and displaying them in a grid fashion using Materialize cards.
+3ca5485e,jlug331221,2017-03-11,Now able to pass cuisine name from home listing to dishes listing of the particular cuisine. Add some styling to the initial loading screen.
+ee8dcabe,jlug331221,2017-03-11,Fix to the app.module.ts for the dishes component. Webpack was not compiling successfully. Problem fixed.
+cf7d6c21,jlug331221,2017-03-11,Add description to dish and comments for dishes 1 and 3.
+8f812d0e,jlug331221,2017-03-10,Modify JSON structure for the dishes. Move dishes component to components directory.
+437979c9,Justin Lugo,2017-03-10,Add dishes data in JSON format. Add necessary firebase dependencies to dishes component.
+653c4b02,Justin Lugo,2017-03-10,Change background color of the navbar and create dishes component.
+92469a0e,Samip Kothari,2017-03-10,Calling Firebase for cusine values
+3290c755,danielmcadams86,2017-03-05,Home html and css file from development branch
+91ed20cb,Samip Kothari,2017-03-03,Firebase Login and Logout
+0088a2ae,jlug331221,2017-03-03,Apply basic styling of the navbar and remove registration component.
+9c9ab049,jlug331221,2017-03-03,Update .gitignore to remove node_modules from Github. Remove all server related files within the project file structure.
+11b9df40,Samip Kothari,2017-03-03,firebase initials
+88bec4f2,Samip Kothari,2017-03-02,Some SignIn Changes
+02020bff,jlug331221,2017-02-22,Testing new file structure setup for the application.
+140adb27,jlug331221,2017-02-19,Initial commit.

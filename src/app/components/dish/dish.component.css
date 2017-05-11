@@ -45,5 +45,8 @@ button{
 .sebm-google-map-container {
   height: 300px;
 }
+.comLike{
+    cursor: pointer;
+}
 
 
