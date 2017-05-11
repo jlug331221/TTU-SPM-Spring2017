@@ -113,7 +113,7 @@ export class DishComponent implements OnInit {
 	onAddedComment(){
 		console.log("Adding Dish");
 		this.authData=this.fireBaseService.getAuthData();
-    firebase.database().ref('/userComments/'+this.dish_id+'/'+this.userID).once('value').then((res)=>{
+    	firebase.database().ref('/userComments/'+this.dish_id+'/'+this.userID).once('value').then((res)=>{
 		  if(res.A.aa!=null){
 			  console.log("You have commented on this dish");
 			  this.addedComment="";
@@ -123,9 +123,7 @@ export class DishComponent implements OnInit {
 		  }
 		})
 		
-
-
-	  }
+	}
 	  likeComment(comment){
 		  console.log(comment.$key);
 		  firebase.database().ref('/userCommentLikes/'+this.userID+'/'+comment.$key).once('value').then((res)=>{
