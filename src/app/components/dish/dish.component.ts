@@ -118,14 +118,11 @@ export class DishComponent implements OnInit {
 			  console.log("You have commented on this dish");
 			  this.addedComment="";
 		  }else{
-	  		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid);
+	  		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid,this.rank);
 	  		this.addedComment="";
 		  }
 		})
 		
-
-		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid, this.rank);
-		this.addedComment="";
 
 
 	  }

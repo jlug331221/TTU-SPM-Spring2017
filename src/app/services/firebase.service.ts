@@ -54,8 +54,7 @@ export class FireBaseService {
 
 
 	setComments(dish_id,user_name,comment_data, user_id, rank){
-    this.af.database.list('/userComments/'+dish_id+'/'+user_id).push({commented: true});
-		this.commentObject ={user:user_name, comment_data:comment_data, like:0, uid:user_id};
+    
 		let actRating = this.getRating(user_id, dish_id)
 		let rating=0
 		let r = rank
@@ -72,7 +71,7 @@ export class FireBaseService {
 		}
 
 
-		this.commentObject ={user:user_name, comment_data:comment_data, rating: rating, uid:user_id, ranking: rank};
+		this.commentObject ={user:user_name, comment_data:comment_data, like: 0, rating: rating, uid:user_id, ranking: rank};
 
 		this.af.database.list('/dishes/'+ dish_id + '/comments/').push(this.commentObject).then(result=> console.log(result));
 	}
@@ -450,6 +449,7 @@ interface comments {
 	user: string;
 	ranking: string;
 	comment_data: string;
+	rating:number;
 	uid: string;
 	like:number;
 }
