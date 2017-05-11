@@ -18,7 +18,7 @@ declare var $:any;
 
 
 export class SettingsComponent implements OnInit,OnChanges {
-    elementRef: ElementRef;	
+    elementRef: ElementRef;
 	image:any;
 	restaurantName:any;
 	dish_name:any;
@@ -29,20 +29,20 @@ export class SettingsComponent implements OnInit,OnChanges {
 	city_name:string;
 	state_name:string;
 	userID:string;
-	
+
 	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService, private af:AngularFire){}
 
 	ngOnChanges(){
-   		
-   }	
- 
+
+   }
+
    ngOnInit() {
 	   this.af.auth.subscribe(authData=>{
 	              if(authData != null) {
 
-               
+
 	                  this.userID = authData.uid
-               
+
 	              }
 	   	   });
          this.fireBaseService.getCuisines().subscribe(response => {
@@ -84,7 +84,7 @@ export class SettingsComponent implements OnInit,OnChanges {
                  });
                }
            });
-     
+
       	}
 
        fetchPlaceID(restaurantName: string) {
@@ -118,4 +118,3 @@ export class SettingsComponent implements OnInit,OnChanges {
 
        }
    }
-   
