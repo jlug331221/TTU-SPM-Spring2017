@@ -6,7 +6,7 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
 			<li><a [routerLink]="['/']" routerLinkActive="active">Home</a></li>
             <li><a routerLinkActive="active" *ngIf="(af.auth| async)" [routerLink]="['/user-profile']">User Profile</a></li>
-			<li><a routerLinkActive="active" *ngIf="(af.auth| async)" [routerLink]="['/settings']">Settings</a></li>
+			<li><a routerLinkActive="active" *ngIf="(af.auth| async)" [routerLink]="['/settings']">Add Dish</a></li>
             <li><a routerLinkActive="active" *ngIf="!(af.auth| async)" (click)="login()">Login</a></li>
             <li><a routerLinkActive="active" *ngIf="(af.auth| async)" (click)="logOut()">Logout</a></li>
         </ul>
@@ -24,7 +24,7 @@
 			</li>
 			<li><a [routerLink]="['/']" routerLinkActive="active">Home</a></li>
             <li><a routerLinkActive="active" *ngIf="(af.auth| async)" [routerLink]="['/user-profile']">User Profile</a></li>
-			<li><a routerLinkActive="active" *ngIf="(af.auth| async)" [routerLink]="['/settings']">Settings</a></li>
+			<li><a routerLinkActive="active" *ngIf="(af.auth| async)" [routerLink]="['/settings']">Add Dish</a></li>
             <li><a *ngIf="!(af.auth| async)" (click)="login()">Login</a></li>
             <li><a *ngIf="(af.auth| async)" (click)="logOut()">Logout</a></li>
         </ul>

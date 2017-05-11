@@ -113,8 +113,33 @@ export class DishComponent implements OnInit {
 	onAddedComment(){
 		console.log("Adding Dish");
 		this.authData=this.fireBaseService.getAuthData();
+    firebase.database().ref('/userComments/'+this.dish_id+'/'+this.userID).once('value').then((res)=>{
+		  if(res.A.aa!=null){
+			  console.log("You have commented on this dish");
+			  this.addedComment="";
+		  }else{
+	  		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid);
+	  		this.addedComment="";
+		  }
+		})
+		
+
 		this.fireBaseService.setComments(this.dish_id,this.authData.auth.displayName,this.addedComment, this.authData.uid, this.rank);
 		this.addedComment="";
 
+
+	  }
+	  likeComment(comment){
+		  console.log(comment.$key);
+		  firebase.database().ref('/userCommentLikes/'+this.userID+'/'+comment.$key).once('value').then((res)=>{
+			  console.log(res);
+			  if(res.A.aa!=null){
+			  	
+			  }else{
+				  comment.like=comment.like+1;
+				  this.fireBaseService.updateCommentLike(comment,this.dish_id,comment.like,this.userID);
+			  }
+		  })
+		  
 	  }
   }

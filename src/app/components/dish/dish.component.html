@@ -6,6 +6,22 @@
             <div class="card-image">
           	     <img src="{{ dish.img_url }}" alt="" class="responsive-img">
             </div>
+            <div class="flex-center" *ngIf="!details">
+				Loading Up Contents.
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class = "card-content" *ngIf="details">
                     <h6><strong>Restaurant:</strong> {{ details.result.name }}</h6>
                     <h6><strong>Description:</strong> {{ dish.description }}</h6>
@@ -45,10 +61,16 @@
                 <span class= "userid"><strong>{{ comment.user }}</strong></span>
                     <span class="date"><strong>{{ comment.date }}</strong></span>
                 <div class= "card-content">
+
+					
+
                     <div><strong>{{ comment.ranking }}</strong></div>
                     <br>
+
                     <div><strong>Comment: </strong>{{ comment.comment_data }}</div>
-                    <rating [(ngModel)]="comment.rating" [readonly]="true"></rating>
+					<br>
+                    <a class= "btn-small onhover" (click)="likeComment(comment)"><i class="material-icons left">thumb_up</i>({{comment.like}})</a>
+					<br>
                 </div>
                 <hr>
             </div>

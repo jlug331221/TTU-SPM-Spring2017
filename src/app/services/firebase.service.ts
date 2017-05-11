@@ -36,6 +36,7 @@ export class FireBaseService {
 	authData:any;
 	longitude:any;
 	apiUrl:string;
+	
 
 	private res;
 	placeDish:dish;
@@ -51,7 +52,10 @@ export class FireBaseService {
 		return this.authData;
 	}
 
+
 	setComments(dish_id,user_name,comment_data, user_id, rank){
+    this.af.database.list('/userComments/'+dish_id+'/'+user_id).push({commented: true});
+		this.commentObject ={user:user_name, comment_data:comment_data, like:0, uid:user_id};
 		let actRating = this.getRating(user_id, dish_id)
 		let rating=0
 		let r = rank
@@ -66,6 +70,7 @@ export class FireBaseService {
 		if(r == null){
 			r = "Foogler"
 		}
+
 
 		this.commentObject ={user:user_name, comment_data:comment_data, rating: rating, uid:user_id, ranking: rank};
 
@@ -368,6 +373,7 @@ export class FireBaseService {
 							avg_rating: 2.5,
 							place_id : placeId,
 							userId: userID
+
 						}
 
 						this.af.database.list('https://spm-spring2017-7fbab.firebaseio.com/dishes').push(this.placeDish);
@@ -405,6 +411,14 @@ export class FireBaseService {
 		}
 	}
 
+
+	updateCommentLike(comment,dish_id,likes,userId){
+		this.fbUserLike= this.af.database.object('/userCommentLikes/'+userId+"/"+comment.$key) as FirebaseObjectObservable<commentLike>
+		this.fbUserLike.update({like: likes})
+		this.fbUserLike= this.af.database.object('dishes/'+dish_id+"/comments/"+comment.$key) as FirebaseObjectObservable<comments>
+		this.fbUserLike.update({like: likes});
+	}
+
 }
 
 interface cuisines {
@@ -422,15 +436,22 @@ interface dish {
 	restaurant_name: string;
 	avg_rating: number;
 	place_id:string;
-	userId: any;
-}
 
+	userId:string;
+}
+interface commentLike{
+	like:number;
+
+	userId: any;
+
+}
 interface comments {
+	$key?:string;
 	user: string;
 	ranking: string;
 	comment_data: string;
-	rating: number;
 	uid: string;
+	like:number;
 }
 
 interface dishes {
