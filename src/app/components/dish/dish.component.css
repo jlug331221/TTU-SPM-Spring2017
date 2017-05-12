@@ -6,8 +6,10 @@
     font-size: 24px;
 }
 img{
-    height: 300px;
-    width: 450px;
+    /*height: 300px;*/
+    /*width: 450px;*/
+    width: 100%;
+    height: auto;
 }
 button{
     font-size: 14;
@@ -21,7 +23,7 @@ button{
  padding-bottom: 10px;
  padding-top: 10px;
  padding-right: 10px;
- 
+
 }
 .date{
     float: right;
@@ -48,5 +50,3 @@ button{
 .comLike{
     cursor: pointer;
 }
-
-
