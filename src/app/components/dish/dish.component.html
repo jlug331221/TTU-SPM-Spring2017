@@ -58,15 +58,13 @@
 <div class="row container">
         <div class="col s12 m12 l12">
             <div class = "card-large c2" *ngFor="let comment of comments">
-                <span class= "userid"><strong>{{ comment.user }}</strong></span>
+                <span class= "userid"><strong>{{ comment.user }} &nbsp; - &nbsp;</strong></span>
+                <span><strong>{{ comment.ranking }}</strong></span>
+                
                     <span class="date"><strong>{{ comment.date }}</strong></span>
                 <div class= "card-content">
-
-					
-
-                    <div><strong>{{ comment.ranking }}</strong></div>
+                    <div><rating [(ngModel)]="comment.rating" [readonly]="true"></rating></div>
                     <br>
-
                     <div><strong>Comment: </strong>{{ comment.comment_data }}</div>
 					<br>
                     <a class= "comLike btn-small onhover" (click)="likeComment(comment)"><i class="material-icons left">thumb_up</i>({{comment.like}})</a>
