@@ -2,10 +2,10 @@
     <div class="row">
         <ul>
             <div class="col s6">
-                <li class="col s3 top-tab"><a outerLinkActive="active" [routerLink]="['/settings']">Settings</a></li>
+                <li class="col s3 top-tab"><a outerLinkActive="active" [routerLink]="['/settings']">Near-By Restaurant</a></li>
             </div>
             <div class="col s6 top-tab">
-                <li class="col s3"><a outerLinkActive="active" [routerLink]="['/customuploads']">Custom </a></li>
+                <li class="col s3"><a outerLinkActive="active" [routerLink]="['/customuploads']">New Restaurant </a></li>
             </div>
         </ul>
     </div>
@@ -14,7 +14,7 @@
 
     <form (submit)="onSubmit()">
     <fieldset>
-        <legend><strong>Dish Information</strong></legend>
+        <legend><strong>Dish Information for New Restaurant</strong></legend>
         <div class="typeahead__container">
               <div class="typeahead__field">
                   <span class="typeahead__query">
@@ -27,23 +27,37 @@
               </div>
         </div>
         <div class="input-field ">
-          <input id="dish_name" type="text" class="validate" [(ngModel)]="city_name" name="city_name" required>
-          <label for="dish_name">City </label>
-        </div>
-        <!-- <label for="dish_name">Restaurant Name</label>
-        <select class="browser-default" id="sel1" [(ngModel)]="restaurantName"  [ngModelOptions]="{standalone: true}" required>
-          <option *ngFor="let r of restaurants" [ngValue]="r.name"  >{{ r.name }}</option>
-        </select> -->
-
-        <div class="input-field ">
           <input id="dish_name" type="text" class="validate" [(ngModel)]="dish_name" name="dish_name" required>
           <label for="dish_name">Dish Name</label>
         </div>
 
         <label for="dish_name">Type of Cuisine</label>
         <select class="browser-default" id="sel1" [(ngModel)]="selectedCuisine"  [ngModelOptions]="{standalone: true}" required>
-          <option *ngFor="let cuisine of cuisine_names" [ngValue]="cuisine.$key"  >{{ cuisine.$key }}</option>
+          <option *ngFor="let cuisine of cuisine_names" [ngValue]="cuisine.$key" >{{ cuisine.$key }}</option>
         </select>
+		
+        <div class="input-field ">
+          <input id="desc_name" type="text" class="validate" [(ngModel)]="desc_name" name="desc_name" required maxlength="140">
+          <label for="dish_name">Dish Description(max 140 characters)</label>
+        </div>
+        <div class="input-field ">
+          <input id="city_name" type="text" class="validate" [(ngModel)]="city_name" name="city_name" required>
+          <label for="dish_name">City </label>
+        </div>
+        <div class="input-field ">
+          <input id="state_name" type="text" class="validate" [(ngModel)]="state_name" name="state_name" required>
+          <label for="dish_name">State </label>
+        </div>
+        <div class="input-field ">
+          <input id="country_name" type="text" class="validate" [(ngModel)]="country_name" name="country_name" required>
+          <label for="dish_name">Country </label>
+        </div>
+        <!-- <label for="dish_name">Restaurant Name</label>
+        <select class="browser-default" id="sel1" [(ngModel)]="restaurantName"  [ngModelOptions]="{standalone: true}" required>
+          <option *ngFor="let r of restaurants" [ngValue]="r.name"  >{{ r.name }}</option>
+        </select> -->
+
+        
 
         <div class="file-field input-field">
           <div class="btn">

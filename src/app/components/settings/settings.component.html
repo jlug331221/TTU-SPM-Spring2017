@@ -2,10 +2,10 @@
     <div class="row">
         <ul>
             <div class="col s6">
-                <li class="col s3 top-tab"><a outerLinkActive="active" [routerLink]="['/settings']">Settings</a></li>
+                <li class="col s3 top-tab"><a outerLinkActive="active" [routerLink]="['/settings']"> Near-By Restaurants</a></li>
             </div>
             <div class="col s6 top-tab">
-                <li class="col s3"><a outerLinkActive="active" [routerLink]="['/customuploads']">Custom </a></li>
+                <li class="col s3"><a outerLinkActive="active" [routerLink]="['/customuploads']">New Restaurant </a></li>
             </div>
         </ul>
     </div>
@@ -14,7 +14,7 @@
 
     <form (submit)="onSubmit()">
     <fieldset>
-        <legend><strong>Dish Information</strong></legend>
+        <legend><strong>Dish Information Near-By Restaurants</strong></legend>
         <div class="typeahead__container">
               <div class="typeahead__field">
                   <span class="typeahead__query">
