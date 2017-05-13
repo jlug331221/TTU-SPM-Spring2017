@@ -15,6 +15,7 @@ apt:
 branches:
   only:
   - development
+  -recommendation
 
 before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
