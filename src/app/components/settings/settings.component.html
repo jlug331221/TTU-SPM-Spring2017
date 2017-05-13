@@ -13,6 +13,22 @@
     <br>
 
     <form (submit)="onSubmit()">
+    <div class="flex-center" *ngIf="uploading==1">
+		Adding your Input.
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>	
     <fieldset>
         <legend><strong>Dish Information Near-By Restaurants</strong></legend>
         <div class="typeahead__container">
@@ -58,3 +74,4 @@
     </button>
     </form>
 </div>
+

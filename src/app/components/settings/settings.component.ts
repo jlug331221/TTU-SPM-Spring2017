@@ -29,6 +29,7 @@ export class SettingsComponent implements OnInit,OnChanges {
 	city_name:string;
 	state_name:string;
 	userID:string;
+	uploading:number;
 
 	constructor(elementRef: ElementRef, private fireBaseService:FireBaseService, private router:Router, public flash:FlashMessagesService, private af:AngularFire){}
 
@@ -96,14 +97,15 @@ export class SettingsComponent implements OnInit,OnChanges {
        }
 
        onSubmit() {
-
+		 this.uploading=1; 
          let placeID = this.fetchPlaceID($('.js-typeahead-restaurants').val());
 
          //console.log("Typeahead restaurant name: " + $('.js-typeahead-restaurants').val());
          //console.log("Typeahead restaurant place id: " + placeID);
-
+		 
          this.fireBaseService.putImage(this.image,this.dish_name,this.selectedCuisine,$('.js-typeahead-restaurants').val(),placeID,this.userID).subscribe(status => {
              //console.log("Status is" + status);
+			 this.uploading=0;
              if(status != "Error") {
                console.log('added');
 
